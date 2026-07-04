@@ -78,8 +78,8 @@ export interface Document {
   type: 'identity' | 'address'
   filename: string
   storage_path: string
-  mime_type?: string
-  size_bytes?: number
+  mime_type: string | null
+  size_bytes: number | null
   created_at: string
 }
 
