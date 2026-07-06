@@ -18,7 +18,7 @@ export default async function ValidacaoPage({ params }: { params: Promise<{ id: 
       <Link href="/admin" className="w-fit text-sm font-bold text-navy-300">← Voltar ao painel</Link>
       <Card>
         <CardHeader><CardTitle>{patient.personal_data?.full_name}</CardTitle></CardHeader>
-        <CardContent className="grid gap-2 text-sm text-slate-600 dark:text-slate-400">
+        <CardContent className="grid gap-2 text-sm text-navy-600">
           <p>CPF: {patient.personal_data?.cpf}</p>
           <p>Pagamento: {patient.payment?.confirmed ? `Confirmado (${patient.payment.method})` : 'Pendente'}</p>
           <p>Documentos enviados: {documents?.length ?? 0}</p>
@@ -27,7 +27,7 @@ export default async function ValidacaoPage({ params }: { params: Promise<{ id: 
 
       <Card>
         <CardHeader><CardTitle className="text-base">Prontuário do médico</CardTitle></CardHeader>
-        <CardContent className="grid gap-2 text-sm whitespace-pre-wrap text-slate-600 dark:text-slate-400">
+        <CardContent className="grid gap-2 text-sm whitespace-pre-wrap text-navy-600">
           <p><strong>Receita:</strong> {patient.clinical?.prescription || '—'}</p>
           <p><strong>Laudo:</strong> {patient.clinical?.report || '—'}</p>
         </CardContent>

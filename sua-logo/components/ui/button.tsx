@@ -10,8 +10,8 @@ const buttonVariants = cva(
         default: 'bg-brand-500 text-white shadow-[0_10px_22px_rgba(22,104,214,.28)] hover:bg-brand-600',
         teal: 'bg-teal-500 text-white hover:bg-teal-600',
         admin: 'bg-admin-500 text-white hover:bg-admin-600',
-        outline: 'border border-line-400 bg-white text-navy-700 hover:bg-surface-soft dark:border-slate-700 dark:bg-transparent dark:text-slate-100 dark:hover:bg-slate-800',
-        ghost: 'text-navy-500 hover:bg-surface-page dark:hover:bg-slate-800',
+        outline: 'border border-line-400 bg-white text-navy-700 hover:bg-surface-soft',
+        ghost: 'text-navy-500 hover:bg-surface-page',
         destructive: 'bg-error-500 text-white hover:bg-red-700',
       },
       size: {
