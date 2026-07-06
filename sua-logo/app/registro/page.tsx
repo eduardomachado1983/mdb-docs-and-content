@@ -4,11 +4,16 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { toast } from 'sonner'
-import { cn } from '@/lib/utils'
 import { PaymentPanel } from '@/components/shared/payment-panel'
 import { DocumentUpload } from '@/components/shared/document-upload'
+import { WizardStepper } from '@/components/shared/wizard-stepper'
 
-const STEPS = ['Dados pessoais', 'Triagem', 'Documentos', 'Pagamento']
+const STEPS = [
+  { title: 'Dados pessoais' },
+  { title: 'Triagem' },
+  { title: 'Documentos' },
+  { title: 'Pagamento' },
+]
 
 interface FormState {
   nome: string
@@ -112,34 +117,17 @@ export default function RegistroPage() {
         <Link href="/" className="text-sm font-semibold text-navy-500">Cancelar</Link>
       </div>
 
-      <div className="mx-auto mt-10 w-full max-w-[560px]">
+      <div className="mx-auto mt-10 w-full max-w-[680px]">
         <div className="mb-7 text-center">
           <h1 className="text-2xl font-extrabold">Cadastro da consulta</h1>
           <p className="mt-1 text-[15px] text-navy-300">Leva poucos minutos. Seus dados são protegidos.</p>
         </div>
 
-        <div className="mb-7 flex items-start justify-center gap-6">
-          {STEPS.map((label, i) => {
-            const n = i + 1
-            const active = n === step
-            const done = n < step
-            return (
-              <div key={label} className="flex flex-col items-center gap-2 text-center">
-                <div
-                  className={cn(
-                    'flex h-9 w-9 items-center justify-center rounded-full text-sm font-extrabold text-white',
-                    (active || done) ? 'bg-brand-500' : 'bg-line-300 text-navy-100'
-                  )}
-                >
-                  {n}
-                </div>
-                <div className={cn('text-[13px] font-bold', active ? 'text-navy-700' : 'text-navy-100')}>{label}</div>
-              </div>
-            )
-          })}
+        <div className="mb-7">
+          <WizardStepper steps={STEPS} current={step} />
         </div>
 
-        <div className="rounded-[22px] border border-line-200 bg-white p-8 shadow-[0_24px_50px_rgba(20,50,90,.08)]">
+        <div className="mx-auto max-w-[560px] rounded-[22px] border border-line-200 bg-white p-8 shadow-[0_24px_50px_rgba(20,50,90,.08)]">
           {step === 1 && (
             <div className="animate-fade-up">
               <div className="mb-1 text-lg font-extrabold">Dados pessoais</div>
