@@ -66,10 +66,10 @@ export function PaymentPanel() {
       {pix.qrCodeBase64 ? (
         <img src={`data:image/png;base64,${pix.qrCodeBase64}`} alt="QR Code Pix" className="h-48 w-48" />
       ) : (
-        <div className="w-full rounded-xl bg-surface-muted p-3 text-xs break-all dark:bg-slate-800">{pix.qrCode}</div>
+        <div className="w-full rounded-xl bg-surface-muted p-3 text-xs break-all">{pix.qrCode}</div>
       )}
       {pix.simulated && (
-        <div className="flex flex-col items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 p-3.5 text-center text-sm dark:border-amber-800 dark:bg-amber-950">
+        <div className="flex flex-col items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 p-3.5 text-center text-sm">
           <p className="text-amber-800">Pix simulado (Mercado Pago não configurado ainda).</p>
           <Button size="sm" variant="teal" onClick={confirmSimulated} disabled={loading}>
             {loading ? 'Confirmando...' : 'Simular pagamento confirmado'}

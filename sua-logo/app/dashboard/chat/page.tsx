@@ -68,7 +68,7 @@ export default function ChatPage() {
               className={cn(
                 'max-w-[85%] whitespace-pre-wrap rounded-2xl px-4 py-2.5 text-sm',
                 m.role === 'assistant'
-                  ? 'self-start bg-surface-muted text-navy-700 dark:bg-slate-800'
+                  ? 'self-start bg-surface-muted text-navy-700'
                   : 'self-end bg-brand-500 text-white'
               )}
             >

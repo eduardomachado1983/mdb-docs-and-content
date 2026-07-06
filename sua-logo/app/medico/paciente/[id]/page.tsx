@@ -22,7 +22,7 @@ export default async function PacientePage({ params }: { params: Promise<{ id: s
         <CardHeader>
           <CardTitle>{patient.personal_data?.full_name}</CardTitle>
         </CardHeader>
-        <CardContent className="grid gap-2 text-sm text-slate-600 dark:text-slate-400">
+        <CardContent className="grid gap-2 text-sm text-navy-600">
           <p>CPF: {patient.personal_data?.cpf}</p>
           <p>Nascimento: {patient.personal_data?.birth_date}</p>
           <p>Telefone: {patient.personal_data?.phone}</p>
@@ -31,7 +31,7 @@ export default async function PacientePage({ params }: { params: Promise<{ id: s
 
       <Card>
         <CardHeader><CardTitle className="text-base">Triagem</CardTitle></CardHeader>
-        <CardContent className="grid gap-2 text-sm text-slate-600 dark:text-slate-400">
+        <CardContent className="grid gap-2 text-sm text-navy-600">
           <p><strong>Sintoma:</strong> {patient.triage?.main_symptom}</p>
           <p><strong>Local:</strong> {patient.triage?.pain_location}</p>
           <p><strong>Intensidade:</strong> {patient.triage?.pain_intensity}/10</p>
@@ -44,7 +44,7 @@ export default async function PacientePage({ params }: { params: Promise<{ id: s
           <CardHeader><CardTitle className="text-base">Conversa com o assistente</CardTitle></CardHeader>
           <CardContent className="flex flex-col gap-2 text-sm">
             {chatHistory.map((m) => (
-              <p key={m.id} className={m.role === 'assistant' ? 'text-slate-400' : 'text-slate-800 dark:text-slate-200'}>
+              <p key={m.id} className={m.role === 'assistant' ? 'text-navy-200' : 'text-navy-700'}>
                 <strong>{m.role === 'assistant' ? 'Assistente' : 'Paciente'}:</strong> {m.content}
               </p>
             ))}
