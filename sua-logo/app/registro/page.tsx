@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 import { PaymentPanel } from '@/components/shared/payment-panel'
 import { DocumentUpload } from '@/components/shared/document-upload'
 import { WizardStepper } from '@/components/shared/wizard-stepper'
+import type { Document } from '@/types'
 
 const STEPS = [
   { title: 'Dados pessoais' },
@@ -40,6 +41,11 @@ export default function RegistroPage() {
   const [step, setStep] = useState(1)
   const [form, setForm] = useState<FormState>(EMPTY_FORM)
   const [loading, setLoading] = useState(false)
+  const [uploadedDocs, setUploadedDocs] = useState<Document[]>([])
+
+  const hasIdentity = uploadedDocs.some((d) => d.type === 'identity')
+  const hasAddress = uploadedDocs.some((d) => d.type === 'address')
+  const docsComplete = hasIdentity && hasAddress
 
   function update<K extends keyof FormState>(field: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [field]: value }))
@@ -175,7 +181,10 @@ export default function RegistroPage() {
             <div className="animate-fade-up">
               <div className="mb-1 text-lg font-extrabold">Documentos</div>
               <div className="mb-[18px] text-sm text-navy-300">Etapa 3 de 4 — envie seu documento de identidade e comprovante de residência</div>
-              <DocumentUpload initialDocuments={[]} />
+              <DocumentUpload initialDocuments={[]} onChange={setUploadedDocs} />
+              {!docsComplete && (
+                <p className="mt-3 text-xs text-navy-200">Envie os 2 documentos para continuar.</p>
+              )}
             </div>
           )}
 
@@ -210,7 +219,7 @@ export default function RegistroPage() {
               ) : <span />}
               <button
                 onClick={step === 1 ? handleStep1 : step === 2 ? handleStep2 : () => setStep(4)}
-                disabled={loading}
+                disabled={loading || (step === 3 && !docsComplete)}
                 className="rounded-[11px] bg-brand-500 px-6 py-3 text-[15px] font-bold text-white disabled:opacity-60"
               >
                 {loading ? 'Salvando...' : 'Continuar →'}
