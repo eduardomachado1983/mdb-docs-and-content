@@ -71,13 +71,10 @@ export async function createPixPayment(params: {
 }
 
 // ── CARTÃO ──────────────────────────────────────────────────────────
-
-const CARD_BRAND_MAP: Record<string, string> = {
-  '4': 'visa',
-  '5': 'master',
-  '3': 'amex',
-  '6': 'elo',
-}
+// O número do cartão nunca chega ao nosso servidor: o formulário no
+// cliente usa o SDK MercadoPago.js para gerar um token de uso único
+// (ver components/shared/card-payment-form.tsx), e é esse token que
+// chega aqui.
 
 const ERROR_MESSAGES: Record<string, string> = {
   cc_rejected_insufficient_amount: 'Saldo insuficiente no cartão.',
@@ -87,50 +84,36 @@ const ERROR_MESSAGES: Record<string, string> = {
   cc_rejected_call_for_authorize: 'Entre em contato com seu banco para autorizar.',
   cc_rejected_card_disabled: 'Cartão desabilitado. Entre em contato com o banco.',
   cc_rejected_duplicated_payment: 'Pagamento duplicado detectado.',
+  cc_rejected_high_risk: 'Pagamento recusado por segurança. Tente outro cartão.',
 }
 
 export async function createCardPayment(params: {
   patientId: string
-  name: string
   email: string
   cpf: string
-  card: {
-    number: string
-    holderName: string
-    expiryMonth: string
-    expiryYear: string
-    cvv: string
-  }
-  cardType: 'credit' | 'debit'
+  token: string
+  paymentMethodId: string
+  issuerId?: string
+  installments: number
 }) {
   const referenceId = `SUALOGO-${params.patientId}-${Date.now()}`
 
   // Modo simulado
   if (!process.env.MERCADOPAGO_ACCESS_TOKEN) {
-    return {
-      success: true,
-      referenceId,
-      status: 'approved',
-      simulated: true,
-    }
+    return { success: true, referenceId, status: 'approved', simulated: true }
   }
 
   const client = getClient()
   const payment = new Payment(client)
 
-  // Detectar bandeira pelo primeiro dígito
-  const firstDigit = params.card.number.replace(/\s/g, '')[0]
-  const paymentMethodId = CARD_BRAND_MAP[firstDigit] || 'visa'
-
   const result = await payment.create({
     body: {
       transaction_amount: AMOUNT / 100,
       description: 'Consulta médica online — Sua Logo Telemedicina',
-      installments: 1,
-      payment_method_id: params.cardType === 'debit'
-        ? `${paymentMethodId}_debit`
-        : paymentMethodId,
-      token: params.card.number.replace(/\s/g, ''), // Em produção: tokenizar via MP.js
+      installments: params.installments,
+      payment_method_id: params.paymentMethodId,
+      issuer_id: params.issuerId ? Number(params.issuerId) : undefined,
+      token: params.token,
       payer: {
         email: params.email,
         identification: {
