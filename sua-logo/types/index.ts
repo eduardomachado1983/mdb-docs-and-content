@@ -107,8 +107,8 @@ export interface PaymentTransaction {
 export const STATUS_LABELS: Record<PatientStatus, string> = {
   cadastro_incompleto: 'Cadastro incompleto',
   aguardando_pagamento: 'Aguardando pagamento',
-  aguardando_medico: 'Na fila do médico',
-  retido_admin: 'Em validação',
+  aguardando_medico: 'Aguardando atendimento médico',
+  retido_admin: 'Aguardando validação final',
   concluido: 'Concluído',
 }
 

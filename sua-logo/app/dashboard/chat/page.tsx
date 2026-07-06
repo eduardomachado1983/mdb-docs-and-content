@@ -66,10 +66,10 @@ export default function ChatPage() {
             <div
               key={i}
               className={cn(
-                'max-w-[85%] whitespace-pre-wrap rounded-lg px-3 py-2 text-sm',
+                'max-w-[85%] whitespace-pre-wrap rounded-2xl px-4 py-2.5 text-sm',
                 m.role === 'assistant'
-                  ? 'self-start bg-slate-100 dark:bg-slate-800'
-                  : 'self-end bg-teal-600 text-white'
+                  ? 'self-start bg-surface-muted text-navy-700 dark:bg-slate-800'
+                  : 'self-end bg-brand-500 text-white'
               )}
             >
               {m.content}

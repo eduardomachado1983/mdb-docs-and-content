@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { createServiceClient } from '@/lib/supabase/server'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -15,7 +16,8 @@ export default async function PacientePage({ params }: { params: Promise<{ id: s
     .from('chat_history').select('*').eq('patient_id', id).order('created_at', { ascending: true })
 
   return (
-    <main className="mx-auto flex max-w-2xl flex-col gap-6 px-6 py-12">
+    <main className="mx-auto flex min-h-screen max-w-2xl flex-col gap-6 px-6 py-12">
+      <Link href="/medico" className="w-fit text-sm font-bold text-navy-300">← Voltar ao painel</Link>
       <Card>
         <CardHeader>
           <CardTitle>{patient.personal_data?.full_name}</CardTitle>
