@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
-import { createClient, getUser } from '@/lib/supabase/server'
+import { createClient, createServiceClient, getUser } from '@/lib/supabase/server'
 
 const schema = z.object({ referenceId: z.string() })
 
@@ -22,7 +22,8 @@ export async function POST(request: Request) {
   const { data: patient } = await supabase.from('patients').select('id').eq('user_id', user.id).single()
   if (!patient) return NextResponse.json({ error: 'Paciente não encontrado' }, { status: 404 })
 
-  const { data: transaction } = await supabase
+  const serviceClient = await createServiceClient()
+  const { data: transaction } = await serviceClient
     .from('payment_transactions')
     .select('id, patient_id, amount')
     .eq('reference_id', parsed.data.referenceId)
@@ -31,9 +32,9 @@ export async function POST(request: Request) {
 
   if (!transaction) return NextResponse.json({ error: 'Transação não encontrada' }, { status: 404 })
 
-  await supabase.from('payment_transactions').update({ status: 'approved' }).eq('id', transaction.id)
+  await serviceClient.from('payment_transactions').update({ status: 'approved' }).eq('id', transaction.id)
 
-  await supabase.from('patients').update({
+  await serviceClient.from('patients').update({
     status: 'aguardando_medico',
     payment: {
       confirmed: true,

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { createClient, getUser } from '@/lib/supabase/server'
+import { createClient, createServiceClient, getUser } from '@/lib/supabase/server'
 import { createPixPayment } from '@/lib/mercadopago'
 
 export async function POST() {
@@ -25,7 +25,8 @@ export async function POST() {
       cpf: personalData.cpf || '00000000000',
     })
 
-    await supabase.from('payment_transactions').insert({
+    const serviceClient = await createServiceClient()
+    await serviceClient.from('payment_transactions').insert({
       patient_id: patient.id,
       reference_id: pix.referenceId,
       amount: Number(process.env.CONSULTATION_AMOUNT || '200'),
