@@ -1,13 +1,10 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { Suspense, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { toast } from 'sonner'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
 
 const ROLE_REDIRECT: Record<string, string> = {
   patient: '/dashboard',
@@ -15,17 +12,55 @@ const ROLE_REDIRECT: Record<string, string> = {
   admin: '/admin',
 }
 
-const DEMO_ACCOUNTS = [
-  { label: 'Paciente demo', email: 'contato@em.art.br', password: 'A1234567' },
-  { label: 'Médico demo', email: 'medico@sualogo.com.br', password: 'medico123' },
-  { label: 'Admin demo', email: 'admin@sualogo.com.br', password: 'admin123' },
-]
+const ROLES = {
+  patient: {
+    label: 'Paciente',
+    icon: '👤',
+    desc: 'Acompanhe seu atendimento e baixe seus documentos.',
+    bg: 'bg-brand-500',
+    lightBg: 'bg-brand-100',
+    text: 'text-brand-500',
+    demo: { label: 'Paciente demo', email: 'contato@em.art.br', password: 'A1234567' },
+  },
+  doctor: {
+    label: 'Médico',
+    icon: '🩺',
+    desc: 'Atenda pacientes e emita receitas e laudos.',
+    bg: 'bg-teal-500',
+    lightBg: 'bg-teal-100',
+    text: 'text-teal-600',
+    demo: { label: 'Médico demo', email: 'medico@sualogo.com.br', password: 'medico123' },
+  },
+  admin: {
+    label: 'Administrador',
+    icon: '🛡️',
+    desc: 'Valide documentos e gerencie a plataforma.',
+    bg: 'bg-admin-500',
+    lightBg: 'bg-admin-100',
+    text: 'text-admin-500',
+    demo: { label: 'Admin demo', email: 'admin@sualogo.com.br', password: 'admin123' },
+  },
+} as const
 
-export default function LoginPage() {
+type RoleKey = keyof typeof ROLES
+
+function LoginForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const initialRole = (searchParams.get('role') as RoleKey) in ROLES ? (searchParams.get('role') as RoleKey) : 'patient'
+
+  const [role, setRole] = useState<RoleKey>(initialRole)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+
+  const config = ROLES[role]
+
+  function selectRole(next: RoleKey) {
+    setRole(next)
+    setEmail('')
+    setPassword('')
+  }
 
   async function doLogin(emailValue: string, passwordValue: string) {
     setLoading(true)
@@ -48,13 +83,30 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center gap-6 px-6 py-16">
-      <Card>
-        <CardHeader>
-          <CardTitle>Entrar</CardTitle>
-          <CardDescription>Acesse sua conta da Sua Logo Telemedicina.</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+    <main className="flex min-h-screen flex-col bg-gradient-to-br from-surface-page to-brand-50 px-6 py-8">
+      <div className="mx-auto flex w-full max-w-[1140px] items-center justify-between">
+        <Link href="/" className="flex items-center gap-2.5">
+          <div className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-gradient-to-br from-brand-500 to-teal-500 text-xs font-extrabold text-white">
+            SL
+          </div>
+          <span className="text-base font-extrabold text-navy-800">Sua Logo</span>
+        </Link>
+        <Link href="/" className="text-sm font-semibold text-navy-500">← Voltar ao início</Link>
+      </div>
+
+      <div className="mx-auto mt-16 w-full max-w-[376px]">
+        <div className="rounded-[22px] border border-line-200 bg-white p-8 shadow-[0_24px_50px_rgba(20,50,90,.08)]">
+          <div className="mb-5 flex items-center gap-3.5">
+            <div className={cn('flex h-12 w-12 items-center justify-center rounded-[13px] text-2xl', config.bg)}>
+              {config.icon}
+            </div>
+            <div>
+              <div className="text-xs font-bold tracking-wide text-navy-100">ÁREA DO</div>
+              <div className="text-[21px] font-extrabold leading-tight">{config.label}</div>
+            </div>
+          </div>
+          <p className="mb-6 text-sm leading-relaxed text-navy-300">{config.desc}</p>
+
           <form
             className="flex flex-col gap-4"
             onSubmit={(e) => {
@@ -62,43 +114,76 @@ export default function LoginPage() {
               doLogin(email, password)
             }}
           >
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+            <div>
+              <label className="mb-1.5 block text-[13px] font-bold text-navy-700">E-mail</label>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="seu@email.com"
+                className="w-full rounded-[11px] border border-line-400 px-3.5 py-3 outline-none focus:border-brand-500"
+              />
             </div>
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="password">Senha</Label>
-              <Input id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+            <div>
+              <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Senha</label>
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••"
+                className="w-full rounded-[11px] border border-line-400 px-3.5 py-3 outline-none focus:border-brand-500"
+              />
             </div>
-            <Button type="submit" disabled={loading}>
+            <button
+              type="submit"
+              disabled={loading}
+              className={cn('mt-1 rounded-[11px] py-3.5 text-[15px] font-bold text-white disabled:opacity-60', config.bg)}
+            >
               {loading ? 'Entrando...' : 'Entrar'}
-            </Button>
+            </button>
           </form>
 
-          <div className="flex items-center gap-2 text-xs text-slate-400">
-            <div className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
-            acesso rápido (demo)
-            <div className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
-          </div>
+          <div className="my-6 border-t border-dashed border-line-300" />
 
-          <div className="flex flex-col gap-2">
-            {DEMO_ACCOUNTS.map((acc) => (
-              <Button
-                key={acc.email}
-                variant="outline"
-                disabled={loading}
-                onClick={() => doLogin(acc.email, acc.password)}
-              >
-                {acc.label}
-              </Button>
-            ))}
-          </div>
+          <div className="mb-3 text-xs font-bold tracking-wide text-navy-100">CONTAS DE DEMONSTRAÇÃO</div>
+          <button
+            disabled={loading}
+            onClick={() => doLogin(config.demo.email, config.demo.password)}
+            className="flex w-full items-center justify-between gap-2.5 rounded-[10px] border border-line-200 bg-surface-subtle px-3 py-2.5 text-left hover:border-brand-200 hover:bg-brand-50"
+          >
+            <span className="text-[13px] font-bold text-navy-700">{config.demo.label}</span>
+            <span className="text-xs text-navy-200">{config.demo.email}</span>
+          </button>
 
-          <p className="text-center text-sm text-slate-500">
-            Não tem conta? <Link href="/registro" className="text-teal-600 hover:underline">Cadastre-se</Link>
+          <p className="mt-6 text-center text-sm text-navy-300">
+            Não tem conta? <Link href="/registro" className="font-semibold text-brand-500">Cadastre-se</Link>
           </p>
-        </CardContent>
-      </Card>
+        </div>
+
+        <div className="mt-6 flex items-center justify-center gap-2.5 text-sm text-navy-300">
+          {(Object.keys(ROLES) as RoleKey[]).map((key, i) => (
+            <span key={key} className="flex items-center gap-2.5">
+              {i > 0 && <span className="text-line-400">•</span>}
+              <button
+                onClick={() => selectRole(key)}
+                className={role === key ? 'font-bold text-navy-700' : 'text-navy-300'}
+              >
+                {ROLES[key].label}
+              </button>
+            </span>
+          ))}
+        </div>
+      </div>
     </main>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
   )
 }

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { createServiceClient } from '@/lib/supabase/server'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -13,7 +14,8 @@ export default async function ValidacaoPage({ params }: { params: Promise<{ id: 
   const { data: documents } = await supabase.from('documents').select('*').eq('patient_id', id)
 
   return (
-    <main className="mx-auto flex max-w-2xl flex-col gap-6 px-6 py-12">
+    <main className="mx-auto flex min-h-screen max-w-2xl flex-col gap-6 px-6 py-12">
+      <Link href="/admin" className="w-fit text-sm font-bold text-navy-300">← Voltar ao painel</Link>
       <Card>
         <CardHeader><CardTitle>{patient.personal_data?.full_name}</CardTitle></CardHeader>
         <CardContent className="grid gap-2 text-sm text-slate-600 dark:text-slate-400">
