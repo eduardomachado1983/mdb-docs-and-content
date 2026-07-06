@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
-import { createClient, getUser } from '@/lib/supabase/server'
+import { createClient, createServiceClient, getUser } from '@/lib/supabase/server'
 import { createCardPayment } from '@/lib/mercadopago'
 
 const schema = z.object({
@@ -41,7 +41,8 @@ export async function POST(request: Request) {
 
     const approved = result.status === 'approved'
 
-    await supabase.from('payment_transactions').insert({
+    const serviceClient = await createServiceClient()
+    await serviceClient.from('payment_transactions').insert({
       patient_id: patient.id,
       reference_id: result.referenceId,
       amount: Number(process.env.CONSULTATION_AMOUNT || '200'),
@@ -51,7 +52,7 @@ export async function POST(request: Request) {
     })
 
     if (approved) {
-      await supabase.from('patients').update({
+      await serviceClient.from('patients').update({
         status: 'aguardando_medico',
         payment: {
           confirmed: true,
