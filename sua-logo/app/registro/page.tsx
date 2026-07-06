@@ -209,28 +209,11 @@ export default function RegistroPage() {
                 </button>
               ) : <span />}
               <button
-                onClick={step === 1 ? handleStep1 : handleStep2}
+                onClick={step === 1 ? handleStep1 : step === 2 ? handleStep2 : () => setStep(4)}
                 disabled={loading}
                 className="rounded-[11px] bg-brand-500 px-6 py-3 text-[15px] font-bold text-white disabled:opacity-60"
               >
                 {loading ? 'Salvando...' : 'Continuar →'}
-              </button>
-            </div>
-          )}
-
-          {step === 3 && (
-            <div className="mt-6 flex items-center justify-between gap-3">
-              <button
-                onClick={() => setStep(2)}
-                className="rounded-[11px] border border-line-300 bg-surface-page px-5 py-3 text-sm font-bold text-navy-500"
-              >
-                ← Voltar
-              </button>
-              <button
-                onClick={() => setStep(4)}
-                className="rounded-[11px] bg-brand-500 px-6 py-3 text-[15px] font-bold text-white"
-              >
-                Continuar →
               </button>
             </div>
           )}
