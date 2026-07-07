@@ -29,6 +29,7 @@ export function LoginMenu() {
               <Link
                 key={r.href}
                 href={r.href}
+                onClick={() => setOpen(false)}
                 className="flex items-center gap-2.5 rounded-[9px] px-2.5 py-2.5 text-sm font-semibold text-navy-700 hover:bg-surface-soft"
               >
                 <span>{r.icon}</span>

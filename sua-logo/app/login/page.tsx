@@ -72,8 +72,10 @@ function LoginForm() {
         toast.error(data.error ?? 'Falha ao entrar')
         return
       }
+      // Só push: a resposta do fetch já aplicou o cookie de sessão, então a
+      // navegação já busca a rota de destino autenticada. Um router.refresh()
+      // aqui duplicaria essa busca e deixaria o login mais lento.
       router.push(ROLE_REDIRECT[data.role] ?? '/dashboard')
-      router.refresh()
     } finally {
       setLoading(false)
     }

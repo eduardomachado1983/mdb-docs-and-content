@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { createClient, getProfile, getUser } from '@/lib/supabase/server'
+import { createClient, getUserAndProfile } from '@/lib/supabase/server'
 import { PatientHeader } from '@/components/shared/patient-header'
 import { PatientStepper } from '@/components/shared/patient-stepper'
 import { PaymentPanel } from '@/components/shared/payment-panel'
@@ -18,10 +18,9 @@ const STATUS_MSG: Record<Patient['status'], string> = {
 const DOCS_UNLOCKED: Patient['status'][] = ['aguardando_medico', 'retido_admin', 'concluido']
 
 export default async function DashboardPage() {
-  const user = await getUser()
+  const { user, profile } = await getUserAndProfile()
   if (!user) redirect('/login')
 
-  const profile = await getProfile()
   const supabase = await createClient()
   const { data: patient } = await supabase
     .from('patients').select('*').eq('user_id', user.id).single<Patient>()
