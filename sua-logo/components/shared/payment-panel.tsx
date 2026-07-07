@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -14,9 +14,17 @@ interface PixResult {
   simulated: boolean
 }
 
+type Method = 'pix' | 'debit_card' | 'credit_card'
+
+const METHODS: { value: Method; icon: string; label: string }[] = [
+  { value: 'pix', icon: '📱', label: 'Pix' },
+  { value: 'debit_card', icon: '💳', label: 'Cartão de débito' },
+  { value: 'credit_card', icon: '💳', label: 'Cartão de crédito' },
+]
+
 export function PaymentPanel({ cpf = '' }: { cpf?: string }) {
   const router = useRouter()
-  const [method, setMethod] = useState<'pix' | 'card'>('pix')
+  const [method, setMethod] = useState<Method>('pix')
   const [loading, setLoading] = useState(false)
   const [pix, setPix] = useState<PixResult | null>(null)
 
@@ -45,6 +53,14 @@ export function PaymentPanel({ cpf = '' }: { cpf?: string }) {
     }
   }
 
+  // Gera o Pix automaticamente assim que essa forma de pagamento é selecionada.
+  useEffect(() => {
+    if (method === 'pix' && !pix && !loading) {
+      generatePix()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [method])
+
   async function confirmSimulated() {
     if (!pix) return
     setLoading(true)
@@ -68,35 +84,33 @@ export function PaymentPanel({ cpf = '' }: { cpf?: string }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-2 gap-2">
-        <button
-          type="button"
-          onClick={() => setMethod('pix')}
-          className={cn(
-            'rounded-[11px] border px-4 py-2.5 text-sm font-bold',
-            method === 'pix' ? 'border-teal-500 bg-teal-50 text-teal-600' : 'border-line-300 text-navy-300'
-          )}
-        >
-          📱 Pix
-        </button>
-        <button
-          type="button"
-          onClick={() => setMethod('card')}
-          className={cn(
-            'rounded-[11px] border px-4 py-2.5 text-sm font-bold',
-            method === 'card' ? 'border-brand-500 bg-brand-50 text-brand-500' : 'border-line-300 text-navy-300'
-          )}
-        >
-          💳 Cartão
-        </button>
+      <div>
+        <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Escolha a forma de pagamento</label>
+        <div className="grid grid-cols-3 gap-2">
+          {METHODS.map((m) => (
+            <button
+              key={m.value}
+              type="button"
+              onClick={() => setMethod(m.value)}
+              className={cn(
+                'rounded-[11px] border px-3 py-2.5 text-sm font-bold',
+                method === m.value ? 'border-teal-500 bg-teal-50 text-teal-600' : 'border-line-300 text-navy-300'
+              )}
+            >
+              {m.icon} {m.label}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {method === 'card' && <CardPaymentForm cpf={cpf} />}
+      {(method === 'debit_card' || method === 'credit_card') && (
+        <CardPaymentForm cpf={cpf} cardType={method === 'debit_card' ? 'debit_card' : 'credit_card'} />
+      )}
 
       {method === 'pix' && !pix && (
-        <Button variant="teal" onClick={generatePix} disabled={loading}>
-          {loading ? 'Gerando...' : '📱 Gerar Pix — R$ 2,00'}
-        </Button>
+        <div className="flex items-center justify-center py-6 text-sm text-navy-300">
+          {loading ? 'Gerando Pix...' : 'Falha ao gerar Pix.'}
+        </div>
       )}
 
       {method === 'pix' && pix && (

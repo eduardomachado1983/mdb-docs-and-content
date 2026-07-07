@@ -7,7 +7,6 @@ import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { cn } from '@/lib/utils'
 
 const PUBLIC_KEY = process.env.NEXT_PUBLIC_MERCADOPAGO_PUBLIC_KEY
 const SUBMIT_TIMEOUT_MS = 20_000
@@ -19,12 +18,11 @@ function withTimeout<T>(promise: Promise<T>, message: string): Promise<T> {
   ])
 }
 
-export function CardPaymentForm({ cpf }: { cpf: string }) {
+export function CardPaymentForm({ cpf, cardType }: { cpf: string; cardType: 'credit_card' | 'debit_card' }) {
   const router = useRouter()
   const [sdkReady, setSdkReady] = useState(false)
   const [sdkFailed, setSdkFailed] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [cardType, setCardType] = useState<'credit_card' | 'debit_card'>('credit_card')
   const [form, setForm] = useState({
     number: '', name: '', month: '', year: '', cvv: '',
   })
@@ -124,29 +122,6 @@ export function CardPaymentForm({ cpf }: { cpf: string }) {
         onError={() => setSdkFailed(true)}
       />
       <form className="flex flex-col gap-3.5" onSubmit={handleSubmit}>
-        <div className="grid grid-cols-2 gap-2">
-          <button
-            type="button"
-            onClick={() => setCardType('credit_card')}
-            className={cn(
-              'rounded-[11px] border px-4 py-2.5 text-sm font-bold',
-              cardType === 'credit_card' ? 'border-brand-500 bg-brand-50 text-brand-500' : 'border-line-300 text-navy-300'
-            )}
-          >
-            Crédito
-          </button>
-          <button
-            type="button"
-            onClick={() => setCardType('debit_card')}
-            className={cn(
-              'rounded-[11px] border px-4 py-2.5 text-sm font-bold',
-              cardType === 'debit_card' ? 'border-brand-500 bg-brand-50 text-brand-500' : 'border-line-300 text-navy-300'
-            )}
-          >
-            Débito
-          </button>
-        </div>
-
         <div>
           <Label htmlFor="cardNumber">Número do cartão</Label>
           <Input
