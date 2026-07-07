@@ -18,3 +18,17 @@ export function initials(name: string): string {
     .join('')
     .toUpperCase()
 }
+
+// Formata "YYYY-MM-DD" (valor de <input type="date">) para "DD/MM/YYYY".
+export function formatDateBR(dateStr: string): string {
+  const [y, m, d] = dateStr.split('-')
+  if (!y || !m || !d) return dateStr
+  return `${d}/${m}/${y}`
+}
+
+// Formata um timestamp ISO para data e hora no padrão brasileiro.
+export function formatDateTimeBR(iso: string): string {
+  return new Date(iso).toLocaleString('pt-BR', {
+    day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
+  })
+}

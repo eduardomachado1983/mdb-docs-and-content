@@ -5,6 +5,7 @@ import { PatientHeader } from '@/components/shared/patient-header'
 import { PatientStepper } from '@/components/shared/patient-stepper'
 import { PaymentPanel } from '@/components/shared/payment-panel'
 import { DocumentUpload } from '@/components/shared/document-upload'
+import { ConsultationCard } from '@/components/shared/consultation-card'
 import { STATUS_LABELS, type Patient } from '@/types'
 
 const STATUS_MSG: Record<Patient['status'], string> = {
@@ -39,7 +40,7 @@ export default async function DashboardPage() {
       <PatientHeader patientName={profile?.name ?? 'Paciente'} statusLabel={STATUS_LABELS[patient.status]} />
 
       <div className="mx-auto max-w-[960px] px-6 py-7">
-        <h1 className="mb-1 text-2xl font-extrabold">Consultas</h1>
+        <h1 className="mb-1 text-2xl font-extrabold">Minhas consultas</h1>
         <p className="mb-5 text-[15px] text-navy-300">Acompanhe aqui o andamento do seu atendimento.</p>
 
         <div className="mb-[18px] rounded-[18px] border border-line-200 bg-white p-6 shadow-[0_10px_30px_rgba(20,50,90,.06)]">
@@ -78,19 +79,7 @@ export default async function DashboardPage() {
           )}
         </div>
 
-        {patient.triage?.main_symptom && (
-          <div className="mb-[18px] rounded-2xl border border-line-200 bg-white p-6">
-            <div className="mb-2 text-xs font-extrabold tracking-wide text-navy-200">CONSULTA</div>
-            <div className="flex flex-col gap-1.5 text-sm text-navy-600">
-              <p><span className="text-navy-300">😊 Sintomas:</span> {patient.triage.main_symptom}</p>
-              <p><span className="text-navy-300">📍 Local:</span> {patient.triage.pain_location}</p>
-              <p><span className="text-navy-300">📊 Intensidade:</span> {patient.triage.pain_intensity}/10</p>
-              {patient.triage.medical_history && (
-                <p><span className="text-navy-300">📋 Histórico:</span> {patient.triage.medical_history}</p>
-              )}
-            </div>
-          </div>
-        )}
+        <ConsultationCard patient={patient} />
 
         <div className="rounded-2xl border border-line-200 bg-white p-6">
           <div className="mb-1 text-[15px] font-bold">📎 Documentos</div>

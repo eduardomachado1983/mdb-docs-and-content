@@ -6,7 +6,7 @@ import { LogoutButton } from '@/components/shared/logout-button'
 import { cn, initials } from '@/lib/utils'
 
 const TABS = [
-  { href: '/dashboard', label: 'Consultas' },
+  { href: '/dashboard', label: 'Minhas consultas' },
   { href: '/dashboard/dados', label: 'Meus dados' },
 ]
 
