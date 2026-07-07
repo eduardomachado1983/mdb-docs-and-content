@@ -3,7 +3,7 @@ import { createServiceClient, getProfile } from '@/lib/supabase/server'
 import { AdminHeader } from '@/components/shared/admin-header'
 import { PatientCard } from '@/components/shared/patient-card'
 import { cn } from '@/lib/utils'
-import type { Patient } from '@/types'
+import type { Patient, PaymentTransaction } from '@/types'
 
 const PAGE_SIZE = 5
 
@@ -29,12 +29,21 @@ export default async function AdminPacientesPage({
 
   const patientIds = allPatients?.map((p) => p.id) ?? []
   const docsByPatient = new Map<string, Set<string>>()
+  const txByPatient = new Map<string, PaymentTransaction[]>()
   if (patientIds.length > 0) {
     const { data: docs } = await supabase.from('documents').select('patient_id, type').in('patient_id', patientIds)
     docs?.forEach((d) => {
       const set = docsByPatient.get(d.patient_id) ?? new Set<string>()
       set.add(d.type)
       docsByPatient.set(d.patient_id, set)
+    })
+
+    const { data: transactions } = await supabase
+      .from('payment_transactions').select('*').in('patient_id', patientIds).order('created_at', { ascending: false })
+    transactions?.forEach((t) => {
+      const arr = txByPatient.get(t.patient_id) ?? []
+      arr.push(t)
+      txByPatient.set(t.patient_id, arr)
     })
   }
 
@@ -63,6 +72,7 @@ export default async function AdminPacientesPage({
                 docsComplete={docsComplete}
                 href={`/admin/validacao/${patient.id}`}
                 accent="admin"
+                transactions={txByPatient.get(patient.id) ?? []}
               />
             )
           })}
