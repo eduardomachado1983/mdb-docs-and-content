@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 import { Eye, EyeOff } from 'lucide-react'
 import { PaymentPanel } from '@/components/shared/payment-panel'
 import { DocumentUpload } from '@/components/shared/document-upload'
+import { SingleDocumentUpload } from '@/components/shared/single-document-upload'
 import { WizardStepper } from '@/components/shared/wizard-stepper'
 import { SiteHeader } from '@/components/shared/site-header'
 import { cn } from '@/lib/utils'
@@ -116,7 +117,20 @@ export default function RegistroPage() {
     }
   }
 
+  function validateStep2(): boolean {
+    const next: FieldErrors = {
+      sintomas: form.sintomas.trim() ? null : 'Descreva os sintomas.',
+      local: form.local.trim() ? null : 'Informe a localização.',
+    }
+    setErrors((prev) => ({ ...prev, ...next }))
+    return Object.values(next).every((e) => !e)
+  }
+
   async function handleStep2() {
+    if (!validateStep2()) {
+      toast.error('Revise os campos destacados.')
+      return
+    }
     setLoading(true)
     try {
       const res = await fetch('/api/patient/triage', {
@@ -188,8 +202,8 @@ export default function RegistroPage() {
               <div className="mb-1 text-lg font-extrabold">Consulta</div>
               <div className="mb-[18px] text-sm text-navy-300">Etapa 2 de 4</div>
               <div className="flex flex-col gap-4">
-                <TextAreaField label="Sintomas" value={form.sintomas} onChange={(v) => update('sintomas', v)} placeholder="Descreva o que você está sentindo..." />
-                <Field label="Localização" value={form.local} onChange={(v) => update('local', v)} placeholder="Ex.: cabeça, garganta, abdômen..." />
+                <TextAreaField label="Sintomas" value={form.sintomas} onChange={(v) => update('sintomas', v)} placeholder="Descreva o que você está sentindo..." error={errors.sintomas} />
+                <Field label="Localização" value={form.local} onChange={(v) => update('local', v)} placeholder="Ex.: cabeça, garganta, abdômen..." error={errors.local} />
                 <div>
                   <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Intensidade — {form.intensidade}/10</label>
                   <input
@@ -199,6 +213,10 @@ export default function RegistroPage() {
                   />
                 </div>
                 <TextAreaField label="Histórico médico" value={form.historico} onChange={(v) => update('historico', v)} placeholder="Ex.: alergia a dipirona, uso de losartana..." />
+                <div>
+                  <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Documento de consultas anteriores (opcional)</label>
+                  <SingleDocumentUpload type="previous_consultation" label="Ex.: consultas anteriores, exames..." />
+                </div>
               </div>
             </div>
           )}
@@ -330,8 +348,8 @@ function PasswordField({ label, value, onChange, placeholder, error, hint }: {
   )
 }
 
-function TextAreaField({ label, value, onChange, placeholder }: {
-  label: string; value: string; onChange: (v: string) => void; placeholder?: string
+function TextAreaField({ label, value, onChange, placeholder, error }: {
+  label: string; value: string; onChange: (v: string) => void; placeholder?: string; error?: string | null
 }) {
   return (
     <div>
@@ -341,8 +359,13 @@ function TextAreaField({ label, value, onChange, placeholder }: {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full rounded-[10px] border border-line-400 px-3.5 py-3 text-[15px] outline-none focus:border-brand-500"
+        aria-invalid={Boolean(error)}
+        className={cn(
+          'w-full rounded-[10px] border px-3.5 py-3 text-[15px] outline-none',
+          error ? 'border-error-500 focus:border-error-500' : 'border-line-400 focus:border-brand-500'
+        )}
       />
+      {error && <p className="mt-1 text-xs font-semibold text-error-500">{error}</p>}
     </div>
   )
 }
