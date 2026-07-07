@@ -18,7 +18,7 @@ interface MercadoPagoCardToken {
 interface MercadoPagoPaymentMethod {
   id: string
   payment_type_id: 'credit_card' | 'debit_card'
-  issuer?: { id: string; name: string }
+  issuer?: { id: string | number; name: string }
 }
 
 interface MercadoPagoInstance {

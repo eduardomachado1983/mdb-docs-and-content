@@ -62,7 +62,13 @@ export function CardPaymentForm({ cpf }: { cpf: string }) {
       const method = results.find((r) => r.payment_type_id === cardType)
       if (!method) {
         const wanted = cardType === 'credit_card' ? 'crédito' : 'débito'
-        toast.error(`Este cartão não foi reconhecido como cartão de ${wanted}. Escolha a outra opção ou tente outro cartão.`)
+        const detected = results[0]
+        const detectedLabel = detected?.payment_type_id === 'credit_card' ? 'Crédito' : detected?.payment_type_id === 'debit_card' ? 'Débito' : null
+        toast.error(
+          detectedLabel
+            ? `Este cartão foi identificado como cartão de ${detectedLabel.toLowerCase()}, não ${wanted}. Selecione "${detectedLabel}" acima ou tente outro cartão.`
+            : `Não foi possível identificar este cartão para pagamento de ${wanted}. Tente outro cartão.`
+        )
         return
       }
 
@@ -86,7 +92,7 @@ export function CardPaymentForm({ cpf }: { cpf: string }) {
           body: JSON.stringify({
             token: token.id,
             paymentMethodId: method.id,
-            issuerId: method.issuer?.id,
+            issuerId: method.issuer?.id !== undefined ? String(method.issuer.id) : undefined,
           }),
         }),
         'Tempo esgotado ao processar o pagamento. Tente novamente em instantes.'

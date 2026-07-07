@@ -7,7 +7,7 @@ import { extractMpError } from '@/lib/mp-error'
 const schema = z.object({
   token: z.string().min(1),
   paymentMethodId: z.string().min(1),
-  issuerId: z.string().optional(),
+  issuerId: z.union([z.string(), z.number()]).optional(),
 })
 
 export async function POST(request: Request) {
@@ -16,7 +16,10 @@ export async function POST(request: Request) {
 
   const body = await request.json()
   const parsed = schema.safeParse(body)
-  if (!parsed.success) return NextResponse.json({ error: 'Dados inválidos' }, { status: 400 })
+  if (!parsed.success) {
+    const detail = parsed.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join(', ')
+    return NextResponse.json({ error: `Dados inválidos (${detail})` }, { status: 400 })
+  }
 
   const supabase = await createClient()
   const { data: patient } = await supabase
@@ -36,7 +39,7 @@ export async function POST(request: Request) {
       cpf: personalData.cpf || '00000000000',
       token: parsed.data.token,
       paymentMethodId: parsed.data.paymentMethodId,
-      issuerId: parsed.data.issuerId,
+      issuerId: parsed.data.issuerId !== undefined ? String(parsed.data.issuerId) : undefined,
       installments: 1,
     })
 
