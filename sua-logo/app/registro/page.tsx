@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 import { PaymentPanel } from '@/components/shared/payment-panel'
 import { DocumentUpload } from '@/components/shared/document-upload'
 import { WizardStepper } from '@/components/shared/wizard-stepper'
+import { SiteHeader } from '@/components/shared/site-header'
 import type { Document } from '@/types'
 
 const STEPS = [
@@ -112,18 +113,10 @@ export default function RegistroPage() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col bg-gradient-to-br from-surface-page to-brand-50 px-6 py-8">
-      <div className="mx-auto flex w-full max-w-[1140px] items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-gradient-to-br from-brand-500 to-teal-500 text-xs font-extrabold text-white">
-            SL
-          </div>
-          <span className="text-base font-extrabold text-navy-800">Sua Logo</span>
-        </Link>
-        <Link href="/" className="text-sm font-semibold text-navy-500">Cancelar</Link>
-      </div>
+    <div className="flex min-h-screen flex-col bg-gradient-to-br from-surface-page to-brand-50">
+      <SiteHeader />
 
-      <div className="mx-auto mt-10 w-full max-w-[680px]">
+      <div className="mx-auto mt-10 w-full max-w-[680px] px-6 pb-12">
         <div className="mb-7 text-center">
           <h1 className="text-2xl font-extrabold">Cadastro da consulta</h1>
           <p className="mt-1 text-[15px] text-navy-300">Leva poucos minutos. Seus dados são protegidos.</p>
@@ -238,7 +231,7 @@ export default function RegistroPage() {
           Já tem conta? <Link href="/login" className="font-semibold text-brand-500">Entrar</Link>
         </p>
       </div>
-    </main>
+    </div>
   )
 }
 
