@@ -6,9 +6,8 @@ import { LogoutButton } from '@/components/shared/logout-button'
 import { cn, initials } from '@/lib/utils'
 
 const TABS = [
-  { href: '/dashboard', label: 'Meus dados' },
-  { href: '/dashboard/consulta', label: 'Nova consulta' },
-  { href: '/dashboard/documentos', label: 'Documentos' },
+  { href: '/dashboard', label: 'Consultas' },
+  { href: '/dashboard/dados', label: 'Meus dados' },
 ]
 
 export function PatientHeader({ patientName, statusLabel }: { patientName: string; statusLabel?: string }) {
