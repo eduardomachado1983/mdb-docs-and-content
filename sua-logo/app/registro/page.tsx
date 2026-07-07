@@ -18,7 +18,7 @@ import type { Document } from '@/types'
 
 const STEPS = [
   { title: 'Dados pessoais' },
-  { title: 'Triagem' },
+  { title: 'Consulta' },
   { title: 'Documentos' },
   { title: 'Pagamento' },
 ]
@@ -185,7 +185,7 @@ export default function RegistroPage() {
 
           {step === 2 && (
             <div className="animate-fade-up">
-              <div className="mb-1 text-lg font-extrabold">Triagem</div>
+              <div className="mb-1 text-lg font-extrabold">Consulta</div>
               <div className="mb-[18px] text-sm text-navy-300">Etapa 2 de 4</div>
               <div className="flex flex-col gap-4">
                 <TextAreaField label="Sintomas" value={form.sintomas} onChange={(v) => update('sintomas', v)} placeholder="Descreva o que você está sentindo..." />

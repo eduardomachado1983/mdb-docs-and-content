@@ -75,7 +75,7 @@ export default async function ConsultaPage() {
 
         {patient.triage?.main_symptom && (
           <div className="rounded-2xl border border-line-200 bg-white p-6">
-            <div className="mb-2 text-xs font-extrabold tracking-wide text-navy-200">TRIAGEM</div>
+            <div className="mb-2 text-xs font-extrabold tracking-wide text-navy-200">CONSULTA</div>
             <div className="flex flex-col gap-1.5 text-sm text-navy-600">
               <p><span className="text-navy-300">😊 Sintomas:</span> {patient.triage.main_symptom}</p>
               <p><span className="text-navy-300">📍 Local:</span> {patient.triage.pain_location}</p>
