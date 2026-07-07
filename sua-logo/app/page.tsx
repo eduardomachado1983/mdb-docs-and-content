@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { LoginMenu } from '@/components/shared/login-menu'
+import { SiteHeader } from '@/components/shared/site-header'
+import { SiteLogo } from '@/components/shared/site-logo'
 import { FaqAccordion } from '@/components/shared/faq-accordion'
 
 const FEATURES = [
@@ -31,43 +32,10 @@ const TESTEMUNHOS = [
   { quote: 'O assistente de triagem me ajudou a explicar os sintomas direitinho. Atendimento humano e ágil.', initials: 'JA', name: 'Juliana Alves', city: 'Recife, PE' },
 ]
 
-function Logo({ light }: { light?: boolean }) {
-  return (
-    <div className="flex items-center gap-2.5">
-      <div className="flex h-10 w-10 items-center justify-center rounded-[11px] bg-gradient-to-br from-brand-500 to-teal-500 text-[13px] font-extrabold tracking-wide text-white">
-        SL
-      </div>
-      <div className="leading-tight">
-        <div className={`text-base font-extrabold ${light ? 'text-white' : 'text-navy-800'}`}>Sua Logo</div>
-        <div className="text-[11px] font-bold tracking-wide text-navy-200">TELEMEDICINA</div>
-      </div>
-    </div>
-  )
-}
-
 export default function LandingPage() {
   return (
     <div>
-      <header className="sticky top-0 z-40 border-b border-line-200 bg-white/90 backdrop-blur-md">
-        <div className="mx-auto flex max-w-[1140px] items-center justify-between px-6 py-[15px]">
-          <Logo />
-          <nav className="hidden items-center gap-6 text-sm font-semibold text-[#41546b] md:flex">
-            <a href="#quem-somos">Quem somos</a>
-            <a href="#consultas">Consultas</a>
-            <a href="#como-funciona">Como funciona</a>
-            <a href="#faq">Dúvidas</a>
-          </nav>
-          <div className="flex items-center gap-2.5">
-            <LoginMenu />
-            <Link
-              href="/registro"
-              className="rounded-[10px] bg-brand-500 px-[17px] py-2.5 text-sm font-bold text-white"
-            >
-              Iniciar consulta
-            </Link>
-          </div>
-        </div>
-      </header>
+      <SiteHeader />
 
       <section className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-12 px-6 pb-10 pt-16 md:grid-cols-[1.05fr_.95fr]">
         <div className="animate-fade-up">
@@ -251,7 +219,7 @@ export default function LandingPage() {
         <div className="mx-auto grid max-w-[1140px] grid-cols-1 gap-8 px-6 pb-7 pt-12 sm:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <div className="mb-3.5">
-              <Logo light />
+              <SiteLogo light />
             </div>
             <p className="max-w-[320px] text-sm leading-relaxed text-[#9db4cc]">
               Plataforma de telemedicina com médicos registrados e validação de documentos. Este é um
