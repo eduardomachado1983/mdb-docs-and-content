@@ -48,9 +48,11 @@ type RoleKey = keyof typeof ROLES
 function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const initialRole = (searchParams.get('role') as RoleKey) in ROLES ? (searchParams.get('role') as RoleKey) : 'patient'
+  const roleParam = searchParams.get('role')
+  // O papel é derivado da URL (?role=...) a cada render, para que o
+  // menu "Entrar" do header troque o formulário sem precisar recarregar.
+  const role: RoleKey = roleParam && roleParam in ROLES ? (roleParam as RoleKey) : 'patient'
 
-  const [role] = useState<RoleKey>(initialRole)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
