@@ -29,7 +29,9 @@ export function MedicoHeader({
             <div className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-teal-500 text-[11px] font-extrabold text-white">
               SL
             </div>
-            <span className="text-[15px] font-extrabold">Sua Logo</span>
+            <span className="text-[15px] font-extrabold">
+              Sua Logo <span className="text-xs font-semibold text-navy-100">· Médico</span>
+            </span>
           </div>
           <nav className="flex items-center gap-6">
             {TABS.map((tab) => (
@@ -38,7 +40,7 @@ export function MedicoHeader({
                 href={tab.href}
                 className={cn(
                   'border-b-2 py-[18px] text-sm font-bold',
-                  pathname === tab.href ? 'border-teal-500 text-teal-600' : 'border-transparent text-navy-300'
+                  pathname === tab.href ? 'border-teal-500 text-teal-600' : 'border-transparent text-navy-700'
                 )}
               >
                 {tab.label}
