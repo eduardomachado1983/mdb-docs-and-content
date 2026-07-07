@@ -1,8 +1,6 @@
-import Link from 'next/link'
 import { createServiceClient, getProfile } from '@/lib/supabase/server'
 import { MedicoHeader } from '@/components/shared/medico-header'
-import { Badge } from '@/components/ui/badge'
-import { initials } from '@/lib/utils'
+import { PatientQueueRow } from '@/components/shared/patient-queue-row'
 import type { Patient } from '@/types'
 
 export default async function MedicoPage() {
@@ -43,36 +41,18 @@ export default async function MedicoPage() {
 
         <div className="flex flex-col gap-4">
           {queue?.map((patient) => {
-            const name = patient.personal_data?.full_name || 'Paciente'
-            const email = patient.personal_data?.email || '—'
-            const phone = patient.personal_data?.phone
             const docs = docsByPatient.get(patient.id)
             const docsComplete = Boolean(docs?.has('identity') && docs?.has('address'))
-            const paid = Boolean(patient.payment?.confirmed)
-
             return (
-              <div key={patient.id} className="flex items-center justify-between gap-4 rounded-2xl border border-line-200 bg-white px-6 py-5">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-teal-100 text-[13px] font-bold text-teal-600">
-                    {initials(name)}
-                  </div>
-                  <div>
-                    <div className="text-[15px] font-bold text-navy-800">{name}</div>
-                    <div className="flex items-center gap-3 text-[13px] text-navy-200">
-                      <span>{email}</span>
-                      {phone && <span>📞 {phone}</span>}
-                    </div>
-                    <div className="mt-2 flex items-center gap-2">
-                      <Badge variant="amber">Na fila do médico</Badge>
-                      {paid && <Badge variant="teal">✓ Pago</Badge>}
-                      {docsComplete && <Badge variant="teal">✓ Docs enviados</Badge>}
-                    </div>
-                  </div>
-                </div>
-                <Link href={`/medico/paciente/${patient.id}`} className="rounded-[10px] bg-teal-500 px-5 py-2.5 text-sm font-bold text-white">
-                  Visualizar
-                </Link>
-              </div>
+              <PatientQueueRow
+                key={patient.id}
+                patient={patient}
+                docsComplete={docsComplete}
+                statusLabel="Na fila do médico"
+                actionLabel="Visualizar"
+                href={`/medico/paciente/${patient.id}`}
+                accent="teal"
+              />
             )
           })}
         </div>
