@@ -14,11 +14,21 @@ interface PixResult {
   simulated: boolean
 }
 
-export function PaymentPanel() {
+export function PaymentPanel({ cpf = '' }: { cpf?: string }) {
   const router = useRouter()
   const [method, setMethod] = useState<'pix' | 'card'>('pix')
   const [loading, setLoading] = useState(false)
   const [pix, setPix] = useState<PixResult | null>(null)
+
+  async function copyPixCode() {
+    if (!pix?.qrCode) return
+    try {
+      await navigator.clipboard.writeText(pix.qrCode)
+      toast.success('Código Pix copiado!')
+    } catch {
+      toast.error('Não foi possível copiar. Selecione o código manualmente.')
+    }
+  }
 
   async function generatePix() {
     setLoading(true)
@@ -81,7 +91,7 @@ export function PaymentPanel() {
         </button>
       </div>
 
-      {method === 'card' && <CardPaymentForm />}
+      {method === 'card' && <CardPaymentForm cpf={cpf} />}
 
       {method === 'pix' && !pix && (
         <Button variant="teal" onClick={generatePix} disabled={loading}>
@@ -91,10 +101,19 @@ export function PaymentPanel() {
 
       {method === 'pix' && pix && (
         <div className="flex flex-col items-center gap-4">
-          {pix.qrCodeBase64 ? (
+          {pix.qrCodeBase64 && (
             <img src={`data:image/png;base64,${pix.qrCodeBase64}`} alt="QR Code Pix" className="h-48 w-48" />
-          ) : (
-            <div className="w-full rounded-xl bg-surface-muted p-3 text-xs break-all">{pix.qrCode}</div>
+          )}
+          {pix.qrCode && (
+            <div className="w-full">
+              <label className="mb-1.5 block text-[13px] font-bold text-navy-700">
+                Pix Copia e Cola
+              </label>
+              <div className="w-full rounded-xl bg-surface-muted p-3 text-xs break-all">{pix.qrCode}</div>
+              <Button size="sm" variant="outline" className="mt-2 w-full" onClick={copyPixCode}>
+                📋 Copiar código
+              </Button>
+            </div>
           )}
           {pix.simulated && (
             <div className="flex flex-col items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 p-3.5 text-center text-sm">

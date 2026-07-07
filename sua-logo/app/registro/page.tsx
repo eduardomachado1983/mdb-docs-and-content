@@ -192,7 +192,7 @@ export default function RegistroPage() {
             <div className="animate-fade-up">
               <div className="mb-1 text-lg font-extrabold">Pagamento</div>
               <div className="mb-[18px] text-sm text-navy-300">Etapa 4 de 4 — valor da consulta: <strong className="text-navy-900">R$ 2,00</strong></div>
-              <PaymentPanel />
+              <PaymentPanel cpf={form.cpf} />
               <div className="mt-5 border-t border-dashed border-line-300 pt-4">
                 <p className="mb-3 text-sm leading-relaxed text-navy-300">
                   Não consegue pagar agora? Sem problema — você pode finalizar o cadastro e pagar depois pela sua área.
