@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { createClient, createServiceClient, getUser } from '@/lib/supabase/server'
 import { createCardPayment } from '@/lib/mercadopago'
+import { extractMpError } from '@/lib/mp-error'
 
 const schema = z.object({
   token: z.string().min(1),
@@ -66,6 +67,6 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ ok: true, status: result.status, approved })
   } catch (error) {
-    return NextResponse.json({ error: error instanceof Error ? error.message : 'Falha ao processar cartão' }, { status: 500 })
+    return NextResponse.json({ error: extractMpError(error) }, { status: 500 })
   }
 }

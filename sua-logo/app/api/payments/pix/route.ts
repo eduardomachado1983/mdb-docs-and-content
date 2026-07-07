@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient, createServiceClient, getUser } from '@/lib/supabase/server'
 import { createPixPayment } from '@/lib/mercadopago'
+import { extractMpError } from '@/lib/mp-error'
 
 export async function POST() {
   const user = await getUser()
@@ -16,13 +17,20 @@ export async function POST() {
   }
 
   const personalData = (patient.personal_data ?? {}) as { full_name?: string; cpf?: string }
+  const cpf = (personalData.cpf ?? '').replace(/\D/g, '')
+  if (cpf.length !== 11) {
+    return NextResponse.json(
+      { error: 'CPF inválido no cadastro. Atualize seus dados pessoais com um CPF válido antes de pagar.' },
+      { status: 400 }
+    )
+  }
 
   try {
     const pix = await createPixPayment({
       patientId: patient.id,
       name: personalData.full_name || 'Paciente',
       email: user.email!,
-      cpf: personalData.cpf || '00000000000',
+      cpf,
     })
 
     const serviceClient = await createServiceClient()
@@ -37,6 +45,6 @@ export async function POST() {
 
     return NextResponse.json(pix)
   } catch (error) {
-    return NextResponse.json({ error: error instanceof Error ? error.message : 'Falha ao gerar pagamento' }, { status: 500 })
+    return NextResponse.json({ error: extractMpError(error) }, { status: 500 })
   }
 }
