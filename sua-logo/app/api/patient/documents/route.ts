@@ -26,9 +26,12 @@ export async function POST(request: Request) {
   const file = formData.get('file')
   const type = formData.get('type')
 
-  if (!(file instanceof File) || (type !== 'identity' && type !== 'address')) {
+  const validTypes = ['identity', 'address', 'previous_consultation'] as const
+  type DocType = (typeof validTypes)[number]
+  if (!(file instanceof File) || typeof type !== 'string' || !validTypes.includes(type as DocType)) {
     return NextResponse.json({ error: 'Arquivo ou tipo inválido' }, { status: 400 })
   }
+  const docType = type as DocType
   if (file.size > MAX_SIZE) return NextResponse.json({ error: 'Arquivo maior que 5MB' }, { status: 400 })
   if (!ALLOWED_TYPES.includes(file.type)) {
     return NextResponse.json({ error: 'Envie um arquivo JPG, PNG ou PDF' }, { status: 400 })
@@ -47,7 +50,7 @@ export async function POST(request: Request) {
   }
 
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_')
-  const storagePath = `${patient.id}/${type}/${Date.now()}-${safeName}`
+  const storagePath = `${patient.id}/${docType}/${Date.now()}-${safeName}`
 
   const { error: uploadError } = await serviceClient.storage
     .from(DOCUMENTS_BUCKET)
@@ -58,11 +61,11 @@ export async function POST(request: Request) {
   }
 
   // Substitui documento anterior do mesmo tipo (permite "Trocar")
-  await serviceClient.from('documents').delete().eq('patient_id', patient.id).eq('type', type)
+  await serviceClient.from('documents').delete().eq('patient_id', patient.id).eq('type', docType)
 
   const { error: insertError } = await serviceClient.from('documents').insert({
     patient_id: patient.id,
-    type,
+    type: docType,
     filename: file.name,
     storage_path: storagePath,
     mime_type: file.type,

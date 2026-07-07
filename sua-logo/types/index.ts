@@ -75,7 +75,7 @@ export interface Patient {
 export interface Document {
   id: string
   patient_id: string
-  type: 'identity' | 'address'
+  type: 'identity' | 'address' | 'previous_consultation'
   filename: string
   storage_path: string
   mime_type: string | null
