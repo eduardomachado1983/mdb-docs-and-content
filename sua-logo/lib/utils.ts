@@ -32,3 +32,8 @@ export function formatDateTimeBR(iso: string): string {
     day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
   })
 }
+
+// Formata um valor em centavos para Real (ex.: 200 -> "R$ 2,00").
+export function formatBRL(cents: number): string {
+  return (cents / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+}

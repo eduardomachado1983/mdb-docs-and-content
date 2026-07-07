@@ -57,6 +57,7 @@ export interface AdminValidation {
   clinical_approved?: boolean
   released_at?: string
   released_by?: string
+  document_reminder_sent_at?: string
 }
 
 export interface Patient {
@@ -96,9 +97,9 @@ export interface PaymentTransaction {
   patient_id: string
   reference_id: string
   amount: number
-  method?: string
+  method?: string | null
   status: 'pending' | 'approved' | 'rejected' | 'cancelled'
-  gateway_response?: Record<string, unknown>
+  gateway_response?: unknown
   created_at: string
   updated_at: string
 }

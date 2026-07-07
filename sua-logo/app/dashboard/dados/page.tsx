@@ -7,6 +7,11 @@ import { STATUS_LABELS, type Patient } from '@/types'
 
 const DOCS_UNLOCKED: Patient['status'][] = ['aguardando_medico', 'retido_admin', 'concluido']
 
+const REQUIRED_DOCS: { type: string; label: string }[] = [
+  { type: 'identity', label: 'documento de identidade' },
+  { type: 'address', label: 'comprovante de endereço' },
+]
+
 export default async function DadosPage() {
   const { user, profile } = await getUserAndProfile()
   if (!user) redirect('/login')
@@ -22,6 +27,9 @@ export default async function DadosPage() {
   }
 
   const docsUnlocked = DOCS_UNLOCKED.includes(patient.status)
+  const uploadedTypes = new Set<string>((documents ?? []).map((d) => d.type))
+  const missingDocs = REQUIRED_DOCS.filter((d) => !uploadedTypes.has(d.type))
+  const showReminder = Boolean(patient.admin_validation?.document_reminder_sent_at) && missingDocs.length > 0
 
   return (
     <div className="min-h-screen">
@@ -34,6 +42,12 @@ export default async function DadosPage() {
         <div className="mb-[18px] rounded-2xl border border-line-200 bg-white p-6">
           <PersonalDataForm initial={patient.personal_data} />
         </div>
+
+        {showReminder && (
+          <div className="mb-[18px] rounded-2xl border border-amber-200 bg-amber-50 p-5">
+            <p className="text-sm font-bold text-amber-800">⚠️ A administração pediu o envio de: {missingDocs.map((d) => d.label).join(', ')}.</p>
+          </div>
+        )}
 
         <div className="mb-[18px] rounded-2xl border border-line-200 bg-white p-6">
           <div className="mb-1 text-[15px] font-bold">📎 Documentos</div>
