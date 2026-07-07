@@ -4,10 +4,16 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { toast } from 'sonner'
+import { Eye, EyeOff } from 'lucide-react'
 import { PaymentPanel } from '@/components/shared/payment-panel'
 import { DocumentUpload } from '@/components/shared/document-upload'
 import { WizardStepper } from '@/components/shared/wizard-stepper'
 import { SiteHeader } from '@/components/shared/site-header'
+import { cn } from '@/lib/utils'
+import {
+  validateFullName, validateEmail, validateCPF,
+  validateBirthDate, validatePhone, validatePassword,
+} from '@/lib/validators'
 import type { Document } from '@/types'
 
 const STEPS = [
@@ -37,10 +43,13 @@ const EMPTY_FORM: FormState = {
   senha: '', senha2: '', sintomas: '', local: '', intensidade: 5, historico: '',
 }
 
+type FieldErrors = Partial<Record<keyof FormState, string | null>>
+
 export default function RegistroPage() {
   const router = useRouter()
   const [step, setStep] = useState(1)
   const [form, setForm] = useState<FormState>(EMPTY_FORM)
+  const [errors, setErrors] = useState<FieldErrors>({})
   const [loading, setLoading] = useState(false)
   const [uploadedDocs, setUploadedDocs] = useState<Document[]>([])
 
@@ -50,11 +59,28 @@ export default function RegistroPage() {
 
   function update<K extends keyof FormState>(field: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [field]: value }))
+    // limpa o erro do campo assim que o usuário começa a corrigir
+    setErrors((prev) => (prev[field] ? { ...prev, [field]: null } : prev))
+  }
+
+  function validateStep1(): boolean {
+    const next: FieldErrors = {
+      nome: validateFullName(form.nome),
+      email: validateEmail(form.email),
+      cpf: validateCPF(form.cpf),
+      rg: form.rg.trim() ? null : 'Informe o RG.',
+      nascimento: validateBirthDate(form.nascimento),
+      telefone: validatePhone(form.telefone),
+      senha: validatePassword(form.senha),
+      senha2: form.senha2 !== form.senha ? 'As senhas não coincidem.' : null,
+    }
+    setErrors(next)
+    return Object.values(next).every((e) => !e)
   }
 
   async function handleStep1() {
-    if (form.senha !== form.senha2) {
-      toast.error('As senhas não coincidem')
+    if (!validateStep1()) {
+      toast.error('Revise os campos destacados.')
       return
     }
     setLoading(true)
@@ -132,19 +158,26 @@ export default function RegistroPage() {
               <div className="mb-1 text-lg font-extrabold">Dados pessoais</div>
               <div className="mb-[18px] text-sm text-navy-300">Etapa 1 de 4</div>
               <div className="flex flex-col gap-4">
-                <Field label="Nome completo" value={form.nome} onChange={(v) => update('nome', v)} placeholder="Seu nome" />
-                <Field label="E-mail" type="email" value={form.email} onChange={(v) => update('email', v)} placeholder="seu@email.com" />
+                <Field label="Nome completo" value={form.nome} onChange={(v) => update('nome', v)} placeholder="Nome e sobrenome" error={errors.nome} />
+                <Field label="E-mail" type="email" value={form.email} onChange={(v) => update('email', v)} placeholder="seu@email.com" error={errors.email} />
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="CPF" value={form.cpf} onChange={(v) => update('cpf', v)} placeholder="000.000.000-00" />
-                  <Field label="RG" value={form.rg} onChange={(v) => update('rg', v)} placeholder="00.000.000-0" />
+                  <Field label="CPF" value={form.cpf} onChange={(v) => update('cpf', v)} placeholder="000.000.000-00" inputMode="numeric" error={errors.cpf} />
+                  <Field label="RG" value={form.rg} onChange={(v) => update('rg', v)} placeholder="00.000.000-0" error={errors.rg} />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="Data de nascimento" type="date" value={form.nascimento} onChange={(v) => update('nascimento', v)} />
-                  <Field label="Telefone" value={form.telefone} onChange={(v) => update('telefone', v)} placeholder="(00) 00000-0000" />
+                  <Field label="Data de nascimento" type="date" value={form.nascimento} onChange={(v) => update('nascimento', v)} error={errors.nascimento} />
+                  <Field label="Telefone" value={form.telefone} onChange={(v) => update('telefone', v)} placeholder="(00) 00000-0000" inputMode="tel" error={errors.telefone} />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="Senha" type="password" value={form.senha} onChange={(v) => update('senha', v)} placeholder="••••••" />
-                  <Field label="Confirmar senha" type="password" value={form.senha2} onChange={(v) => update('senha2', v)} placeholder="••••••" />
+                  <PasswordField
+                    label="Senha" value={form.senha} onChange={(v) => update('senha', v)}
+                    placeholder="Crie uma senha" error={errors.senha}
+                    hint="Mínimo 8 caracteres, com maiúscula, minúscula e número."
+                  />
+                  <PasswordField
+                    label="Confirmar senha" value={form.senha2} onChange={(v) => update('senha2', v)}
+                    placeholder="Repita a senha" error={errors.senha2}
+                  />
                 </div>
               </div>
             </div>
@@ -235,8 +268,9 @@ export default function RegistroPage() {
   )
 }
 
-function Field({ label, value, onChange, placeholder, type = 'text' }: {
-  label: string; value: string; onChange: (v: string) => void; placeholder?: string; type?: string
+function Field({ label, value, onChange, placeholder, type = 'text', error, inputMode }: {
+  label: string; value: string; onChange: (v: string) => void; placeholder?: string
+  type?: string; error?: string | null; inputMode?: 'numeric' | 'tel'
 }) {
   return (
     <div>
@@ -244,10 +278,54 @@ function Field({ label, value, onChange, placeholder, type = 'text' }: {
       <input
         type={type}
         value={value}
+        inputMode={inputMode}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full rounded-[10px] border border-line-400 px-3.5 py-3 text-[15px] outline-none focus:border-brand-500"
+        aria-invalid={Boolean(error)}
+        className={cn(
+          'w-full rounded-[10px] border px-3.5 py-3 text-[15px] outline-none',
+          error ? 'border-error-500 focus:border-error-500' : 'border-line-400 focus:border-brand-500'
+        )}
       />
+      {error && <p className="mt-1 text-xs font-semibold text-error-500">{error}</p>}
+    </div>
+  )
+}
+
+function PasswordField({ label, value, onChange, placeholder, error, hint }: {
+  label: string; value: string; onChange: (v: string) => void
+  placeholder?: string; error?: string | null; hint?: string
+}) {
+  const [show, setShow] = useState(false)
+  return (
+    <div>
+      <label className="mb-1.5 block text-[13px] font-bold text-navy-700">{label}</label>
+      <div className="relative">
+        <input
+          type={show ? 'text' : 'password'}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          aria-invalid={Boolean(error)}
+          className={cn(
+            'w-full rounded-[10px] border px-3.5 py-3 pr-11 text-[15px] outline-none',
+            error ? 'border-error-500 focus:border-error-500' : 'border-line-400 focus:border-brand-500'
+          )}
+        />
+        <button
+          type="button"
+          onClick={() => setShow((v) => !v)}
+          aria-label={show ? 'Ocultar senha' : 'Mostrar senha'}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-navy-300 hover:text-navy-600"
+        >
+          {show ? <EyeOff className="h-[18px] w-[18px]" /> : <Eye className="h-[18px] w-[18px]" />}
+        </button>
+      </div>
+      {error ? (
+        <p className="mt-1 text-xs font-semibold text-error-500">{error}</p>
+      ) : hint ? (
+        <p className="mt-1 text-xs text-navy-200">{hint}</p>
+      ) : null}
     </div>
   )
 }
