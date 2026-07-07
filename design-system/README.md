@@ -41,8 +41,11 @@ design-system/
   2. Passar os links dos arquivos duplicados (agora na sua conta) para gerar
      `platforms/desktop` e `platforms/mobile` a partir dos componentes reais.
 
-- Nenhuma marca aplicada ainda. `tokens/brand.template.json` está com os
-  campos vazios/placeholder.
+- **Primeira marca aplicada:** `versions/nature-health/` (Nature Health,
+  v1.1.0) — paleta Marine/Forest/Feather/Sleek Grey, tipografia SF Pro,
+  efeitos Liquid Glass e tom de voz pt-BR, a partir de uma spec fornecida
+  pelo usuário. Ver `versions/nature-health/DESIGN.md` (documento completo)
+  e `versions/nature-health/brand.json` (tokens no formato do template).
 
 ## Como criar uma nova versão de marca
 
@@ -72,5 +75,10 @@ Cada nova marca = uma nova pasta de tokens, nunca uma edição da estrutura.
       `platforms/mobile`.
 - [ ] Revisar `tokens/core.json` contra os valores reais extraídos do Figma
       (hoje são estimativas baseadas na HIG pública da Apple).
-- [ ] Definir a primeira marca real (v1) e seu input de identidade (site,
-      logo ou Figma).
+- [x] Definir a primeira marca real (v1) — Nature Health, aplicada em
+      `versions/nature-health/`.
+- [ ] Quando os componentes reais de `platforms/desktop` e
+      `platforms/mobile` forem extraídos do Figma, remapear os componentes
+      já descritos em `versions/nature-health/DESIGN.md` (button, card,
+      input, navigation-bar, tab-bar, modal, etc.) para a estrutura
+      compartilhada, mantendo os valores de marca Nature Health.

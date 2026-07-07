@@ -1,0 +1,78 @@
+{
+  "$schema": "instance of tokens/brand.template.json — see versions/nature-health/DESIGN.md for full rationale, components and voice rules",
+  "meta": {
+    "name": "Nature Health",
+    "slug": "nature-health",
+    "version": "1.1.0",
+    "source": {
+      "site": "",
+      "logo": "",
+      "figma": ""
+    }
+  },
+  "color": {
+    "primary": "#57BC90",
+    "secondary": "#015249",
+    "accent": "#77C9D4",
+    "background": "#F0F4F3",
+    "surface": "rgba(255,255,255,0.75)",
+    "textPrimary": "#015249",
+    "textSecondary": "#4A6B67",
+    "border": "rgba(1,82,73,0.10)",
+    "success": "#57BC90",
+    "warning": "#FF9500",
+    "error": "#FF3B30",
+    "info": "#77C9D4"
+  },
+  "typography": {
+    "fontFamily": {
+      "base": "SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif",
+      "heading": "SF Pro Display, -apple-system, BlinkMacSystemFont, sans-serif",
+      "mono": "SF Mono, Menlo, Consolas, monospace"
+    },
+    "weight": {
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700
+    },
+    "scale": {
+      "desktop": {
+        "display": 34,
+        "title": 28,
+        "heading": 22,
+        "body": 17,
+        "caption": 12
+      },
+      "mobile": {
+        "display": 34,
+        "title": 28,
+        "heading": 22,
+        "body": 17,
+        "caption": 12
+      }
+    }
+  },
+  "voice": {
+    "tone": ["acolhedor", "credível", "direto", "humano"],
+    "preferredVocabulary": [
+      "Agendar consulta",
+      "Entrar",
+      "Médico",
+      "Seus documentos"
+    ],
+    "avoidedVocabulary": [
+      "Book appointment",
+      "Login",
+      "Doutor (exceto saudação direta)",
+      "Seus arquivos",
+      "Erro 500 / Algo deu errado"
+    ],
+    "sampleMicrocopy": {
+      "buttonPrimary": "Agendar consulta",
+      "emptyState": "",
+      "errorMessage": "Diga o que aconteceu e como resolver — nunca códigos de erro crus"
+    }
+  },
+  "notes": "Não segue o schema estrutural genérico 1:1 — inclui extensões próprias (rounded xs/2xl/3xl/none, effects de Liquid Glass, animation springs, e uma biblioteca de componentes React/CSS-in-JS específica do produto de telemedicina). Ver DESIGN.md nesta mesma pasta para o token set completo e as regras de uso."
+}
