@@ -49,11 +49,20 @@ export async function getUser() {
 
 // Helper: retorna o profile do usuário (com role)
 export async function getProfile() {
+  const { profile } = await getUserAndProfile()
+  return profile
+}
+
+// Helper: user + profile numa única validação de sessão. Usar em vez de
+// chamar getUser() e getProfile() separadamente na mesma página — cada um
+// faz sua própria validação de sessão (round-trip à API do Supabase Auth),
+// então chamar os dois dobra essa espera à toa.
+export async function getUserAndProfile() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return null
+  if (!user) return { user: null, profile: null }
 
   const { data: profile } = await supabase
     .from('profiles').select('*').eq('id', user.id).single()
-  return profile
+  return { user, profile }
 }
