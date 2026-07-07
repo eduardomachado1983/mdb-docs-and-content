@@ -1,0 +1,61 @@
+{
+  "$schema": "provisional — pending replacement with values extracted from Figma (macOS 27 / iOS 27 Community)",
+  "spacing": {
+    "unit": 4,
+    "scale": {
+      "xs": 4,
+      "sm": 8,
+      "md": 12,
+      "lg": 16,
+      "xl": 24,
+      "xxl": 32,
+      "xxxl": 48
+    }
+  },
+  "radius": {
+    "sm": 6,
+    "md": 10,
+    "lg": 14,
+    "xl": 20,
+    "full": 9999
+  },
+  "breakpoints": {
+    "mobile": 390,
+    "mobileLarge": 428,
+    "tablet": 768,
+    "desktop": 1024,
+    "desktopLarge": 1440
+  },
+  "grid": {
+    "desktop": { "columns": 12, "gutter": 24, "margin": 80 },
+    "mobile": { "columns": 4, "gutter": 16, "margin": 16 }
+  },
+  "elevation": {
+    "level0": { "blur": 0, "y": 0, "opacity": 0 },
+    "level1": { "blur": 8, "y": 2, "opacity": 0.08 },
+    "level2": { "blur": 16, "y": 4, "opacity": 0.12 },
+    "level3": { "blur": 32, "y": 8, "opacity": 0.16 }
+  },
+  "motion": {
+    "duration": { "fast": 120, "base": 200, "slow": 320 },
+    "easing": {
+      "standard": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "decelerate": "cubic-bezier(0, 0, 0.2, 1)",
+      "accelerate": "cubic-bezier(0.4, 0, 1, 1)"
+    }
+  },
+  "iconSize": {
+    "sm": 16,
+    "md": 20,
+    "lg": 24,
+    "xl": 32
+  },
+  "zIndex": {
+    "base": 0,
+    "dropdown": 100,
+    "sticky": 200,
+    "modal": 300,
+    "toast": 400,
+    "tooltip": 500
+  }
+}
