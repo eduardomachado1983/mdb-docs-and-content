@@ -63,7 +63,7 @@ export function PatientCard({
 
       {hasTriage && (
         <div className="border-t border-line-100 px-6 py-4 text-sm text-navy-600">
-          <div className="mb-2 text-xs font-extrabold tracking-wide text-navy-200">TRIAGEM</div>
+          <div className="mb-2 text-xs font-extrabold tracking-wide text-navy-200">CONSULTA</div>
           <div className="flex flex-col gap-1.5">
             <p className="line-clamp-2"><span className="text-navy-300">😊 Sintomas:</span> {triage.main_symptom}</p>
             <p><span className="text-navy-300">📍 Local:</span> {triage.pain_location}</p>
