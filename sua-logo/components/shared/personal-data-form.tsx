@@ -67,7 +67,7 @@ export function PersonalDataForm({ initial }: { initial?: Partial<PersonalData> 
         <Input id="phone" required value={form.phone} onChange={(e) => update('phone', e.target.value)} placeholder="(00) 00000-0000" />
       </div>
       <Button type="submit" disabled={loading} className="sm:col-span-2">
-        {loading ? 'Salvando...' : 'Salvar e continuar'}
+        {loading ? 'Salvando...' : 'Salvar alterações'}
       </Button>
     </form>
   )
