@@ -102,7 +102,7 @@ export default async function DashboardPage() {
 
           {patient.status === 'aguardando_pagamento' && (
             <div className="mt-5">
-              <PaymentPanel />
+              <PaymentPanel cpf={(patient.personal_data as { cpf?: string })?.cpf ?? ''} />
             </div>
           )}
         </div>
