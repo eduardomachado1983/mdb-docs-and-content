@@ -80,7 +80,7 @@ export default function ChatPage() {
       </Card>
 
       {done ? (
-        <Button onClick={() => router.push('/dashboard/consulta')}>Voltar ao painel</Button>
+        <Button onClick={() => router.push('/dashboard')}>Voltar ao painel</Button>
       ) : (
         <form className="flex gap-2" onSubmit={send}>
           <Input
