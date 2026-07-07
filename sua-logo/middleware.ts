@@ -70,8 +70,11 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Redirecionar usuário logado para sua área
-  if (pathname === '/login' && user) {
+  // Redirecionar usuário logado para sua área.
+  // Exceção: se veio um ?role= explícito (menu "Entrar" do header),
+  // deixa acessar o login para trocar de perfil/conta.
+  const switchingRole = request.nextUrl.searchParams.has('role')
+  if (pathname === '/login' && user && !switchingRole) {
     const { data: profile } = await supabase
       .from('profiles').select('role').eq('id', user.id).single()
     const redirectMap: Record<string, string> = {
