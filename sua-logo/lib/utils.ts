@@ -5,11 +5,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function formatWaitTime(isoDate: string): string {
-  const diffMs = Date.now() - new Date(isoDate).getTime()
-  const hours = Math.floor(diffMs / 3_600_000)
-  const minutes = Math.floor((diffMs % 3_600_000) / 60_000)
-  return `${hours}h ${minutes}min`
+export function patientCode(id: string): string {
+  return `PNT-${id.replace(/-/g, '').slice(0, 6).toUpperCase()}`
 }
 
 export function initials(name: string): string {

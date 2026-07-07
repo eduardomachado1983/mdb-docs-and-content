@@ -1,0 +1,68 @@
+'use client'
+
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { LogoutButton } from '@/components/shared/logout-button'
+import { cn, initials } from '@/lib/utils'
+
+const TABS = [
+  { href: '/medico', label: 'Fila de atendimento' },
+  { href: '/medico/pacientes', label: 'Lista de pacientes' },
+]
+
+export function MedicoHeader({
+  doctorName,
+  crm,
+  specialty,
+}: {
+  doctorName: string
+  crm?: string | null
+  specialty?: string | null
+}) {
+  const pathname = usePathname()
+
+  return (
+    <header className="sticky top-0 z-30 border-b border-line-200 bg-white">
+      <div className="mx-auto flex max-w-[960px] items-center justify-between px-6">
+        <div className="flex items-center gap-8">
+          <div className="flex items-center gap-2.5 py-[13px]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-teal-500 text-[11px] font-extrabold text-white">
+              SL
+            </div>
+            <span className="text-[15px] font-extrabold">Sua Logo</span>
+          </div>
+          <nav className="flex items-center gap-6">
+            {TABS.map((tab) => (
+              <Link
+                key={tab.href}
+                href={tab.href}
+                className={cn(
+                  'border-b-2 py-[18px] text-sm font-bold',
+                  pathname === tab.href ? 'border-teal-500 text-teal-600' : 'border-transparent text-navy-300'
+                )}
+              >
+                {tab.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+        <div className="flex items-center gap-3.5">
+          <div className="flex items-center gap-2">
+            <div className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-teal-100 text-[13px] font-bold text-teal-600">
+              {initials(doctorName)}
+            </div>
+            <div>
+              <div className="text-sm font-bold leading-tight">{doctorName}</div>
+              {(specialty || crm) && (
+                <div className="text-xs leading-tight text-navy-200">
+                  {specialty}{specialty && crm ? ' · CRM/SC ' : crm ? 'CRM/SC ' : ''}{crm}
+                </div>
+              )}
+            </div>
+          </div>
+          <LogoutButton />
+        </div>
+      </div>
+    </header>
+  )
+}
