@@ -1,13 +1,13 @@
 import Link from 'next/link'
 import { createServiceClient, getProfile } from '@/lib/supabase/server'
-import { MedicoHeader } from '@/components/shared/medico-header'
+import { AdminHeader } from '@/components/shared/admin-header'
 import { PatientCard } from '@/components/shared/patient-card'
 import { cn } from '@/lib/utils'
 import type { Patient } from '@/types'
 
 const PAGE_SIZE = 5
 
-export default async function MedicoPacientesPage({
+export default async function AdminPacientesPage({
   searchParams,
 }: {
   searchParams: Promise<{ page?: string }>
@@ -40,10 +40,10 @@ export default async function MedicoPacientesPage({
 
   return (
     <div className="min-h-screen">
-      <MedicoHeader doctorName={profile?.name ?? 'Médico'} crm={profile?.crm} specialty={profile?.specialty} />
+      <AdminHeader adminName={profile?.name ?? 'Administrador'} />
 
       <div className="mx-auto max-w-[960px] px-6 py-7">
-        <h1 className="mb-1 text-2xl font-extrabold">Painel do médico</h1>
+        <h1 className="mb-1 text-2xl font-extrabold">Painel do administrador</h1>
         <p className="mb-5 text-[15px] text-navy-300">Lista de pacientes</p>
 
         {!allPatients?.length && (
@@ -61,8 +61,8 @@ export default async function MedicoPacientesPage({
                 key={patient.id}
                 patient={patient}
                 docsComplete={docsComplete}
-                href={`/medico/paciente/${patient.id}`}
-                accent="teal"
+                href={`/admin/validacao/${patient.id}`}
+                accent="admin"
               />
             )
           })}
@@ -95,10 +95,10 @@ function PageLink({ page, active, disabled, children }: { page: number; active?:
   }
   return (
     <Link
-      href={`/medico/pacientes?page=${page}`}
+      href={`/admin/pacientes?page=${page}`}
       className={cn(
         'flex h-8 w-8 items-center justify-center rounded-lg text-sm font-bold',
-        active ? 'bg-teal-500 text-white' : 'text-navy-500 hover:bg-surface-page'
+        active ? 'bg-admin-500 text-white' : 'text-navy-500 hover:bg-surface-page'
       )}
     >
       {children}

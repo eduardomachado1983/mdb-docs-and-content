@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
-import { initials, patientCode } from '@/lib/utils'
+import { cn, initials, patientCode } from '@/lib/utils'
 import type { Patient, PatientStatus } from '@/types'
 
 const STATUS_LABEL: Record<PatientStatus, string> = {
@@ -24,14 +24,16 @@ const PAYMENT_METHOD_LABEL: Record<string, string> = {
   card: 'cartão',
 }
 
-export function MedicoPatientCard({
+export function PatientCard({
   patient,
   docsComplete,
   href,
+  accent = 'teal',
 }: {
   patient: Patient
   docsComplete: boolean
   href: string
+  accent?: 'teal' | 'admin'
 }) {
   const name = patient.personal_data?.full_name || 'Paciente'
   const triage = patient.triage
@@ -43,7 +45,12 @@ export function MedicoPatientCard({
     <div className="overflow-hidden rounded-2xl border border-line-200 bg-white">
       <div className="flex items-center justify-between px-6 py-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-teal-100 text-[13px] font-bold text-teal-600">
+          <div
+            className={cn(
+              'flex h-11 w-11 items-center justify-center rounded-full text-[13px] font-bold',
+              accent === 'admin' ? 'bg-admin-100 text-admin-500' : 'bg-teal-100 text-teal-600'
+            )}
+          >
             {initials(name)}
           </div>
           <div>
@@ -70,7 +77,13 @@ export function MedicoPatientCard({
           {docsComplete && <Badge variant="teal">✓ Docs enviados</Badge>}
           {paid && <Badge variant="teal">✓ Pago{methodLabel ? ` (${methodLabel})` : ''}</Badge>}
         </div>
-        <Link href={href} className="rounded-[10px] bg-teal-500 px-5 py-2.5 text-sm font-bold text-white">
+        <Link
+          href={href}
+          className={cn(
+            'rounded-[10px] px-5 py-2.5 text-sm font-bold text-white',
+            accent === 'admin' ? 'bg-admin-500' : 'bg-teal-500'
+          )}
+        >
           Visualizar
         </Link>
       </div>
