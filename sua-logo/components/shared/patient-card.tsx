@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
-import { PaymentHistory } from '@/components/shared/payment-history'
 import { cn, initials, patientCode } from '@/lib/utils'
-import type { Patient, PatientStatus, PaymentTransaction } from '@/types'
+import type { Patient, PatientStatus } from '@/types'
 
 const STATUS_LABEL: Record<PatientStatus, string> = {
   cadastro_incompleto: 'Cadastro incompleto',
@@ -30,13 +29,11 @@ export function PatientCard({
   docsComplete,
   href,
   accent = 'teal',
-  transactions,
 }: {
   patient: Patient
   docsComplete: boolean
   href: string
   accent?: 'teal' | 'admin'
-  transactions?: PaymentTransaction[]
 }) {
   const name = patient.personal_data?.full_name || 'Paciente'
   const triage = patient.triage
@@ -64,23 +61,14 @@ export function PatientCard({
         <Badge variant={STATUS_VARIANT[patient.status]}>{STATUS_LABEL[patient.status]}</Badge>
       </div>
 
-      {(hasTriage || transactions) && (
-        <div className={cn('border-t border-line-100', hasTriage && transactions && 'lg:grid lg:grid-cols-[1fr_220px]')}>
-          {hasTriage && (
-            <div className="px-6 py-4 text-sm text-navy-600">
-              <div className="mb-2 text-xs font-extrabold tracking-wide text-navy-200">CONSULTA</div>
-              <div className="flex flex-col gap-1.5">
-                <p className="line-clamp-2"><span className="text-navy-300">😊 Sintomas:</span> {triage.main_symptom}</p>
-                <p><span className="text-navy-300">📍 Local:</span> {triage.pain_location}</p>
-                <p><span className="text-navy-300">📊 Intensidade:</span> {triage.pain_intensity}/10</p>
-              </div>
-            </div>
-          )}
-          {transactions && (
-            <div className={cn('px-6 py-4', hasTriage && 'border-t border-line-100 lg:border-l lg:border-t-0')}>
-              <PaymentHistory transactions={transactions} />
-            </div>
-          )}
+      {hasTriage && (
+        <div className="border-t border-line-100 px-6 py-4 text-sm text-navy-600">
+          <div className="mb-2 text-xs font-extrabold tracking-wide text-navy-200">CONSULTA</div>
+          <div className="flex flex-col gap-1.5">
+            <p className="line-clamp-2"><span className="text-navy-300">😊 Sintomas:</span> {triage.main_symptom}</p>
+            <p><span className="text-navy-300">📍 Local:</span> {triage.pain_location}</p>
+            <p><span className="text-navy-300">📊 Intensidade:</span> {triage.pain_intensity}/10</p>
+          </div>
         </div>
       )}
 

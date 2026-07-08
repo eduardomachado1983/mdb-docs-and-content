@@ -1,7 +1,7 @@
 import { createServiceClient, getProfile } from '@/lib/supabase/server'
 import { AdminHeader } from '@/components/shared/admin-header'
 import { PatientQueueRow } from '@/components/shared/patient-queue-row'
-import type { Patient, PaymentTransaction } from '@/types'
+import type { Patient } from '@/types'
 
 export default async function AdminPage() {
   const profile = await getProfile()
@@ -16,21 +16,12 @@ export default async function AdminPage() {
 
   const patientIds = pending?.map((p) => p.id) ?? []
   const docsByPatient = new Map<string, Set<string>>()
-  const txByPatient = new Map<string, PaymentTransaction[]>()
   if (patientIds.length > 0) {
     const { data: docs } = await supabase.from('documents').select('patient_id, type').in('patient_id', patientIds)
     docs?.forEach((d) => {
       const set = docsByPatient.get(d.patient_id) ?? new Set<string>()
       set.add(d.type)
       docsByPatient.set(d.patient_id, set)
-    })
-
-    const { data: transactions } = await supabase
-      .from('payment_transactions').select('*').in('patient_id', patientIds).order('created_at', { ascending: false })
-    transactions?.forEach((t) => {
-      const arr = txByPatient.get(t.patient_id) ?? []
-      arr.push(t)
-      txByPatient.set(t.patient_id, arr)
     })
   }
 
@@ -61,7 +52,6 @@ export default async function AdminPage() {
                 actionLabel="Validar"
                 href={`/admin/validacao/${patient.id}`}
                 accent="admin"
-                transactions={txByPatient.get(patient.id) ?? []}
               />
             )
           })}
