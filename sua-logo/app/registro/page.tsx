@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 import { toast } from 'sonner'
 import { Eye, EyeOff } from 'lucide-react'
 import { PaymentPanel } from '@/components/shared/payment-panel'
@@ -162,11 +161,16 @@ export default function RegistroPage() {
           <p className="mt-1 text-[15px] text-navy-300">Leva poucos minutos. Seus dados são protegidos.</p>
         </div>
 
-        <div className="mb-7">
-          <WizardStepper steps={STEPS} current={step} />
-        </div>
+        <div
+          className={cn(
+            'mx-auto max-w-[560px] rounded-[22px] border bg-white/65 backdrop-blur-xl p-8 shadow-[0_24px_50px_rgba(20,50,90,.08)]',
+            docsComplete ? 'border-teal-500' : 'border-white/30'
+          )}
+        >
+          <div className="mb-7">
+            <WizardStepper steps={STEPS} current={step} />
+          </div>
 
-        <div className="mx-auto max-w-[560px] rounded-[22px] border border-white/30 bg-white/65 backdrop-blur-xl p-8 shadow-[0_24px_50px_rgba(20,50,90,.08)]">
           {step === 1 && (
             <div className="animate-fade-up">
               <div className="mb-1 text-lg font-extrabold">Dados pessoais</div>
@@ -277,10 +281,6 @@ export default function RegistroPage() {
             </div>
           )}
         </div>
-
-        <p className="mt-6 text-center text-sm text-navy-300">
-          Já tem conta? <Link href="/login" className="font-semibold text-brand-500">Entrar</Link>
-        </p>
       </div>
     </div>
   )
@@ -300,6 +300,7 @@ function Field({ label, value, onChange, placeholder, type = 'text', error, inpu
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         aria-invalid={Boolean(error)}
+        autoComplete="off"
         className={cn(
           'w-full rounded-[10px] border px-3.5 py-3 text-[15px] outline-none',
           error ? 'border-error-500 focus:border-error-500' : 'border-line-400 focus:border-brand-500'
@@ -325,6 +326,7 @@ function PasswordField({ label, value, onChange, placeholder, error, hint }: {
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           aria-invalid={Boolean(error)}
+          autoComplete="new-password"
           className={cn(
             'w-full rounded-[10px] border px-3.5 py-3 pr-11 text-[15px] outline-none',
             error ? 'border-error-500 focus:border-error-500' : 'border-line-400 focus:border-brand-500'

@@ -14,11 +14,10 @@ interface PixResult {
   simulated: boolean
 }
 
-type Method = 'pix' | 'debit_card' | 'credit_card'
+type Method = 'pix' | 'credit_card'
 
 const METHODS: { value: Method; icon: string; label: string }[] = [
   { value: 'pix', icon: '📱', label: 'Pix' },
-  { value: 'debit_card', icon: '💳', label: 'Cartão de débito' },
   { value: 'credit_card', icon: '💳', label: 'Cartão de crédito' },
 ]
 
@@ -86,7 +85,7 @@ export function PaymentPanel({ cpf = '' }: { cpf?: string }) {
     <div className="flex flex-col gap-4">
       <div>
         <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Escolha a forma de pagamento</label>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 gap-2">
           {METHODS.map((m) => (
             <button
               key={m.value}
@@ -103,9 +102,7 @@ export function PaymentPanel({ cpf = '' }: { cpf?: string }) {
         </div>
       </div>
 
-      {(method === 'debit_card' || method === 'credit_card') && (
-        <CardPaymentForm cpf={cpf} cardType={method === 'debit_card' ? 'debit_card' : 'credit_card'} />
-      )}
+      {method === 'credit_card' && <CardPaymentForm cpf={cpf} />}
 
       {method === 'pix' && !pix && (
         <div className="flex items-center justify-center py-6 text-sm text-navy-300">
