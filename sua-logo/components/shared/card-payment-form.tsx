@@ -18,7 +18,7 @@ function withTimeout<T>(promise: Promise<T>, message: string): Promise<T> {
   ])
 }
 
-export function CardPaymentForm({ cpf, cardType }: { cpf: string; cardType: 'credit_card' | 'debit_card' }) {
+export function CardPaymentForm({ cpf }: { cpf: string }) {
   const router = useRouter()
   const [sdkReady, setSdkReady] = useState(false)
   const [sdkFailed, setSdkFailed] = useState(false)
@@ -57,15 +57,13 @@ export function CardPaymentForm({ cpf, cardType }: { cpf: string; cardType: 'cre
         mp.getPaymentMethods({ bin }),
         'Tempo esgotado ao identificar a bandeira do cartão. Verifique sua conexão e tente novamente.'
       )
-      const method = results.find((r) => r.payment_type_id === cardType)
+      const method = results.find((r) => r.payment_type_id === 'credit_card')
       if (!method) {
-        const wanted = cardType === 'credit_card' ? 'crédito' : 'débito'
         const detected = results[0]
-        const detectedLabel = detected?.payment_type_id === 'credit_card' ? 'Crédito' : detected?.payment_type_id === 'debit_card' ? 'Débito' : null
         toast.error(
-          detectedLabel
-            ? `Este cartão foi identificado como cartão de ${detectedLabel.toLowerCase()}, não ${wanted}. Selecione "${detectedLabel}" acima ou tente outro cartão.`
-            : `Não foi possível identificar este cartão para pagamento de ${wanted}. Tente outro cartão.`
+          detected?.payment_type_id === 'debit_card'
+            ? 'Este cartão foi identificado como cartão de débito, não crédito. Tente outro cartão.'
+            : 'Não foi possível identificar este cartão para pagamento de crédito. Tente outro cartão.'
         )
         return
       }
