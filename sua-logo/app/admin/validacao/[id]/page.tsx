@@ -85,7 +85,7 @@ export default async function ValidacaoPage({ params }: { params: Promise<{ id: 
             </Card>
           </div>
 
-          <div className="rounded-2xl border border-line-200 bg-white p-5">
+          <div className="rounded-2xl border border-white/30 bg-white/65 p-5 backdrop-blur-xl">
             <PaymentHistory transactions={transactions ?? []} />
           </div>
         </div>

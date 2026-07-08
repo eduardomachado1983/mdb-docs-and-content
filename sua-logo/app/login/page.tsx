@@ -20,7 +20,8 @@ const ROLES = {
     desc: 'Acompanhe seu atendimento e baixe seus documentos.',
     bg: 'bg-brand-500',
     lightBg: 'bg-brand-100',
-    text: 'text-brand-500',
+    text: 'text-brand-700',
+    onBg: 'text-primary-on',
     demo: { label: 'Paciente demo', email: 'contato@em.art.br', password: 'A1234567' },
   },
   doctor: {
@@ -29,7 +30,8 @@ const ROLES = {
     desc: 'Atenda pacientes e emita receitas e laudos.',
     bg: 'bg-teal-500',
     lightBg: 'bg-teal-100',
-    text: 'text-teal-600',
+    text: 'text-navy-900',
+    onBg: 'text-primary-on',
     demo: { label: 'Médico demo', email: 'medico@sualogo.com.br', password: 'medico123' },
   },
   admin: {
@@ -39,6 +41,7 @@ const ROLES = {
     bg: 'bg-admin-500',
     lightBg: 'bg-admin-100',
     text: 'text-admin-500',
+    onBg: 'text-white',
     demo: { label: 'Admin demo', email: 'admin@sualogo.com.br', password: 'admin123' },
   },
 } as const
@@ -86,7 +89,7 @@ function LoginForm() {
       <SiteHeader />
 
       <div className="mx-auto mt-16 w-full max-w-[376px] px-6 pb-12">
-        <div className="rounded-[22px] border border-line-200 bg-white p-8 shadow-[0_24px_50px_rgba(20,50,90,.08)]">
+        <div className="rounded-[22px] border border-white/30 bg-white/65 backdrop-blur-xl p-8 shadow-[0_24px_50px_rgba(20,50,90,.08)]">
           <div className="mb-5 flex items-center gap-3.5">
             <div className={cn('flex h-12 w-12 items-center justify-center rounded-[13px] text-2xl', config.bg)}>
               {config.icon}
@@ -130,7 +133,7 @@ function LoginForm() {
             <button
               type="submit"
               disabled={loading}
-              className={cn('mt-1 rounded-[11px] py-3.5 text-[15px] font-bold text-white disabled:opacity-60', config.bg)}
+              className={cn('mt-1 rounded-full py-3.5 text-[15px] font-bold disabled:opacity-60', config.bg, config.onBg)}
             >
               {loading ? 'Entrando...' : 'Entrar'}
             </button>

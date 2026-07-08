@@ -39,7 +39,7 @@ export default async function DadosPage() {
         <h1 className="mb-1 text-2xl font-extrabold">Meus dados</h1>
         <p className="mb-5 text-[15px] text-navy-300">Mantenha seus dados pessoais atualizados.</p>
 
-        <div className="mb-[18px] rounded-2xl border border-line-200 bg-white p-6">
+        <div className="mb-[18px] rounded-2xl border border-white/30 bg-white/65 backdrop-blur-xl p-6">
           <PersonalDataForm initial={patient.personal_data} />
         </div>
 
@@ -49,7 +49,7 @@ export default async function DadosPage() {
           </div>
         )}
 
-        <div className="mb-[18px] rounded-2xl border border-line-200 bg-white p-6">
+        <div className="mb-[18px] rounded-2xl border border-white/30 bg-white/65 backdrop-blur-xl p-6">
           <div className="mb-1 text-[15px] font-bold">📎 Documentos</div>
           <p className="mb-4 text-sm text-navy-300">Documento de identidade e comprovante de endereço.</p>
           {docsUnlocked ? (

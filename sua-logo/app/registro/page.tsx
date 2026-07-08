@@ -166,7 +166,7 @@ export default function RegistroPage() {
           <WizardStepper steps={STEPS} current={step} />
         </div>
 
-        <div className="mx-auto max-w-[560px] rounded-[22px] border border-line-200 bg-white p-8 shadow-[0_24px_50px_rgba(20,50,90,.08)]">
+        <div className="mx-auto max-w-[560px] rounded-[22px] border border-white/30 bg-white/65 backdrop-blur-xl p-8 shadow-[0_24px_50px_rgba(20,50,90,.08)]">
           {step === 1 && (
             <div className="animate-fade-up">
               <div className="mb-1 text-lg font-extrabold">Dados pessoais</div>
@@ -264,7 +264,7 @@ export default function RegistroPage() {
               <button
                 onClick={step === 1 ? handleStep1 : step === 2 ? handleStep2 : () => setStep(4)}
                 disabled={loading || (step === 3 && !docsComplete)}
-                className="rounded-[11px] bg-brand-500 px-6 py-3 text-[15px] font-bold text-white disabled:opacity-60"
+                className="rounded-full bg-brand-500 px-6 py-3 text-[15px] font-bold text-primary-on disabled:opacity-60"
               >
                 {loading ? 'Salvando...' : 'Continuar →'}
               </button>

@@ -20,7 +20,7 @@ export function ConsultationCard({ patient }: { patient: Patient }) {
     : 'Pendente'
 
   return (
-    <div className="mb-[18px] rounded-2xl border border-line-200 bg-white p-6">
+    <div className="mb-[18px] rounded-2xl border border-white/30 bg-white/65 backdrop-blur-xl p-6">
       <div className="mb-2 text-xs font-extrabold tracking-wide text-navy-200">CONSULTA</div>
       <div className="flex flex-col gap-1.5 text-sm text-navy-600">
         <p><span className="text-navy-300">😊 Sintomas:</span> {triage.main_symptom}</p>

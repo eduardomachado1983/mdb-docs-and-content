@@ -37,7 +37,7 @@ export default async function DashboardPage() {
         <h1 className="mb-1 text-2xl font-extrabold">Minhas consultas</h1>
         <p className="mb-5 text-[15px] text-navy-300">Acompanhe aqui o andamento do seu atendimento.</p>
 
-        <div className="mb-[18px] rounded-[18px] border border-line-200 bg-white p-6 shadow-[0_10px_30px_rgba(20,50,90,.06)]">
+        <div className="mb-[18px] rounded-[18px] border border-white/30 bg-white/65 backdrop-blur-xl p-6 shadow-[0_10px_30px_rgba(20,50,90,.06)]">
           <PatientStepper status={patient.status} />
           <div className="mt-3 rounded-xl bg-surface-muted px-4 py-3.5 text-[14.5px] leading-relaxed text-navy-600">
             {STATUS_MSG[patient.status]}
@@ -46,7 +46,7 @@ export default async function DashboardPage() {
           {patient.status === 'cadastro_incompleto' && !hasPersonalData && (
             <div className="mt-5 flex flex-col gap-3">
               <p className="text-sm text-navy-300">Complete seus dados pessoais em &quot;Meus dados&quot; para prosseguir.</p>
-              <Link href="/dashboard/dados" className="w-fit rounded-[11px] bg-brand-500 px-5 py-3 text-sm font-bold text-white">
+              <Link href="/dashboard/dados" className="w-fit rounded-full bg-brand-500 px-5 py-3 text-sm font-bold text-primary-on">
                 Ir para Meus dados
               </Link>
             </div>
@@ -59,7 +59,7 @@ export default async function DashboardPage() {
               </p>
               <Link
                 href="/dashboard/chat"
-                className="w-fit rounded-[11px] bg-brand-500 px-5 py-3 text-sm font-bold text-white"
+                className="w-fit rounded-full bg-brand-500 px-5 py-3 text-sm font-bold text-primary-on"
               >
                 Iniciar triagem
               </Link>

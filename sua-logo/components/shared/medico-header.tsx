@@ -22,7 +22,7 @@ export function MedicoHeader({
   const pathname = usePathname()
 
   return (
-    <header className="sticky top-0 z-30 border-b border-line-200 bg-white">
+    <header className="sticky top-0 z-30 border-b border-line-200 bg-white/85 backdrop-blur-xl">
       <div className="mx-auto flex max-w-[960px] items-center justify-between px-6">
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-2.5 py-[13px]">
@@ -38,7 +38,7 @@ export function MedicoHeader({
                 href={tab.href}
                 className={cn(
                   'border-b-2 py-[18px] text-sm font-bold',
-                  pathname === tab.href ? 'border-teal-500 text-teal-600' : 'border-transparent text-navy-700'
+                  pathname === tab.href ? 'border-teal-500 text-navy-900' : 'border-transparent text-navy-700'
                 )}
               >
                 {tab.label}
@@ -48,7 +48,7 @@ export function MedicoHeader({
         </div>
         <div className="flex items-center gap-3.5">
           <div className="flex items-center gap-2">
-            <div className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-teal-100 text-[13px] font-bold text-teal-600">
+            <div className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-teal-100 text-[13px] font-bold text-navy-900">
               {initials(doctorName)}
             </div>
             <div>

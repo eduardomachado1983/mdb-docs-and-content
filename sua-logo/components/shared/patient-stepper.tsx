@@ -23,7 +23,7 @@ export function PatientStepper({ status }: { status: PatientStatus }) {
           <div key={label} className="flex flex-1 flex-col items-center gap-2 text-center">
             <div
               className={cn(
-                'flex h-[38px] w-[38px] items-center justify-center rounded-full text-[15px] font-extrabold text-white',
+                'flex h-[38px] w-[38px] items-center justify-center rounded-full text-[15px] font-extrabold text-primary-on',
                 done && 'bg-teal-500',
                 active && 'bg-brand-500 ring-4 ring-brand-100',
                 !done && !active && 'bg-line-300 text-navy-100'
