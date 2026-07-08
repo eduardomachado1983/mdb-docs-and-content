@@ -14,8 +14,15 @@ const REQUIRED_DOCS: { type: string; label: string }[] = [
   { type: 'address', label: 'Comprovante de endereço' },
 ]
 
-export default async function ValidacaoPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function ValidacaoPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>
+  searchParams: Promise<{ edit?: string }>
+}) {
   const { id } = await params
+  const { edit } = await searchParams
   const profile = await getProfile()
   const supabase = await createServiceClient()
   const { data: patient } = await supabase.from('patients').select('*').eq('id', id).single<Patient>()
@@ -45,7 +52,7 @@ export default async function ValidacaoPage({ params }: { params: Promise<{ id: 
       <AdminHeader adminName={profile?.name ?? 'Administrador'} />
 
       <main className="mx-auto max-w-[960px] px-6 py-8">
-        <AdminPatientHeader patientId={patient.id} initial={patient.personal_data} />
+        <AdminPatientHeader patientId={patient.id} initial={patient.personal_data} initialEditing={edit === '1'} />
 
         <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_280px]">
           <div className="flex flex-col gap-6">

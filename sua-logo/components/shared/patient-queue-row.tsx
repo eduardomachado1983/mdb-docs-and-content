@@ -9,6 +9,7 @@ export function PatientQueueRow({
   statusLabel,
   actionLabel,
   href,
+  editHref,
   accent = 'teal',
 }: {
   patient: Patient
@@ -16,6 +17,7 @@ export function PatientQueueRow({
   statusLabel: string
   actionLabel: string
   href: string
+  editHref?: string
   accent?: 'teal' | 'admin'
 }) {
   const name = patient.personal_data?.full_name || 'Paciente'
@@ -48,15 +50,25 @@ export function PatientQueueRow({
           </div>
         </div>
       </div>
-      <Link
-        href={href}
-        className={cn(
-          'rounded-full px-5 py-2.5 text-sm font-bold',
-          accent === 'admin' ? 'bg-admin-500 text-white' : 'bg-teal-500 text-primary-on'
+      <div className="flex shrink-0 items-center gap-2">
+        {editHref && (
+          <Link
+            href={editHref}
+            className="rounded-full border border-line-300 px-5 py-2.5 text-sm font-bold text-navy-700 hover:bg-surface-page"
+          >
+            ✏️ Editar
+          </Link>
         )}
-      >
-        {actionLabel}
-      </Link>
+        <Link
+          href={href}
+          className={cn(
+            'rounded-full px-5 py-2.5 text-sm font-bold',
+            accent === 'admin' ? 'bg-admin-500 text-white' : 'bg-teal-500 text-primary-on'
+          )}
+        >
+          {actionLabel}
+        </Link>
+      </div>
     </div>
   )
 }

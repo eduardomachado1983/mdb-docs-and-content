@@ -17,9 +17,17 @@ function emptyForm(initial?: Partial<PersonalData>) {
   }
 }
 
-export function AdminPatientHeader({ patientId, initial }: { patientId: string; initial?: PersonalData }) {
+export function AdminPatientHeader({
+  patientId,
+  initial,
+  initialEditing = false,
+}: {
+  patientId: string
+  initial?: PersonalData
+  initialEditing?: boolean
+}) {
   const router = useRouter()
-  const [editing, setEditing] = useState(false)
+  const [editing, setEditing] = useState(initialEditing)
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState(emptyForm(initial))
 
