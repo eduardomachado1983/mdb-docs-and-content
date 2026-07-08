@@ -51,6 +51,7 @@ export default async function AdminPage() {
                 statusLabel="Aguardando validação"
                 actionLabel="Validar"
                 href={`/admin/validacao/${patient.id}`}
+                editHref={`/admin/validacao/${patient.id}?edit=1`}
                 accent="admin"
               />
             )
