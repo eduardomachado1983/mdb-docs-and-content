@@ -65,7 +65,6 @@ function LoginForm() {
   const [forgotMode, setForgotMode] = useState(false)
   const [forgotEmail, setForgotEmail] = useState('')
   const [forgotError, setForgotError] = useState<string | null>(null)
-  const [forgotSent, setForgotSent] = useState(false)
 
   const config = ROLES[role]
 
@@ -119,7 +118,11 @@ function LoginForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: forgotEmail }),
       })
-      setForgotSent(true)
+      toast.success('Se houver uma conta com esse e-mail, enviamos um link para redefinir a senha.')
+      setForgotMode(false)
+      setForgotEmail('')
+      setForgotError(null)
+      router.push('/login')
     } finally {
       setLoading(false)
     }
@@ -135,46 +138,41 @@ function LoginForm() {
             <>
               <div className="mb-1 text-[21px] font-extrabold leading-tight">Recuperar senha</div>
               <p className="mb-6 text-sm leading-relaxed text-navy-300">
-                {forgotSent
-                  ? 'Se houver uma conta com esse e-mail, enviamos um link para redefinir a senha.'
-                  : 'Informe seu e-mail e enviaremos um link para redefinir a senha.'}
+                Informe seu e-mail e enviaremos um link para redefinir a senha.
               </p>
 
-              {!forgotSent && (
-                <form className="flex flex-col gap-4" onSubmit={handleForgotSubmit}>
-                  <div>
-                    <label className="mb-1.5 block text-[13px] font-bold text-navy-700">E-mail</label>
-                    <input
-                      type="email"
-                      value={forgotEmail}
-                      onChange={(e) => {
-                        setForgotEmail(e.target.value)
-                        if (forgotError) setForgotError(null)
-                      }}
-                      placeholder="seu@email.com"
-                      autoComplete="off"
-                      aria-invalid={Boolean(forgotError)}
-                      className={cn(
-                        'w-full rounded-[11px] border px-3.5 py-3 outline-none',
-                        forgotError ? 'border-error-500 focus:border-error-500' : 'border-line-400 focus:border-brand-500'
-                      )}
-                    />
-                    {forgotError && <p className="mt-1 text-xs font-semibold text-error-500">{forgotError}</p>}
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className={cn('mt-1 rounded-full py-3.5 text-[15px] font-bold disabled:opacity-60', config.bg, config.onBg)}
-                  >
-                    {loading ? 'Enviando...' : 'Enviar link de recuperação'}
-                  </button>
-                </form>
-              )}
+              <form className="flex flex-col gap-4" onSubmit={handleForgotSubmit}>
+                <div>
+                  <label className="mb-1.5 block text-[13px] font-bold text-navy-700">E-mail</label>
+                  <input
+                    type="email"
+                    value={forgotEmail}
+                    onChange={(e) => {
+                      setForgotEmail(e.target.value)
+                      if (forgotError) setForgotError(null)
+                    }}
+                    placeholder="seu@email.com"
+                    autoComplete="off"
+                    aria-invalid={Boolean(forgotError)}
+                    className={cn(
+                      'w-full rounded-[11px] border px-3.5 py-3 outline-none',
+                      forgotError ? 'border-error-500 focus:border-error-500' : 'border-line-400 focus:border-brand-500'
+                    )}
+                  />
+                  {forgotError && <p className="mt-1 text-xs font-semibold text-error-500">{forgotError}</p>}
+                </div>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className={cn('mt-1 rounded-full py-3.5 text-[15px] font-bold disabled:opacity-60', config.bg, config.onBg)}
+                >
+                  {loading ? 'Enviando...' : 'Enviar link de recuperação'}
+                </button>
+              </form>
 
               <button
                 onClick={() => {
                   setForgotMode(false)
-                  setForgotSent(false)
                   setForgotEmail('')
                   setForgotError(null)
                 }}
