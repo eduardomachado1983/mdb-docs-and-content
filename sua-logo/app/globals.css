@@ -58,6 +58,9 @@
   color-scheme: light;
   --background: var(--color-surface-page);
   --foreground: var(--color-navy-800);
+  /* Atualizado em runtime pelo HeaderOffset com a altura real do <header>
+     da página atual; usado para posicionar o toast 24px abaixo dele. */
+  --header-height: 64px;
 }
 
 body {

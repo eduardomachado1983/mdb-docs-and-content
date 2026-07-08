@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Toaster } from 'sonner'
+import { HeaderOffset } from '@/components/shared/header-offset'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -15,7 +16,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="pt-BR">
       <body className="min-h-screen antialiased">
         {children}
-        <Toaster richColors position="top-right" />
+        <HeaderOffset />
+        <Toaster richColors position="top-right" offset={{ top: 'calc(var(--header-height) + 24px)' }} />
       </body>
     </html>
   )
