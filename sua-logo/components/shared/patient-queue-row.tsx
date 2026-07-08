@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
-import { PaymentHistory } from '@/components/shared/payment-history'
 import { cn, initials } from '@/lib/utils'
-import type { Patient, PaymentTransaction } from '@/types'
+import type { Patient } from '@/types'
 
 export function PatientQueueRow({
   patient,
@@ -11,7 +10,6 @@ export function PatientQueueRow({
   actionLabel,
   href,
   accent = 'teal',
-  transactions,
 }: {
   patient: Patient
   docsComplete: boolean
@@ -19,7 +17,6 @@ export function PatientQueueRow({
   actionLabel: string
   href: string
   accent?: 'teal' | 'admin'
-  transactions?: PaymentTransaction[]
 }) {
   const name = patient.personal_data?.full_name || 'Paciente'
   const email = patient.personal_data?.email || '—'
@@ -51,11 +48,6 @@ export function PatientQueueRow({
           </div>
         </div>
       </div>
-      {transactions && (
-        <div className="hidden w-56 shrink-0 border-l border-line-100 pl-4 lg:block">
-          <PaymentHistory transactions={transactions} />
-        </div>
-      )}
       <Link
         href={href}
         className={cn(
