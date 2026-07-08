@@ -7,7 +7,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-line-200 bg-white/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-[1140px] items-center justify-between px-6 py-[15px]">
         <SiteLogo />
-        <nav className="hidden items-center gap-6 text-[0.700rem] font-semibold text-[#41546b] md:flex">
+        <nav className="hidden items-center gap-6 text-[0.700rem] font-semibold text-navy-500 md:flex">
           <Link href="/">Início</Link>
           <Link href="/#quem-somos">Quem somos</Link>
           <Link href="/#consultas">Consultas</Link>
@@ -18,7 +18,7 @@ export function SiteHeader() {
           <LoginMenu />
           <Link
             href="/registro"
-            className="rounded-[10px] bg-brand-500 px-[17px] py-2.5 text-sm font-bold text-white"
+            className="rounded-full bg-brand-500 px-[17px] py-2.5 text-sm font-bold text-primary-on"
           >
             Iniciar consulta
           </Link>

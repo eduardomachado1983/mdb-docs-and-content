@@ -1,49 +1,57 @@
 @import "tailwindcss";
 
+/* Nature Health — design system: Marine (primária), Forest (texto/autoridade),
+   Feather (acento/glass), Sleek Grey (neutro). Ver DESIGN.md do projeto. */
 @theme {
-  --font-sans: var(--font-jakarta), system-ui, sans-serif;
-  --font-serif: var(--font-spectral), Georgia, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, sans-serif;
 
-  --color-brand-50: #eaf2fb;
-  --color-brand-100: #d5e5f7;
-  --color-brand-200: #b9d4f3;
-  --color-brand-400: #3d8bff;
-  --color-brand-500: #1668d6;
-  --color-brand-600: #12558f;
-  --color-brand-700: #0e2a4a;
+  /* Marine — CTA / identidade / botão primário (a única cor de ação) */
+  --color-brand-50: #eefaf4;
+  --color-brand-100: #def5e9;
+  --color-brand-200: #c9ecdc;
+  --color-brand-400: #7dd0a8;
+  --color-brand-500: #57bc90;
+  --color-brand-600: #3d9a73;
+  --color-brand-700: #015249;
 
-  --color-teal-50: #f4faf6;
-  --color-teal-100: #dcf3ee;
-  --color-teal-500: #0e9e8e;
-  --color-teal-600: #0b7c6f;
+  /* Feather-tinted — acento do médico (glass, nunca texto) */
+  --color-teal-50: #f2faf7;
+  --color-teal-100: #dff3ed;
+  --color-teal-500: #57bc90;
+  --color-teal-600: #3d9a73;
 
-  --color-admin-50: #efe7fd;
-  --color-admin-100: #eaddfb;
-  --color-admin-500: #7c3aed;
-  --color-admin-600: #6023d9;
+  /* Forest — autoridade / admin */
+  --color-admin-50: #e9f1f0;
+  --color-admin-100: #dceae8;
+  --color-admin-500: #015249;
+  --color-admin-600: #013632;
 
-  --color-navy-900: #0e2a4a;
-  --color-navy-800: #12263f;
-  --color-navy-700: #1c3a5e;
-  --color-navy-600: #33475f;
-  --color-navy-500: #47586e;
-  --color-navy-400: #5a6b82;
-  --color-navy-300: #6a7c93;
-  --color-navy-200: #7488a0;
-  --color-navy-100: #8496ac;
+  /* Forest — escala de texto (on-surface) */
+  --color-navy-900: #015249;
+  --color-navy-800: #0b3d37;
+  --color-navy-700: #16544c;
+  --color-navy-600: #2a6960;
+  --color-navy-500: #4a6b67;
+  --color-navy-400: #5f7d79;
+  --color-navy-300: #77938d;
+  --color-navy-200: #8fa6a1;
+  --color-navy-100: #a5a5af;
 
-  --color-line-100: #e6eef6;
-  --color-line-200: #e2ebf4;
-  --color-line-300: #dbe6f0;
-  --color-line-400: #cddcec;
+  --color-line-100: #e3ece9;
+  --color-line-200: #c8d8d6;
+  --color-line-300: #bbd0cd;
+  --color-line-400: #aec7c3;
 
-  --color-surface-page: #eef3f9;
-  --color-surface-subtle: #f9fbfe;
-  --color-surface-muted: #f4f8fc;
-  --color-surface-soft: #f7fafd;
+  --color-surface-page: #f0f4f3;
+  --color-surface-subtle: #f6f9f8;
+  --color-surface-muted: #eaf1ef;
+  --color-surface-soft: #f2f7f6;
 
-  --color-error-500: #c0392b;
-  --color-error-50: #fdeceb;
+  --color-error-500: #ff3b30;
+  --color-error-50: #ffeae8;
+
+  /* Texto sobre botão Marine — nunca branco (contraste 3.2:1 insuficiente) */
+  --color-primary-on: #015249;
 }
 
 :root {

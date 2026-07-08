@@ -14,7 +14,7 @@ export function AdminHeader({ adminName }: { adminName: string }) {
   const pathname = usePathname()
 
   return (
-    <header className="sticky top-0 z-30 border-b border-line-200 bg-white">
+    <header className="sticky top-0 z-30 border-b border-line-200 bg-white/85 backdrop-blur-xl">
       <div className="mx-auto flex max-w-[960px] items-center justify-between px-6">
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-2.5 py-[13px]">

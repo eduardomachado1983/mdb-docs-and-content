@@ -52,11 +52,11 @@ export default function LandingPage() {
           <div className="flex flex-wrap gap-3.5">
             <Link
               href="/registro"
-              className="rounded-xl bg-brand-500 px-6 py-3.5 text-base font-bold text-white shadow-[0_10px_22px_rgba(22,104,214,.28)]"
+              className="rounded-full bg-brand-500 px-6 py-3.5 text-base font-bold text-primary-on shadow-[0_10px_22px_rgba(87,188,144,.30)]"
             >
               Iniciar minha consulta →
             </Link>
-            <a href="#como-funciona" className="rounded-xl border border-line-400 bg-white px-[22px] py-3.5 text-base font-bold text-navy-700">
+            <a href="#como-funciona" className="rounded-full border border-line-400 bg-white/70 px-[22px] py-3.5 text-base font-bold text-navy-700 backdrop-blur-md">
               Como funciona
             </a>
           </div>
@@ -69,9 +69,9 @@ export default function LandingPage() {
             ))}
           </div>
         </div>
-        <div className="animate-fade-up rounded-[22px] border border-line-200 bg-white p-6 shadow-[0_24px_50px_rgba(20,50,90,.1)]">
+        <div className="animate-fade-up rounded-[22px] border border-white/30 bg-white/65 p-6 shadow-[0_8px_32px_rgba(1,82,73,.14),inset_0_1px_0_rgba(255,255,255,.45)] backdrop-blur-xl">
           <div className="flex items-center gap-3 border-b border-surface-page pb-4">
-            <div className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-teal-500 font-extrabold text-white">
+            <div className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-teal-500 font-extrabold text-primary-on">
               Dr
             </div>
             <div>
@@ -83,14 +83,14 @@ export default function LandingPage() {
           <div className="flex flex-col gap-2.5 py-4">
             {['Triagem inteligente dos sintomas', 'Receita e laudo digitais', 'Validação antes da liberação'].map((t) => (
               <div key={t} className="flex items-center gap-2.5 text-sm text-navy-600">
-                <span className="flex h-[26px] w-[26px] items-center justify-center rounded-lg bg-[#e8f0fb]">✓</span>
+                <span className="flex h-[26px] w-[26px] items-center justify-center rounded-lg bg-[#def5e9]">✓</span>
                 {t}
               </div>
             ))}
           </div>
           <Link
             href="/registro"
-            className="block w-full rounded-[11px] bg-teal-500 py-3.5 text-center text-[15px] font-bold text-white"
+            className="block w-full rounded-full bg-teal-500 py-3.5 text-center text-[15px] font-bold text-primary-on"
           >
             Começar agora
           </Link>
@@ -100,7 +100,7 @@ export default function LandingPage() {
       <section id="quem-somos" className="border-y border-[#e9eff6] bg-white">
         <div className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-11 px-6 py-14 md:grid-cols-2">
           <div>
-            <div className="mb-3 text-[13px] font-extrabold tracking-wide text-brand-500">QUEM SOMOS</div>
+            <div className="mb-3 text-[13px] font-extrabold tracking-wide text-brand-700">QUEM SOMOS</div>
             <h2 className="mb-4 text-[26px] font-extrabold tracking-tight sm:text-[31px]">
               Saúde de verdade, com responsabilidade médica
             </h2>
@@ -129,13 +129,13 @@ export default function LandingPage() {
 
       <section id="consultas" className="mx-auto max-w-[1140px] px-6 py-14">
         <div className="mb-9 text-center">
-          <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-brand-500">TIPOS DE CONSULTA</div>
+          <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-brand-700">TIPOS DE CONSULTA</div>
           <h2 className="text-[26px] font-extrabold tracking-tight sm:text-[31px]">Para o que você precisa hoje</h2>
         </div>
         <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
           {CONSULTAS.map((c) => (
             <div key={c.title} className="rounded-2xl border border-line-100 bg-white p-6 transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(20,50,90,.09)]">
-              <div className="mb-3.5 flex h-[46px] w-[46px] items-center justify-center rounded-xl bg-[#e8f0fb] text-[22px]">
+              <div className="mb-3.5 flex h-[46px] w-[46px] items-center justify-center rounded-xl bg-[#def5e9] text-[22px]">
                 {c.icon}
               </div>
               <div className="mb-1.5 text-[17px] font-bold">{c.title}</div>
@@ -184,15 +184,15 @@ export default function LandingPage() {
 
       <section className="mx-auto max-w-[1140px] px-6 pb-14 pt-5">
         <div className="mb-9 text-center">
-          <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-brand-500">DEPOIMENTOS</div>
+          <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-brand-700">DEPOIMENTOS</div>
           <h2 className="text-[26px] font-extrabold sm:text-[31px]">Quem já se consultou</h2>
         </div>
         <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
           {TESTEMUNHOS.map((t) => (
             <div key={t.name} className="rounded-2xl border border-line-100 bg-white p-[26px]">
-              <div className="mb-[18px] font-serif text-[17px] italic leading-relaxed text-[#2a3d54]">&ldquo;{t.quote}&rdquo;</div>
+              <div className="mb-[18px] text-[17px] italic leading-relaxed text-navy-700">&ldquo;{t.quote}&rdquo;</div>
               <div className="flex items-center gap-2.5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#dbe9fb] font-bold text-brand-500">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#def5e9] font-bold text-brand-700">
                   {t.initials}
                 </div>
                 <div>
@@ -208,7 +208,7 @@ export default function LandingPage() {
       <section id="faq" className="border-t border-[#e9eff6] bg-white">
         <div className="mx-auto max-w-[820px] px-6 py-14">
           <div className="mb-8 text-center">
-            <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-brand-500">PERGUNTAS FREQUENTES</div>
+            <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-brand-700">PERGUNTAS FREQUENTES</div>
             <h2 className="text-[26px] font-extrabold sm:text-[31px]">Ainda com dúvidas?</h2>
           </div>
           <FaqAccordion />

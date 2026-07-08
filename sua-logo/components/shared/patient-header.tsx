@@ -14,7 +14,7 @@ export function PatientHeader({ patientName, statusLabel }: { patientName: strin
   const pathname = usePathname()
 
   return (
-    <header className="sticky top-0 z-30 border-b border-line-200 bg-white">
+    <header className="sticky top-0 z-30 border-b border-line-200 bg-white/85 backdrop-blur-xl">
       <div className="mx-auto flex max-w-[960px] items-center justify-between px-6">
         <div className="flex items-center gap-8">
           <div className="flex items-center gap-2.5 py-[13px]">
@@ -30,7 +30,7 @@ export function PatientHeader({ patientName, statusLabel }: { patientName: strin
                 href={tab.href}
                 className={cn(
                   'border-b-2 py-[18px] text-sm font-bold',
-                  pathname === tab.href ? 'border-brand-500 text-brand-500' : 'border-transparent text-navy-700'
+                  pathname === tab.href ? 'border-brand-500 text-navy-900' : 'border-transparent text-navy-700'
                 )}
               >
                 {tab.label}
@@ -40,7 +40,7 @@ export function PatientHeader({ patientName, statusLabel }: { patientName: strin
         </div>
         <div className="flex items-center gap-3.5">
           <div className="flex items-center gap-2">
-            <div className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-[#dbe9fb] text-[13px] font-bold text-brand-500">
+            <div className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-brand-100 text-[13px] font-bold text-brand-700">
               {initials(patientName)}
             </div>
             <div>

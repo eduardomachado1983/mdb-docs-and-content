@@ -34,7 +34,7 @@ export default async function MedicoPage() {
         <p className="mb-5 text-[15px] text-navy-300">Fila de atendimento</p>
 
         {!queue?.length && (
-          <div className="rounded-2xl border border-line-200 bg-white px-6 py-8 text-center text-sm text-navy-200">
+          <div className="rounded-2xl border border-white/30 bg-white/65 backdrop-blur-xl px-6 py-8 text-center text-sm text-navy-200">
             Nenhum paciente na fila.
           </div>
         )}

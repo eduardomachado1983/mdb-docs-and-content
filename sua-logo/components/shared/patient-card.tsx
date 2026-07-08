@@ -45,13 +45,13 @@ export function PatientCard({
   const methodLabel = patient.payment?.method ? PAYMENT_METHOD_LABEL[patient.payment.method] ?? patient.payment.method : null
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-line-200 bg-white">
+    <div className="overflow-hidden rounded-2xl border border-white/30 bg-white/65 backdrop-blur-xl">
       <div className="flex items-center justify-between px-6 py-4">
         <div className="flex items-center gap-3">
           <div
             className={cn(
               'flex h-11 w-11 items-center justify-center rounded-full text-[13px] font-bold',
-              accent === 'admin' ? 'bg-admin-100 text-admin-500' : 'bg-teal-100 text-teal-600'
+              accent === 'admin' ? 'bg-admin-100 text-admin-500' : 'bg-teal-100 text-navy-900'
             )}
           >
             {initials(name)}
@@ -93,8 +93,8 @@ export function PatientCard({
         <Link
           href={href}
           className={cn(
-            'rounded-[10px] px-5 py-2.5 text-sm font-bold text-white',
-            accent === 'admin' ? 'bg-admin-500' : 'bg-teal-500'
+            'rounded-full px-5 py-2.5 text-sm font-bold',
+            accent === 'admin' ? 'bg-admin-500 text-white' : 'bg-teal-500 text-primary-on'
           )}
         >
           Visualizar

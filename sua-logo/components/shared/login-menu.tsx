@@ -23,7 +23,7 @@ export function LoginMenu() {
       {open && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 top-[52px] z-50 w-[210px] rounded-2xl border border-line-200 bg-white p-2 shadow-[0_18px_40px_rgba(20,50,90,.16)]">
+          <div className="absolute right-0 top-[52px] z-50 w-[210px] rounded-2xl border border-white/30 bg-white/65 backdrop-blur-xl p-2 shadow-[0_18px_40px_rgba(20,50,90,.16)]">
             <div className="px-2.5 pb-1 pt-2 text-[11px] font-bold tracking-wide text-navy-100">ENTRAR COMO</div>
             {ROLES.map((r) => (
               <Link

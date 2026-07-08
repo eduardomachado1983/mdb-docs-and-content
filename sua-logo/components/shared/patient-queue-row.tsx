@@ -27,12 +27,12 @@ export function PatientQueueRow({
   const paid = Boolean(patient.payment?.confirmed)
 
   return (
-    <div className="flex items-center justify-between gap-4 rounded-2xl border border-line-200 bg-white px-6 py-5">
+    <div className="flex items-center justify-between gap-4 rounded-2xl border border-white/30 bg-white/65 backdrop-blur-xl px-6 py-5">
       <div className="flex items-center gap-3">
         <div
           className={cn(
             'flex h-11 w-11 items-center justify-center rounded-full text-[13px] font-bold',
-            accent === 'admin' ? 'bg-admin-100 text-admin-500' : 'bg-teal-100 text-teal-600'
+            accent === 'admin' ? 'bg-admin-100 text-admin-500' : 'bg-teal-100 text-navy-900'
           )}
         >
           {initials(name)}
@@ -59,8 +59,8 @@ export function PatientQueueRow({
       <Link
         href={href}
         className={cn(
-          'rounded-[10px] px-5 py-2.5 text-sm font-bold text-white',
-          accent === 'admin' ? 'bg-admin-500' : 'bg-teal-500'
+          'rounded-full px-5 py-2.5 text-sm font-bold',
+          accent === 'admin' ? 'bg-admin-500 text-white' : 'bg-teal-500 text-primary-on'
         )}
       >
         {actionLabel}
