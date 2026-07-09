@@ -197,7 +197,7 @@ export default function RegistroPage() {
     <div className="flex min-h-screen flex-col bg-gradient-to-br from-surface-page to-brand-50">
       <SiteHeader />
 
-      <div className="mx-auto grid max-w-[1140px] px-6 pb-12 pt-10">
+      <div className="mx-auto w-full max-w-[1140px] px-6 pb-12 pt-10">
         <div className="w-full">
           <div className="mb-7 text-center">
             <h1 className="text-2xl font-extrabold">Cadastro da consulta</h1>
