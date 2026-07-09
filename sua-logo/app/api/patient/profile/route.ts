@@ -8,6 +8,13 @@ const schema = z.object({
   rg: z.string().min(1),
   birth_date: z.string().min(1),
   phone: z.string().min(8),
+  cep: z.string().optional(),
+  address: z.string().optional(),
+  number: z.string().optional(),
+  complement: z.string().optional(),
+  neighborhood: z.string().optional(),
+  city: z.string().optional(),
+  state: z.string().optional(),
 })
 
 export async function PATCH(request: Request) {
@@ -20,12 +27,16 @@ export async function PATCH(request: Request) {
 
   const supabase = await createClient()
   const { data: patient } = await supabase
-    .from('patients').select('id, status').eq('user_id', user.id).single()
+    .from('patients').select('id, status, personal_data').eq('user_id', user.id).single()
   if (!patient) return NextResponse.json({ error: 'Paciente não encontrado' }, { status: 404 })
 
+  // Mescla com o personal_data existente — formulários que não enviam todos
+  // os campos (ex.: "Meus dados" ainda não edita endereço) não podem apagar
+  // o que já foi salvo em outra etapa.
+  const existing = (patient.personal_data ?? {}) as Record<string, unknown>
   const { error } = await supabase
     .from('patients')
-    .update({ personal_data: { ...parsed.data, email: user.email } })
+    .update({ personal_data: { ...existing, ...parsed.data, email: user.email } })
     .eq('id', patient.id)
 
   if (error) return NextResponse.json({ error: 'Falha ao salvar' }, { status: 500 })

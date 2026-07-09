@@ -60,6 +60,13 @@ export function validatePhone(value: string): string | null {
   return null
 }
 
+// Valida CEP: 8 dígitos.
+export function validateCEP(value: string): string | null {
+  const cep = value.replace(/\D/g, '')
+  if (cep.length !== 8) return 'CEP deve ter 8 dígitos.'
+  return null
+}
+
 // Regras de senha forte.
 export function validatePassword(value: string): string | null {
   if (value.length < 8) return 'A senha deve ter ao menos 8 caracteres.'
