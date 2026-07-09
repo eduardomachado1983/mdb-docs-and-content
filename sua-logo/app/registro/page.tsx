@@ -155,8 +155,8 @@ export default function RegistroPage() {
     <div className="flex min-h-screen flex-col bg-gradient-to-br from-surface-page to-brand-50">
       <SiteHeader />
 
-      <div className="mx-auto grid max-w-[1140px] justify-items-center px-6 pb-12 pt-10">
-        <div className="w-full max-w-[820px]">
+      <div className="mx-auto grid max-w-[1140px] px-6 pb-12 pt-10">
+        <div className="w-full">
           <div className="mb-7 text-center">
             <h1 className="text-2xl font-extrabold">Cadastro da consulta</h1>
             <p className="mt-1 text-[15px] text-navy-300">Leva poucos minutos. Seus dados são protegidos.</p>
@@ -176,28 +176,22 @@ export default function RegistroPage() {
               <div className="animate-fade-up">
                 <div className="mb-1 text-lg font-extrabold">Dados pessoais</div>
                 <div className="mb-[18px] text-sm text-navy-300">Etapa 1 de 4</div>
-                <div className="flex flex-col gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <Field label="Nome completo" value={form.nome} onChange={(v) => update('nome', v)} placeholder="Nome e sobrenome" error={errors.nome} />
                   <Field label="E-mail" type="email" value={form.email} onChange={(v) => update('email', v)} placeholder="seu@email.com" error={errors.email} />
-                  <div className="grid grid-cols-2 gap-4">
-                    <Field label="CPF" value={form.cpf} onChange={(v) => update('cpf', v)} placeholder="000.000.000-00" inputMode="numeric" error={errors.cpf} />
-                    <Field label="RG" value={form.rg} onChange={(v) => update('rg', v)} placeholder="00.000.000-0" error={errors.rg} />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <Field label="Data de nascimento" type="date" value={form.nascimento} onChange={(v) => update('nascimento', v)} error={errors.nascimento} />
-                    <Field label="Telefone" value={form.telefone} onChange={(v) => update('telefone', v)} placeholder="(00) 00000-0000" inputMode="tel" error={errors.telefone} />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <PasswordField
-                      label="Senha" value={form.senha} onChange={(v) => update('senha', v)}
-                      placeholder="Crie uma senha" error={errors.senha}
-                      hint="Mínimo 8 caracteres, com maiúscula, minúscula e número."
-                    />
-                    <PasswordField
-                      label="Confirmar senha" value={form.senha2} onChange={(v) => update('senha2', v)}
-                      placeholder="Repita a senha" error={errors.senha2}
-                    />
-                  </div>
+                  <Field label="CPF" value={form.cpf} onChange={(v) => update('cpf', v)} placeholder="000.000.000-00" inputMode="numeric" error={errors.cpf} />
+                  <Field label="RG" value={form.rg} onChange={(v) => update('rg', v)} placeholder="00.000.000-0" error={errors.rg} />
+                  <Field label="Data de nascimento" type="date" value={form.nascimento} onChange={(v) => update('nascimento', v)} error={errors.nascimento} />
+                  <Field label="Telefone" value={form.telefone} onChange={(v) => update('telefone', v)} placeholder="(00) 00000-0000" inputMode="tel" error={errors.telefone} />
+                  <PasswordField
+                    label="Senha" value={form.senha} onChange={(v) => update('senha', v)}
+                    placeholder="Crie uma senha" error={errors.senha}
+                    hint="Mínimo 8 caracteres, com maiúscula, minúscula e número."
+                  />
+                  <PasswordField
+                    label="Confirmar senha" value={form.senha2} onChange={(v) => update('senha2', v)}
+                    placeholder="Repita a senha" error={errors.senha2}
+                  />
                 </div>
               </div>
             )}
@@ -206,8 +200,10 @@ export default function RegistroPage() {
               <div className="animate-fade-up">
                 <div className="mb-1 text-lg font-extrabold">Consulta</div>
                 <div className="mb-[18px] text-sm text-navy-300">Etapa 2 de 4</div>
-                <div className="flex flex-col gap-4">
-                  <TextAreaField label="Sintomas" value={form.sintomas} onChange={(v) => update('sintomas', v)} placeholder="Descreva o que você está sentindo..." error={errors.sintomas} />
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div className="sm:col-span-2">
+                    <TextAreaField label="Sintomas" value={form.sintomas} onChange={(v) => update('sintomas', v)} placeholder="Descreva o que você está sentindo..." error={errors.sintomas} />
+                  </div>
                   <Field label="Localização" value={form.local} onChange={(v) => update('local', v)} placeholder="Ex.: cabeça, garganta, abdômen..." error={errors.local} />
                   <div>
                     <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Intensidade — {form.intensidade}/10</label>
@@ -217,8 +213,10 @@ export default function RegistroPage() {
                       className="w-full accent-brand-500"
                     />
                   </div>
-                  <TextAreaField label="Histórico médico" value={form.historico} onChange={(v) => update('historico', v)} placeholder="Ex.: alergia a dipirona, uso de losartana..." />
-                  <div>
+                  <div className="sm:col-span-2">
+                    <TextAreaField label="Histórico médico" value={form.historico} onChange={(v) => update('historico', v)} placeholder="Ex.: alergia a dipirona, uso de losartana..." />
+                  </div>
+                  <div className="sm:col-span-2">
                     <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Documento de consultas anteriores (opcional)</label>
                     <SingleDocumentUpload type="previous_consultation" label="Ex.: consultas anteriores, exames..." />
                   </div>
