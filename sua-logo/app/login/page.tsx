@@ -132,8 +132,8 @@ function LoginForm() {
     <div className="flex min-h-screen flex-col bg-gradient-to-br from-surface-page to-brand-50">
       <SiteHeader />
 
-      <div className="mx-auto mt-16 w-full max-w-[376px] px-6 pb-12">
-        <div className="rounded-[22px] border border-white/30 bg-white/65 backdrop-blur-xl p-8 shadow-[0_24px_50px_rgba(20,50,90,.08)]">
+      <div className="mx-auto grid max-w-[1140px] justify-items-center px-6 pb-12 pt-16">
+        <div className="w-full max-w-[376px] rounded-[22px] border border-white/30 bg-white/65 backdrop-blur-xl p-8 shadow-[0_24px_50px_rgba(20,50,90,.08)]">
           {forgotMode ? (
             <>
               <div className="mb-1 text-[21px] font-extrabold leading-tight">Recuperar senha</div>

@@ -38,7 +38,7 @@ export default async function PacientePage({ params }: { params: Promise<{ id: s
     <div className="min-h-screen">
       <MedicoHeader doctorName={profile?.name ?? 'Médico'} crm={profile?.crm} specialty={profile?.specialty} />
 
-      <main className="mx-auto flex max-w-2xl flex-col gap-6 px-6 py-8">
+      <main className="mx-auto grid max-w-[1140px] gap-6 px-6 py-8">
         <div className="flex items-center gap-3">
           <Link
             href="/medico"

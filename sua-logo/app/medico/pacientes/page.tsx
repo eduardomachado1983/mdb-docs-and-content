@@ -42,7 +42,7 @@ export default async function MedicoPacientesPage({
     <div className="min-h-screen">
       <MedicoHeader doctorName={profile?.name ?? 'Médico'} crm={profile?.crm} specialty={profile?.specialty} />
 
-      <div className="mx-auto max-w-[960px] px-6 py-7">
+      <div className="mx-auto grid max-w-[1140px] px-6 py-7">
         <h1 className="mb-1 text-2xl font-extrabold">Painel do médico</h1>
         <p className="mb-5 text-[15px] text-navy-300">Lista de pacientes</p>
 
