@@ -27,6 +27,13 @@ export interface PersonalData {
   rg: string
   birth_date: string
   phone: string
+  cep?: string
+  address?: string
+  number?: string
+  complement?: string
+  neighborhood?: string
+  city?: string
+  state?: string
 }
 
 export interface TriageData {

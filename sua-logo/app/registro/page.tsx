@@ -12,7 +12,7 @@ import { SiteHeader } from '@/components/shared/site-header'
 import { cn } from '@/lib/utils'
 import {
   validateFullName, validateEmail, validateCPF,
-  validateBirthDate, validatePhone, validatePassword,
+  validateBirthDate, validatePhone, validatePassword, validateCEP,
 } from '@/lib/validators'
 import type { Document } from '@/types'
 
@@ -30,6 +30,13 @@ interface FormState {
   rg: string
   nascimento: string
   telefone: string
+  cep: string
+  endereco: string
+  numero: string
+  complemento: string
+  bairro: string
+  cidade: string
+  estado: string
   senha: string
   senha2: string
   sintomas: string
@@ -40,6 +47,7 @@ interface FormState {
 
 const EMPTY_FORM: FormState = {
   nome: '', email: '', cpf: '', rg: '', nascimento: '', telefone: '',
+  cep: '', endereco: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '',
   senha: '', senha2: '', sintomas: '', local: '', intensidade: 5, historico: '',
 }
 
@@ -51,6 +59,7 @@ export default function RegistroPage() {
   const [form, setForm] = useState<FormState>(EMPTY_FORM)
   const [errors, setErrors] = useState<FieldErrors>({})
   const [loading, setLoading] = useState(false)
+  const [cepLoading, setCepLoading] = useState(false)
   const [uploadedDocs, setUploadedDocs] = useState<Document[]>([])
 
   const hasIdentity = uploadedDocs.some((d) => d.type === 'identity')
@@ -63,6 +72,30 @@ export default function RegistroPage() {
     setErrors((prev) => (prev[field] ? { ...prev, [field]: null } : prev))
   }
 
+  async function lookupCEP(digits: string) {
+    setCepLoading(true)
+    try {
+      const res = await fetch(`https://viacep.com.br/ws/${digits}/json/`)
+      const data = await res.json()
+      if (data.erro) {
+        toast.error('CEP não encontrado.')
+        return
+      }
+      setForm((prev) => ({
+        ...prev,
+        endereco: data.logradouro || prev.endereco,
+        bairro: data.bairro || prev.bairro,
+        cidade: data.localidade || prev.cidade,
+        estado: data.uf || prev.estado,
+      }))
+      setErrors((prev) => ({ ...prev, endereco: null, bairro: null, cidade: null, estado: null }))
+    } catch {
+      toast.error('Não foi possível buscar o CEP. Preencha o endereço manualmente.')
+    } finally {
+      setCepLoading(false)
+    }
+  }
+
   function validateStep1(): boolean {
     const next: FieldErrors = {
       nome: validateFullName(form.nome),
@@ -71,6 +104,12 @@ export default function RegistroPage() {
       rg: form.rg.trim() ? null : 'Informe o RG.',
       nascimento: validateBirthDate(form.nascimento),
       telefone: validatePhone(form.telefone),
+      cep: validateCEP(form.cep),
+      endereco: form.endereco.trim() ? null : 'Informe o endereço.',
+      numero: form.numero.trim() ? null : 'Informe o número.',
+      bairro: form.bairro.trim() ? null : 'Informe o bairro.',
+      cidade: form.cidade.trim() ? null : 'Informe a cidade.',
+      estado: form.estado.trim() ? null : 'Informe o estado.',
       senha: validatePassword(form.senha),
       senha2: form.senha2 !== form.senha ? 'As senhas não coincidem.' : null,
     }
@@ -102,6 +141,9 @@ export default function RegistroPage() {
         body: JSON.stringify({
           full_name: form.nome, cpf: form.cpf, rg: form.rg,
           birth_date: form.nascimento, phone: form.telefone,
+          cep: form.cep, address: form.endereco, number: form.numero,
+          complement: form.complemento, neighborhood: form.bairro,
+          city: form.cidade, state: form.estado,
         }),
       })
       if (!profileRes.ok) {
@@ -175,7 +217,9 @@ export default function RegistroPage() {
             {step === 1 && (
               <div className="animate-fade-up">
                 <div className="mb-1 text-lg font-extrabold">Dados pessoais</div>
-                <div className="mb-[18px] text-sm text-navy-300">Etapa 1 de 4</div>
+                <div className="mb-[18px] text-sm text-navy-300">
+                  Precisamos de suas informações pessoais para dar continuidade na consulta.
+                </div>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <Field label="Nome completo" value={form.nome} onChange={(v) => update('nome', v)} placeholder="Nome e sobrenome" error={errors.nome} />
                   <Field label="E-mail" type="email" value={form.email} onChange={(v) => update('email', v)} placeholder="seu@email.com" error={errors.email} />
@@ -183,6 +227,24 @@ export default function RegistroPage() {
                   <Field label="RG" value={form.rg} onChange={(v) => update('rg', v)} placeholder="00.000.000-0" error={errors.rg} />
                   <Field label="Data de nascimento" type="date" value={form.nascimento} onChange={(v) => update('nascimento', v)} error={errors.nascimento} />
                   <Field label="Telefone" value={form.telefone} onChange={(v) => update('telefone', v)} placeholder="(00) 00000-0000" inputMode="tel" error={errors.telefone} />
+                  <Field
+                    label="CEP" value={form.cep}
+                    onChange={(v) => {
+                      update('cep', v)
+                      const digits = v.replace(/\D/g, '')
+                      if (digits.length === 8) lookupCEP(digits)
+                    }}
+                    placeholder={cepLoading ? 'Buscando endereço...' : '00000-000'}
+                    inputMode="numeric" error={errors.cep}
+                  />
+                  <Field label="Número" value={form.numero} onChange={(v) => update('numero', v)} placeholder="123" inputMode="numeric" error={errors.numero} />
+                  <div className="sm:col-span-2">
+                    <Field label="Endereço" value={form.endereco} onChange={(v) => update('endereco', v)} placeholder="Rua, avenida..." error={errors.endereco} />
+                  </div>
+                  <Field label="Complemento (opcional)" value={form.complemento} onChange={(v) => update('complemento', v)} placeholder="Apto, bloco..." />
+                  <Field label="Bairro" value={form.bairro} onChange={(v) => update('bairro', v)} placeholder="Bairro" error={errors.bairro} />
+                  <Field label="Cidade" value={form.cidade} onChange={(v) => update('cidade', v)} placeholder="Cidade" error={errors.cidade} />
+                  <Field label="Estado" value={form.estado} onChange={(v) => update('estado', v)} placeholder="UF" error={errors.estado} />
                   <PasswordField
                     label="Senha" value={form.senha} onChange={(v) => update('senha', v)}
                     placeholder="Crie uma senha" error={errors.senha}
