@@ -23,6 +23,17 @@ const STEPS = [
   { title: 'Pagamento' },
 ]
 
+const OBJETIVOS: { value: string; label: string; desc: string }[] = [
+  { value: 'sono', label: 'Melhora do Sono', desc: 'Ajuda para dormir melhor' },
+  { value: 'calma', label: 'Mais Calma', desc: 'Controle da agitação e do nervosismo diário' },
+  { value: 'foco', label: 'Aumento do Foco', desc: 'Melhorar a concentração e produtividade' },
+  { value: 'estresse', label: 'Menos estresse', desc: 'Reduzir o estresse do dia a dia' },
+  { value: 'ansiedade', label: 'Controle da Ansiedade', desc: 'Alívio dos sintomas de ansiedade' },
+  { value: 'dor', label: 'Dor Crônica', desc: 'Reduzir dores persistentes' },
+  { value: 'tdah', label: 'TDAH', desc: 'Atenção e foco para TDAH' },
+  { value: 'outros', label: 'Outros', desc: 'Descreva seu objetivo' },
+]
+
 interface FormState {
   nome: string
   email: string
@@ -39,7 +50,8 @@ interface FormState {
   estado: string
   senha: string
   senha2: string
-  sintomas: string
+  objetivos: string[]
+  objetivoOutros: string
   local: string
   intensidade: number
   historico: string
@@ -48,7 +60,7 @@ interface FormState {
 const EMPTY_FORM: FormState = {
   nome: '', email: '', cpf: '', rg: '', nascimento: '', telefone: '',
   cep: '', endereco: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '',
-  senha: '', senha2: '', sintomas: '', local: '', intensidade: 5, historico: '',
+  senha: '', senha2: '', objetivos: [], objetivoOutros: '', local: '', intensidade: 5, historico: '',
 }
 
 type FieldErrors = Partial<Record<keyof FormState, string | null>>
@@ -158,9 +170,36 @@ export default function RegistroPage() {
     }
   }
 
+  function toggleObjetivo(value: string) {
+    setForm((prev) => ({
+      ...prev,
+      objetivos: prev.objetivos.includes(value)
+        ? prev.objetivos.filter((o) => o !== value)
+        : [...prev.objetivos, value],
+    }))
+    setErrors((prev) => (prev.objetivos ? { ...prev, objetivos: null } : prev))
+  }
+
+  // Junta os objetivos escolhidos (labels) + o texto de "Outros" numa string,
+  // que é salva em triage.main_symptom (exibida ao médico e nos cards).
+  function objetivosText(): string {
+    const labels = OBJETIVOS
+      .filter((o) => o.value !== 'outros' && form.objetivos.includes(o.value))
+      .map((o) => o.label)
+    if (form.objetivos.includes('outros') && form.objetivoOutros.trim()) {
+      labels.push(form.objetivoOutros.trim())
+    }
+    return labels.join(', ')
+  }
+
   function validateStep2(): boolean {
+    const outrosMissing = form.objetivos.includes('outros') && !form.objetivoOutros.trim()
     const next: FieldErrors = {
-      sintomas: form.sintomas.trim() ? null : 'Descreva os sintomas.',
+      objetivos: form.objetivos.length === 0
+        ? 'Selecione ao menos um objetivo.'
+        : outrosMissing
+          ? 'Descreva o objetivo em "Outros".'
+          : null,
       local: form.local.trim() ? null : 'Informe a localização.',
     }
     setErrors((prev) => ({ ...prev, ...next }))
@@ -178,7 +217,7 @@ export default function RegistroPage() {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          main_symptom: form.sintomas, pain_location: form.local,
+          main_symptom: objetivosText(), pain_location: form.local,
           pain_intensity: form.intensidade, medical_history: form.historico,
         }),
       })
@@ -264,7 +303,53 @@ export default function RegistroPage() {
                 <div className="mb-[18px] text-sm text-navy-300">Qual seu objetivo com o uso de Cannabis?</div>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="sm:col-span-2">
-                    <TextAreaField label="Sintomas" value={form.sintomas} onChange={(v) => update('sintomas', v)} placeholder="Descreva o que você está sentindo..." error={errors.sintomas} />
+                    <label className="mb-1.5 block text-[13px] font-bold text-navy-700">
+                      Objetivo principal <span className="font-normal text-navy-200">(pode escolher mais de um)</span>
+                    </label>
+                    <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                      {OBJETIVOS.map((o) => {
+                        const selected = form.objetivos.includes(o.value)
+                        return (
+                          <button
+                            key={o.value}
+                            type="button"
+                            aria-pressed={selected}
+                            onClick={() => toggleObjetivo(o.value)}
+                            className={cn(
+                              'flex items-start gap-3 rounded-[12px] border p-3.5 text-left transition',
+                              selected ? 'border-brand-500 bg-brand-50' : 'border-line-300 hover:border-brand-200'
+                            )}
+                          >
+                            <span
+                              className={cn(
+                                'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border text-xs',
+                                selected ? 'border-brand-500 bg-brand-500 text-primary-on' : 'border-line-400 text-transparent'
+                              )}
+                              aria-hidden="true"
+                            >
+                              ✓
+                            </span>
+                            <span>
+                              <span className="block text-sm font-bold text-navy-800">{o.label}</span>
+                              <span className="block text-xs text-navy-300">{o.desc}</span>
+                            </span>
+                          </button>
+                        )
+                      })}
+                    </div>
+                    {form.objetivos.includes('outros') && (
+                      <div className="mt-2.5">
+                        <input
+                          type="text"
+                          value={form.objetivoOutros}
+                          onChange={(e) => update('objetivoOutros', e.target.value)}
+                          placeholder="Descreva seu objetivo"
+                          aria-invalid={Boolean(errors.objetivos)}
+                          className="w-full rounded-[10px] border border-line-400 px-3.5 py-3 text-[15px] outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+                        />
+                      </div>
+                    )}
+                    {errors.objetivos && <p className="mt-1 text-xs font-semibold text-error-500">{errors.objetivos}</p>}
                   </div>
                   <Field label="Localização" value={form.local} onChange={(v) => update('local', v)} placeholder="Ex.: cabeça, garganta, abdômen..." error={errors.local} />
                   <div>
