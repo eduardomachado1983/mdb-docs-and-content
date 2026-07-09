@@ -127,7 +127,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section id="consultas" className="mx-auto max-w-[1140px] px-6 py-14">
+      <section id="consultas" className="mx-auto grid max-w-[1140px] px-6 py-14">
         <div className="mb-9 text-center">
           <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-brand-700">TIPOS DE CONSULTA</div>
           <h2 className="text-[26px] font-extrabold tracking-tight sm:text-[31px]">Para o que você precisa hoje</h2>
@@ -146,7 +146,7 @@ export default function LandingPage() {
       </section>
 
       <section id="como-funciona" className="bg-navy-900 text-white">
-        <div className="mx-auto max-w-[1140px] px-6 py-14">
+        <div className="mx-auto grid max-w-[1140px] px-6 py-14">
           <div className="mb-10 text-center">
             <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-[#5fb0ff]">COMO FUNCIONA</div>
             <h2 className="text-[26px] font-extrabold tracking-tight sm:text-[31px]">
@@ -167,7 +167,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1140px] px-6 py-14">
+      <section className="mx-auto grid max-w-[1140px] px-6 py-14">
         <div className="flex flex-wrap items-center justify-between gap-7 rounded-[22px] bg-gradient-to-r from-brand-500 to-teal-500 p-8 shadow-[0_20px_44px_rgba(22,104,214,.25)] sm:p-11">
           <div>
             <h2 className="mb-2 text-2xl font-extrabold text-white sm:text-[28px]">Pronto para começar sua consulta?</h2>
@@ -182,7 +182,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1140px] px-6 pb-14 pt-5">
+      <section className="mx-auto grid max-w-[1140px] px-6 pb-14 pt-5">
         <div className="mb-9 text-center">
           <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-brand-700">DEPOIMENTOS</div>
           <h2 className="text-[26px] font-extrabold sm:text-[31px]">Quem já se consultou</h2>

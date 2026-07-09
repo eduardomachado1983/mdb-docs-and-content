@@ -51,7 +51,7 @@ export default async function ValidacaoPage({
     <div className="min-h-screen">
       <AdminHeader adminName={profile?.name ?? 'Administrador'} />
 
-      <main className="mx-auto max-w-[960px] px-6 py-8">
+      <main className="mx-auto grid max-w-[1140px] px-6 py-8">
         <AdminPatientHeader patientId={patient.id} initial={patient.personal_data} initialEditing={edit === '1'} />
 
         <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_280px]">

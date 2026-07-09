@@ -155,131 +155,133 @@ export default function RegistroPage() {
     <div className="flex min-h-screen flex-col bg-gradient-to-br from-surface-page to-brand-50">
       <SiteHeader />
 
-      <div className="mx-auto mt-10 w-full max-w-[680px] px-6 pb-12">
-        <div className="mb-7 text-center">
-          <h1 className="text-2xl font-extrabold">Cadastro da consulta</h1>
-          <p className="mt-1 text-[15px] text-navy-300">Leva poucos minutos. Seus dados são protegidos.</p>
-        </div>
-
-        <div
-          className={cn(
-            'mx-auto max-w-[560px] rounded-[22px] border bg-white/65 backdrop-blur-xl p-8 shadow-[0_24px_50px_rgba(20,50,90,.08)]',
-            docsComplete ? 'border-teal-500' : 'border-white/30'
-          )}
-        >
-          <div className="mb-7">
-            <WizardStepper steps={STEPS} current={step} />
+      <div className="mx-auto grid max-w-[1140px] justify-items-center px-6 pb-12 pt-10">
+        <div className="w-full max-w-[680px]">
+          <div className="mb-7 text-center">
+            <h1 className="text-2xl font-extrabold">Cadastro da consulta</h1>
+            <p className="mt-1 text-[15px] text-navy-300">Leva poucos minutos. Seus dados são protegidos.</p>
           </div>
 
-          {step === 1 && (
-            <div className="animate-fade-up">
-              <div className="mb-1 text-lg font-extrabold">Dados pessoais</div>
-              <div className="mb-[18px] text-sm text-navy-300">Etapa 1 de 4</div>
-              <div className="flex flex-col gap-4">
-                <Field label="Nome completo" value={form.nome} onChange={(v) => update('nome', v)} placeholder="Nome e sobrenome" error={errors.nome} />
-                <Field label="E-mail" type="email" value={form.email} onChange={(v) => update('email', v)} placeholder="seu@email.com" error={errors.email} />
-                <div className="grid grid-cols-2 gap-4">
-                  <Field label="CPF" value={form.cpf} onChange={(v) => update('cpf', v)} placeholder="000.000.000-00" inputMode="numeric" error={errors.cpf} />
-                  <Field label="RG" value={form.rg} onChange={(v) => update('rg', v)} placeholder="00.000.000-0" error={errors.rg} />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <Field label="Data de nascimento" type="date" value={form.nascimento} onChange={(v) => update('nascimento', v)} error={errors.nascimento} />
-                  <Field label="Telefone" value={form.telefone} onChange={(v) => update('telefone', v)} placeholder="(00) 00000-0000" inputMode="tel" error={errors.telefone} />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <PasswordField
-                    label="Senha" value={form.senha} onChange={(v) => update('senha', v)}
-                    placeholder="Crie uma senha" error={errors.senha}
-                    hint="Mínimo 8 caracteres, com maiúscula, minúscula e número."
-                  />
-                  <PasswordField
-                    label="Confirmar senha" value={form.senha2} onChange={(v) => update('senha2', v)}
-                    placeholder="Repita a senha" error={errors.senha2}
-                  />
+          <div
+            className={cn(
+              'mx-auto max-w-[560px] rounded-[22px] border bg-white/65 backdrop-blur-xl p-8 shadow-[0_24px_50px_rgba(20,50,90,.08)]',
+              docsComplete ? 'border-teal-500' : 'border-white/30'
+            )}
+          >
+            <div className="mb-7">
+              <WizardStepper steps={STEPS} current={step} />
+            </div>
+
+            {step === 1 && (
+              <div className="animate-fade-up">
+                <div className="mb-1 text-lg font-extrabold">Dados pessoais</div>
+                <div className="mb-[18px] text-sm text-navy-300">Etapa 1 de 4</div>
+                <div className="flex flex-col gap-4">
+                  <Field label="Nome completo" value={form.nome} onChange={(v) => update('nome', v)} placeholder="Nome e sobrenome" error={errors.nome} />
+                  <Field label="E-mail" type="email" value={form.email} onChange={(v) => update('email', v)} placeholder="seu@email.com" error={errors.email} />
+                  <div className="grid grid-cols-2 gap-4">
+                    <Field label="CPF" value={form.cpf} onChange={(v) => update('cpf', v)} placeholder="000.000.000-00" inputMode="numeric" error={errors.cpf} />
+                    <Field label="RG" value={form.rg} onChange={(v) => update('rg', v)} placeholder="00.000.000-0" error={errors.rg} />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <Field label="Data de nascimento" type="date" value={form.nascimento} onChange={(v) => update('nascimento', v)} error={errors.nascimento} />
+                    <Field label="Telefone" value={form.telefone} onChange={(v) => update('telefone', v)} placeholder="(00) 00000-0000" inputMode="tel" error={errors.telefone} />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <PasswordField
+                      label="Senha" value={form.senha} onChange={(v) => update('senha', v)}
+                      placeholder="Crie uma senha" error={errors.senha}
+                      hint="Mínimo 8 caracteres, com maiúscula, minúscula e número."
+                    />
+                    <PasswordField
+                      label="Confirmar senha" value={form.senha2} onChange={(v) => update('senha2', v)}
+                      placeholder="Repita a senha" error={errors.senha2}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {step === 2 && (
-            <div className="animate-fade-up">
-              <div className="mb-1 text-lg font-extrabold">Consulta</div>
-              <div className="mb-[18px] text-sm text-navy-300">Etapa 2 de 4</div>
-              <div className="flex flex-col gap-4">
-                <TextAreaField label="Sintomas" value={form.sintomas} onChange={(v) => update('sintomas', v)} placeholder="Descreva o que você está sentindo..." error={errors.sintomas} />
-                <Field label="Localização" value={form.local} onChange={(v) => update('local', v)} placeholder="Ex.: cabeça, garganta, abdômen..." error={errors.local} />
-                <div>
-                  <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Intensidade — {form.intensidade}/10</label>
-                  <input
-                    type="range" min={1} max={10} value={form.intensidade}
-                    onChange={(e) => update('intensidade', Number(e.target.value))}
-                    className="w-full accent-brand-500"
-                  />
-                </div>
-                <TextAreaField label="Histórico médico" value={form.historico} onChange={(v) => update('historico', v)} placeholder="Ex.: alergia a dipirona, uso de losartana..." />
-                <div>
-                  <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Documento de consultas anteriores (opcional)</label>
-                  <SingleDocumentUpload type="previous_consultation" label="Ex.: consultas anteriores, exames..." />
+            {step === 2 && (
+              <div className="animate-fade-up">
+                <div className="mb-1 text-lg font-extrabold">Consulta</div>
+                <div className="mb-[18px] text-sm text-navy-300">Etapa 2 de 4</div>
+                <div className="flex flex-col gap-4">
+                  <TextAreaField label="Sintomas" value={form.sintomas} onChange={(v) => update('sintomas', v)} placeholder="Descreva o que você está sentindo..." error={errors.sintomas} />
+                  <Field label="Localização" value={form.local} onChange={(v) => update('local', v)} placeholder="Ex.: cabeça, garganta, abdômen..." error={errors.local} />
+                  <div>
+                    <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Intensidade — {form.intensidade}/10</label>
+                    <input
+                      type="range" min={1} max={10} value={form.intensidade}
+                      onChange={(e) => update('intensidade', Number(e.target.value))}
+                      className="w-full accent-brand-500"
+                    />
+                  </div>
+                  <TextAreaField label="Histórico médico" value={form.historico} onChange={(v) => update('historico', v)} placeholder="Ex.: alergia a dipirona, uso de losartana..." />
+                  <div>
+                    <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Documento de consultas anteriores (opcional)</label>
+                    <SingleDocumentUpload type="previous_consultation" label="Ex.: consultas anteriores, exames..." />
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {step === 3 && (
-            <div className="animate-fade-up">
-              <div className="mb-1 text-lg font-extrabold">Documentos</div>
-              <div className="mb-[18px] text-sm text-navy-300">Etapa 3 de 4 — envie seu documento de identidade e comprovante de residência</div>
-              <DocumentUpload initialDocuments={[]} onChange={setUploadedDocs} />
-              {!docsComplete && (
-                <p className="mt-3 text-xs text-navy-200">Envie os 2 documentos para continuar.</p>
-              )}
-            </div>
-          )}
+            {step === 3 && (
+              <div className="animate-fade-up">
+                <div className="mb-1 text-lg font-extrabold">Documentos</div>
+                <div className="mb-[18px] text-sm text-navy-300">Etapa 3 de 4 — envie seu documento de identidade e comprovante de residência</div>
+                <DocumentUpload initialDocuments={[]} onChange={setUploadedDocs} />
+                {!docsComplete && (
+                  <p className="mt-3 text-xs text-navy-200">Envie os 2 documentos para continuar.</p>
+                )}
+              </div>
+            )}
 
-          {step === 4 && (
-            <div className="animate-fade-up">
-              <div className="mb-1 text-lg font-extrabold">Pagamento</div>
-              <div className="mb-[18px] text-sm text-navy-300">Etapa 4 de 4 — valor da consulta: <strong className="text-navy-900">R$ 2,00</strong></div>
-              <PaymentPanel cpf={form.cpf} />
-              <div className="mt-5 border-t border-dashed border-line-300 pt-4">
-                <p className="mb-3 text-sm leading-relaxed text-navy-300">
-                  Não consegue pagar agora? Sem problema — você pode finalizar o cadastro e pagar depois pela sua área.
-                </p>
+            {step === 4 && (
+              <div className="animate-fade-up">
+                <div className="mb-1 text-lg font-extrabold">Pagamento</div>
+                <div className="mb-[18px] text-sm text-navy-300">Etapa 4 de 4 — valor da consulta: <strong className="text-navy-900">R$ 2,00</strong></div>
+                <PaymentPanel cpf={form.cpf} />
+                <div className="mt-5 border-t border-dashed border-line-300 pt-4">
+                  <p className="mb-3 text-sm leading-relaxed text-navy-300">
+                    Não consegue pagar agora? Sem problema — você pode finalizar o cadastro e pagar depois pela sua área.
+                  </p>
+                  <button
+                    onClick={() => router.push('/dashboard')}
+                    className="w-full rounded-[11px] border border-line-300 bg-surface-page py-3 text-sm font-bold text-navy-700"
+                  >
+                    Finalizar cadastro e pagar depois
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {step < 4 && (
+              <div className="mt-6 flex items-center justify-between gap-3">
+                {step > 1 ? (
+                  <button
+                    onClick={() => setStep(step - 1)}
+                    className="rounded-[11px] border border-line-300 bg-surface-page px-5 py-3 text-sm font-bold text-navy-500"
+                  >
+                    ← Voltar
+                  </button>
+                ) : <span />}
                 <button
-                  onClick={() => router.push('/dashboard')}
-                  className="w-full rounded-[11px] border border-line-300 bg-surface-page py-3 text-sm font-bold text-navy-700"
+                  onClick={step === 1 ? handleStep1 : step === 2 ? handleStep2 : () => setStep(4)}
+                  disabled={loading || (step === 3 && !docsComplete)}
+                  className="rounded-full bg-brand-500 px-6 py-3 text-[15px] font-bold text-primary-on disabled:opacity-60"
                 >
-                  Finalizar cadastro e pagar depois
+                  {loading ? 'Salvando...' : 'Continuar →'}
                 </button>
               </div>
-            </div>
-          )}
+            )}
 
-          {step < 4 && (
-            <div className="mt-6 flex items-center justify-between gap-3">
-              {step > 1 ? (
-                <button
-                  onClick={() => setStep(step - 1)}
-                  className="rounded-[11px] border border-line-300 bg-surface-page px-5 py-3 text-sm font-bold text-navy-500"
-                >
-                  ← Voltar
-                </button>
-              ) : <span />}
-              <button
-                onClick={step === 1 ? handleStep1 : step === 2 ? handleStep2 : () => setStep(4)}
-                disabled={loading || (step === 3 && !docsComplete)}
-                className="rounded-full bg-brand-500 px-6 py-3 text-[15px] font-bold text-primary-on disabled:opacity-60"
-              >
-                {loading ? 'Salvando...' : 'Continuar →'}
-              </button>
-            </div>
-          )}
-
-          {step === 4 && (
-            <div className="mt-6">
-              <button onClick={() => setStep(3)} className="text-sm font-bold text-navy-500">← Voltar</button>
-            </div>
-          )}
+            {step === 4 && (
+              <div className="mt-6">
+                <button onClick={() => setStep(3)} className="text-sm font-bold text-navy-500">← Voltar</button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
