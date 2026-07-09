@@ -41,6 +41,7 @@ export interface TriageData {
   pain_location: string
   pain_intensity: number
   medical_history: string
+  health_history?: Record<string, string>
 }
 
 export interface PaymentData {
