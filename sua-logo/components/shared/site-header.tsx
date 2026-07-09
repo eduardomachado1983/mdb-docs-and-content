@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { LoginMenu } from '@/components/shared/login-menu'
+import { MobileNavMenu } from '@/components/shared/mobile-nav-menu'
 import { SiteLogo } from '@/components/shared/site-logo'
 
 export function SiteHeader() {
@@ -15,13 +16,16 @@ export function SiteHeader() {
           <Link href="/#faq">Dúvidas</Link>
         </nav>
         <div className="flex items-center gap-2.5">
-          <LoginMenu />
-          <Link
-            href="/registro"
-            className="rounded-full bg-brand-500 px-[17px] py-2.5 text-sm font-bold text-primary-on"
-          >
-            Iniciar consulta
-          </Link>
+          <div className="hidden items-center gap-2.5 md:flex">
+            <LoginMenu />
+            <Link
+              href="/registro"
+              className="rounded-full bg-brand-500 px-[17px] py-2.5 text-sm font-bold text-primary-on"
+            >
+              Iniciar consulta
+            </Link>
+          </div>
+          <MobileNavMenu />
         </div>
       </div>
     </header>
