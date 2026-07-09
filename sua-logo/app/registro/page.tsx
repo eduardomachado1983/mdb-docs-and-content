@@ -237,23 +237,23 @@ export default function RegistroPage() {
                     placeholder={cepLoading ? 'Buscando endereço...' : '00000-000'}
                     inputMode="numeric" error={errors.cep}
                   />
+                  <Field label="Endereço" value={form.endereco} onChange={(v) => update('endereco', v)} placeholder="Rua, avenida..." error={errors.endereco} />
                   <Field label="Número" value={form.numero} onChange={(v) => update('numero', v)} placeholder="123" inputMode="numeric" error={errors.numero} />
-                  <div className="sm:col-span-2">
-                    <Field label="Endereço" value={form.endereco} onChange={(v) => update('endereco', v)} placeholder="Rua, avenida..." error={errors.endereco} />
-                  </div>
                   <Field label="Complemento (opcional)" value={form.complemento} onChange={(v) => update('complemento', v)} placeholder="Apto, bloco..." />
                   <Field label="Bairro" value={form.bairro} onChange={(v) => update('bairro', v)} placeholder="Bairro" error={errors.bairro} />
                   <Field label="Cidade" value={form.cidade} onChange={(v) => update('cidade', v)} placeholder="Cidade" error={errors.cidade} />
                   <Field label="Estado" value={form.estado} onChange={(v) => update('estado', v)} placeholder="UF" error={errors.estado} />
-                  <PasswordField
-                    label="Senha" value={form.senha} onChange={(v) => update('senha', v)}
-                    placeholder="Crie uma senha" error={errors.senha}
-                    hint="Mínimo 8 caracteres, com maiúscula, minúscula e número."
-                  />
-                  <PasswordField
-                    label="Confirmar senha" value={form.senha2} onChange={(v) => update('senha2', v)}
-                    placeholder="Repita a senha" error={errors.senha2}
-                  />
+                  <div className="grid grid-cols-1 gap-4 sm:col-span-2 sm:grid-cols-2">
+                    <PasswordField
+                      label="Senha" value={form.senha} onChange={(v) => update('senha', v)}
+                      placeholder="Crie uma senha" error={errors.senha}
+                      hint="Mínimo 8 caracteres, com maiúscula, minúscula e número."
+                    />
+                    <PasswordField
+                      label="Confirmar senha" value={form.senha2} onChange={(v) => update('senha2', v)}
+                      placeholder="Repita a senha" error={errors.senha2}
+                    />
+                  </div>
                 </div>
               </div>
             )}
