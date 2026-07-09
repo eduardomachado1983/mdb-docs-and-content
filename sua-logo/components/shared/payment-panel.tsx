@@ -60,6 +60,25 @@ export function PaymentPanel({ cpf = '' }: { cpf?: string }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [method])
 
+  // Pix real (não simulado) só é confirmado pelo webhook do Mercado Pago —
+  // sem isso, o paciente ficaria olhando pro QR code pra sempre sem nenhum
+  // sinal de que o pagamento passou. Faz polling do status a cada 4s.
+  useEffect(() => {
+    if (!pix || pix.simulated) return
+    const interval = setInterval(async () => {
+      const res = await fetch(`/api/payments/status?referenceId=${encodeURIComponent(pix.referenceId)}`)
+      if (!res.ok) return
+      const data = await res.json()
+      if (data.status === 'approved') {
+        clearInterval(interval)
+        toast.success('Pagamento confirmado!')
+        router.push('/dashboard')
+        router.refresh()
+      }
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [pix, router])
+
   async function confirmSimulated() {
     if (!pix) return
     setLoading(true)
@@ -75,6 +94,7 @@ export function PaymentPanel({ cpf = '' }: { cpf?: string }) {
         return
       }
       toast.success('Pagamento confirmado!')
+      router.push('/dashboard')
       router.refresh()
     } finally {
       setLoading(false)
@@ -124,6 +144,12 @@ export function PaymentPanel({ cpf = '' }: { cpf?: string }) {
               <Button size="sm" variant="outline" className="mt-2 w-full" onClick={copyPixCode}>
                 📋 Copiar código
               </Button>
+            </div>
+          )}
+          {!pix.simulated && (
+            <div className="flex items-center gap-2 text-sm text-navy-300" role="status">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-brand-500" aria-hidden="true" />
+              Aguardando confirmação do pagamento...
             </div>
           )}
           {pix.simulated && (

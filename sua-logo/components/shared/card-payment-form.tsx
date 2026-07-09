@@ -101,6 +101,7 @@ export function CardPaymentForm({ cpf }: { cpf: string }) {
 
       if (data.approved) {
         toast.success('Pagamento aprovado!')
+        router.push('/dashboard')
         router.refresh()
       } else {
         toast.error('Pagamento não aprovado. Tente outro cartão.')

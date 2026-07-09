@@ -84,7 +84,7 @@ function RedefinirSenhaForm() {
                     autoComplete="new-password"
                     aria-invalid={Boolean(errors.senha)}
                     className={cn(
-                      'w-full rounded-[11px] border px-3.5 py-3 pr-11 outline-none',
+                      'w-full rounded-[11px] border px-3.5 py-3 pr-11 outline-none focus:ring-2 focus:ring-brand-200',
                       errors.senha ? 'border-error-500 focus:border-error-500' : 'border-line-400 focus:border-brand-500'
                     )}
                   />
@@ -114,7 +114,7 @@ function RedefinirSenhaForm() {
                   autoComplete="new-password"
                   aria-invalid={Boolean(errors.senha2)}
                   className={cn(
-                    'w-full rounded-[11px] border px-3.5 py-3 outline-none',
+                    'w-full rounded-[11px] border px-3.5 py-3 outline-none focus:ring-2 focus:ring-brand-200',
                     errors.senha2 ? 'border-error-500 focus:border-error-500' : 'border-line-400 focus:border-brand-500'
                   )}
                 />

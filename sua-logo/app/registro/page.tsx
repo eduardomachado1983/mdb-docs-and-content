@@ -302,7 +302,7 @@ function Field({ label, value, onChange, placeholder, type = 'text', error, inpu
         aria-invalid={Boolean(error)}
         autoComplete="off"
         className={cn(
-          'w-full rounded-[10px] border px-3.5 py-3 text-[15px] outline-none',
+          'w-full rounded-[10px] border px-3.5 py-3 text-[15px] outline-none focus:ring-2 focus:ring-brand-200',
           error ? 'border-error-500 focus:border-error-500' : 'border-line-400 focus:border-brand-500'
         )}
       />
@@ -328,7 +328,7 @@ function PasswordField({ label, value, onChange, placeholder, error, hint }: {
           aria-invalid={Boolean(error)}
           autoComplete="new-password"
           className={cn(
-            'w-full rounded-[10px] border px-3.5 py-3 pr-11 text-[15px] outline-none',
+            'w-full rounded-[10px] border px-3.5 py-3 pr-11 text-[15px] outline-none focus:ring-2 focus:ring-brand-200',
             error ? 'border-error-500 focus:border-error-500' : 'border-line-400 focus:border-brand-500'
           )}
         />
@@ -363,7 +363,7 @@ function TextAreaField({ label, value, onChange, placeholder, error }: {
         placeholder={placeholder}
         aria-invalid={Boolean(error)}
         className={cn(
-          'w-full rounded-[10px] border px-3.5 py-3 text-[15px] outline-none',
+          'w-full rounded-[10px] border px-3.5 py-3 text-[15px] outline-none focus:ring-2 focus:ring-brand-200',
           error ? 'border-error-500 focus:border-error-500' : 'border-line-400 focus:border-brand-500'
         )}
       />

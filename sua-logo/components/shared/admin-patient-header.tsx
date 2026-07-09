@@ -140,7 +140,7 @@ function Field({ label, value, onChange, type = 'text', className }: {
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="rounded-[10px] border border-line-400 px-3.5 py-3 text-[15px] outline-none focus:border-admin-500"
+        className="rounded-[10px] border border-line-400 px-3.5 py-3 text-[15px] outline-none focus:border-admin-500 focus:ring-2 focus:ring-admin-100"
       />
     </div>
   )

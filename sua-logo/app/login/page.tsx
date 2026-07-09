@@ -155,7 +155,7 @@ function LoginForm() {
                     autoComplete="off"
                     aria-invalid={Boolean(forgotError)}
                     className={cn(
-                      'w-full rounded-[11px] border px-3.5 py-3 outline-none',
+                      'w-full rounded-[11px] border px-3.5 py-3 outline-none focus:ring-2 focus:ring-brand-200',
                       forgotError ? 'border-error-500 focus:border-error-500' : 'border-line-400 focus:border-brand-500'
                     )}
                   />
@@ -214,7 +214,7 @@ function LoginForm() {
                     autoComplete="off"
                     aria-invalid={Boolean(errors.email)}
                     className={cn(
-                      'w-full rounded-[11px] border px-3.5 py-3 outline-none',
+                      'w-full rounded-[11px] border px-3.5 py-3 outline-none focus:ring-2 focus:ring-brand-200',
                       errors.email ? 'border-error-500 focus:border-error-500' : 'border-line-400 focus:border-brand-500'
                     )}
                   />
@@ -242,7 +242,7 @@ function LoginForm() {
                     autoComplete="off"
                     aria-invalid={Boolean(errors.password)}
                     className={cn(
-                      'w-full rounded-[11px] border px-3.5 py-3 outline-none',
+                      'w-full rounded-[11px] border px-3.5 py-3 outline-none focus:ring-2 focus:ring-brand-200',
                       errors.password ? 'border-error-500 focus:border-error-500' : 'border-line-400 focus:border-brand-500'
                     )}
                   />
