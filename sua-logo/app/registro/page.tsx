@@ -34,6 +34,17 @@ const OBJETIVOS: { value: string; label: string; desc: string }[] = [
   { value: 'outros', label: 'Outros', desc: 'Descreva seu objetivo' },
 ]
 
+const SAUDE_PERGUNTAS: string[] = [
+  'Atualmente faz algum tratamento?',
+  'Faz uso de remédios psiquiátricos?',
+  'Histórico de psicose, esquizofrenia?',
+  'Já usou cannabis (maconha)?',
+  'Possui alguma doença crônica?',
+  'Possui arritmia cardíaca?',
+  'Tem dores de cabeça intensas?',
+  'Tem problemas digestivos?',
+]
+
 interface FormState {
   nome: string
   email: string
@@ -52,6 +63,7 @@ interface FormState {
   senha2: string
   objetivos: string[]
   objetivoOutros: string
+  saude: Record<string, string>
   local: string
   intensidade: number
   historico: string
@@ -60,7 +72,8 @@ interface FormState {
 const EMPTY_FORM: FormState = {
   nome: '', email: '', cpf: '', rg: '', nascimento: '', telefone: '',
   cep: '', endereco: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '',
-  senha: '', senha2: '', objetivos: [], objetivoOutros: '', local: '', intensidade: 5, historico: '',
+  senha: '', senha2: '', objetivos: [], objetivoOutros: '', saude: {},
+  local: '', intensidade: 5, historico: '',
 }
 
 type FieldErrors = Partial<Record<keyof FormState, string | null>>
@@ -192,14 +205,21 @@ export default function RegistroPage() {
     return labels.join(', ')
   }
 
+  function setSaude(pergunta: string, value: string) {
+    setForm((prev) => ({ ...prev, saude: { ...prev.saude, [pergunta]: value } }))
+    setErrors((prev) => (prev.saude ? { ...prev, saude: null } : prev))
+  }
+
   function validateStep2(): boolean {
     const outrosMissing = form.objetivos.includes('outros') && !form.objetivoOutros.trim()
+    const saudeCompleto = SAUDE_PERGUNTAS.every((p) => form.saude[p])
     const next: FieldErrors = {
       objetivos: form.objetivos.length === 0
         ? 'Selecione ao menos um objetivo.'
         : outrosMissing
           ? 'Descreva o objetivo em "Outros".'
           : null,
+      saude: saudeCompleto ? null : 'Responda todas as perguntas do histórico de saúde.',
       local: form.local.trim() ? null : 'Informe a localização.',
     }
     setErrors((prev) => ({ ...prev, ...next }))
@@ -219,6 +239,7 @@ export default function RegistroPage() {
         body: JSON.stringify({
           main_symptom: objetivosText(), pain_location: form.local,
           pain_intensity: form.intensidade, medical_history: form.historico,
+          health_history: form.saude,
         }),
       })
       const data = await res.json()
@@ -359,6 +380,39 @@ export default function RegistroPage() {
                       onChange={(e) => update('intensidade', Number(e.target.value))}
                       className="w-full accent-brand-500"
                     />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="mb-2 block text-[13px] font-bold text-navy-700">Histórico de saúde</label>
+                    <div className="flex flex-col gap-2">
+                      {SAUDE_PERGUNTAS.map((pergunta) => (
+                        <div
+                          key={pergunta}
+                          className="flex flex-col gap-2 rounded-[12px] border border-line-300 p-3.5 sm:flex-row sm:items-center sm:justify-between"
+                        >
+                          <span className="text-sm font-semibold text-navy-700">{pergunta}</span>
+                          <div className="flex shrink-0 gap-2">
+                            {['Sim', 'Não'].map((opt) => {
+                              const selected = form.saude[pergunta] === opt
+                              return (
+                                <button
+                                  key={opt}
+                                  type="button"
+                                  aria-pressed={selected}
+                                  onClick={() => setSaude(pergunta, opt)}
+                                  className={cn(
+                                    'rounded-full border px-6 py-1.5 text-sm font-bold transition',
+                                    selected ? 'border-brand-500 bg-brand-500 text-primary-on' : 'border-line-300 text-navy-500 hover:border-brand-200'
+                                  )}
+                                >
+                                  {opt}
+                                </button>
+                              )
+                            })}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    {errors.saude && <p className="mt-1 text-xs font-semibold text-error-500">{errors.saude}</p>}
                   </div>
                   <div className="sm:col-span-2">
                     <TextAreaField label="Histórico médico" value={form.historico} onChange={(v) => update('historico', v)} placeholder="Ex.: alergia a dipirona, uso de losartana..." />

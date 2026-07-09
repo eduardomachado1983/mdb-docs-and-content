@@ -64,12 +64,26 @@ export default async function PacientePage({ params }: { params: Promise<{ id: s
         <Card>
           <CardHeader><CardTitle className="text-base">Consulta</CardTitle></CardHeader>
           <CardContent className="grid gap-2 text-sm text-navy-600">
-            <p><strong>Sintoma:</strong> {patient.triage?.main_symptom}</p>
+            <p><strong>Objetivo:</strong> {patient.triage?.main_symptom}</p>
             <p><strong>Local:</strong> {patient.triage?.pain_location}</p>
             <p><strong>Intensidade:</strong> {patient.triage?.pain_intensity}/10</p>
             <p><strong>Histórico:</strong> {patient.triage?.medical_history}</p>
           </CardContent>
         </Card>
+
+        {patient.triage?.health_history && Object.keys(patient.triage.health_history).length > 0 && (
+          <Card>
+            <CardHeader><CardTitle className="text-base">Histórico de saúde</CardTitle></CardHeader>
+            <CardContent className="grid gap-2 text-sm text-navy-600">
+              {Object.entries(patient.triage.health_history).map(([pergunta, resposta]) => (
+                <p key={pergunta} className="flex items-center justify-between gap-3">
+                  <span>{pergunta}</span>
+                  <strong className="shrink-0 text-navy-800">{resposta}</strong>
+                </p>
+              ))}
+            </CardContent>
+          </Card>
+        )}
 
         <Card>
           <CardHeader><CardTitle className="text-base">Documentos enviados</CardTitle></CardHeader>

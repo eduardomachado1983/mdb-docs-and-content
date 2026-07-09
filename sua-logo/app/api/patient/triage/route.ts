@@ -7,6 +7,7 @@ const schema = z.object({
   pain_location: z.string().min(1),
   pain_intensity: z.number().min(1).max(10),
   medical_history: z.string().min(1),
+  health_history: z.record(z.string()).optional(),
 })
 
 export async function PATCH(request: Request) {
