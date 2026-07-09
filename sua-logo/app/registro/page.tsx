@@ -156,7 +156,7 @@ export default function RegistroPage() {
       <SiteHeader />
 
       <div className="mx-auto grid max-w-[1140px] justify-items-center px-6 pb-12 pt-10">
-        <div className="w-full max-w-[680px]">
+        <div className="w-full max-w-[820px]">
           <div className="mb-7 text-center">
             <h1 className="text-2xl font-extrabold">Cadastro da consulta</h1>
             <p className="mt-1 text-[15px] text-navy-300">Leva poucos minutos. Seus dados são protegidos.</p>
@@ -164,7 +164,7 @@ export default function RegistroPage() {
 
           <div
             className={cn(
-              'mx-auto max-w-[560px] rounded-[22px] border bg-white/65 backdrop-blur-xl p-8 shadow-[0_24px_50px_rgba(20,50,90,.08)]',
+              'w-full rounded-[22px] border bg-white/65 backdrop-blur-xl p-8 shadow-[0_24px_50px_rgba(20,50,90,.08)]',
               docsComplete ? 'border-teal-500' : 'border-white/30'
             )}
           >
