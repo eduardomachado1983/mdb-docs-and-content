@@ -67,7 +67,6 @@ export default async function PacientePage({ params }: { params: Promise<{ id: s
             <p><strong>Objetivo:</strong> {patient.triage?.main_symptom}</p>
             {patient.triage?.pain_location && <p><strong>Local:</strong> {patient.triage.pain_location}</p>}
             {patient.triage?.pain_intensity && <p><strong>Intensidade:</strong> {patient.triage.pain_intensity}/10</p>}
-            {patient.triage?.medical_history && <p><strong>Histórico:</strong> {patient.triage.medical_history}</p>}
           </CardContent>
         </Card>
 
