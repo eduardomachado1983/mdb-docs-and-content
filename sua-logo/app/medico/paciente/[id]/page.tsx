@@ -65,9 +65,9 @@ export default async function PacientePage({ params }: { params: Promise<{ id: s
           <CardHeader><CardTitle className="text-base">Consulta</CardTitle></CardHeader>
           <CardContent className="grid gap-2 text-sm text-navy-600">
             <p><strong>Objetivo:</strong> {patient.triage?.main_symptom}</p>
-            <p><strong>Local:</strong> {patient.triage?.pain_location}</p>
-            <p><strong>Intensidade:</strong> {patient.triage?.pain_intensity}/10</p>
-            <p><strong>Histórico:</strong> {patient.triage?.medical_history}</p>
+            {patient.triage?.pain_location && <p><strong>Local:</strong> {patient.triage.pain_location}</p>}
+            {patient.triage?.pain_intensity && <p><strong>Intensidade:</strong> {patient.triage.pain_intensity}/10</p>}
+            {patient.triage?.medical_history && <p><strong>Histórico:</strong> {patient.triage.medical_history}</p>}
           </CardContent>
         </Card>
 

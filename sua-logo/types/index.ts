@@ -38,9 +38,9 @@ export interface PersonalData {
 
 export interface TriageData {
   main_symptom: string
-  pain_location: string
-  pain_intensity: number
-  medical_history: string
+  pain_location?: string
+  pain_intensity?: number
+  medical_history?: string
   health_history?: Record<string, string>
   mental_health?: string[]
   height?: string

@@ -4,9 +4,6 @@ import { createClient, getUser } from '@/lib/supabase/server'
 
 const schema = z.object({
   main_symptom: z.string().min(1),
-  pain_location: z.string().min(1),
-  pain_intensity: z.number().min(1).max(10),
-  medical_history: z.string().min(1),
   health_history: z.record(z.string()).optional(),
   mental_health: z.array(z.string()).optional(),
   height: z.string().optional(),
