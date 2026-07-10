@@ -109,6 +109,19 @@ export default async function PacientePage({ params }: { params: Promise<{ id: s
           </Card>
         )}
 
+        {patient.triage?.product_preferences && patient.triage.product_preferences.length > 0 && (
+          <Card>
+            <CardHeader><CardTitle className="text-base">Produtos de preferência</CardTitle></CardHeader>
+            <CardContent className="flex flex-wrap gap-2">
+              {patient.triage.product_preferences.map((item) => (
+                <span key={item} className="rounded-full bg-surface-muted px-3 py-1 text-xs font-semibold text-navy-700">
+                  {item}
+                </span>
+              ))}
+            </CardContent>
+          </Card>
+        )}
+
         <Card>
           <CardHeader><CardTitle className="text-base">Documentos enviados</CardTitle></CardHeader>
           <CardContent className="flex flex-col gap-2">

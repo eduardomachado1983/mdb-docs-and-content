@@ -12,6 +12,7 @@ const schema = z.object({
   height: z.string().optional(),
   weight: z.string().optional(),
   sex: z.string().optional(),
+  product_preferences: z.array(z.string()).optional(),
 })
 
 export async function PATCH(request: Request) {
