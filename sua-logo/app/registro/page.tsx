@@ -598,17 +598,6 @@ export default function RegistroPage() {
                 </div>
                 <div className="mb-[18px] text-sm text-navy-300">Valor da consulta: <strong className="text-navy-900">R$ 2,00</strong></div>
                 <PaymentPanel cpf={form.cpf} />
-                <div className="mt-5 border-t border-dashed border-line-300 pt-4">
-                  <p className="mb-3 text-sm leading-relaxed text-navy-300">
-                    Não consegue pagar agora? Sem problema — você pode finalizar o cadastro e pagar depois pela sua área.
-                  </p>
-                  <button
-                    onClick={() => router.push('/dashboard')}
-                    className="w-full rounded-[4px] border border-line-300 bg-surface-page py-3 text-sm font-bold text-navy-700"
-                  >
-                    Finalizar cadastro e pagar depois
-                  </button>
-                </div>
               </div>
             )}
 
@@ -632,8 +621,19 @@ export default function RegistroPage() {
             )}
 
             {step === 4 && (
-              <div className="mt-6">
-                <button onClick={() => setStep(3)} className="text-sm font-bold text-navy-500">← Voltar</button>
+              <div className="mt-6 flex items-center justify-between gap-3">
+                <button
+                  onClick={() => setStep(3)}
+                  className="rounded-[4px] border border-line-300 bg-surface-page px-5 py-3 text-sm font-bold text-navy-500"
+                >
+                  ← Voltar
+                </button>
+                <button
+                  onClick={() => router.push('/dashboard')}
+                  className="rounded-[4px] px-5 py-3 text-sm font-bold text-error-500"
+                >
+                  Cancelar consulta
+                </button>
               </div>
             )}
           </div>
