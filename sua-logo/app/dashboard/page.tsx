@@ -5,13 +5,14 @@ import { PatientHeader } from '@/components/shared/patient-header'
 import { PatientStepper } from '@/components/shared/patient-stepper'
 import { PaymentPanel } from '@/components/shared/payment-panel'
 import { ConsultationCard } from '@/components/shared/consultation-card'
+import { TOTAL_ANSWERS } from '@/lib/assistant'
 import { STATUS_LABELS, type Patient } from '@/types'
 
 const STATUS_MSG: Record<Patient['status'], string> = {
   cadastro_incompleto: 'Preencha seus dados pessoais para começar sua consulta.',
   aguardando_pagamento: 'Cadastro completo! Finalize o pagamento para entrar na fila de atendimento.',
-  aguardando_medico: 'Tudo certo! Um médico vai revisar o seu caso em breve.',
-  retido_admin: 'O médico já avaliou seu caso. Nossa equipe está validando tudo antes da liberação final.',
+  aguardando_medico: 'Documentos e pagamento confirmados! Você já pode realizar sua consulta.',
+  retido_admin: 'O médico já avaliou seu caso. Nossa equipe está validando tudo antes de liberar sua receita e laudo.',
   concluido: 'Seus documentos já estão disponíveis em "Meus dados".',
 }
 
@@ -28,6 +29,20 @@ export default async function DashboardPage() {
   }
 
   const hasPersonalData = Boolean(patient.personal_data?.full_name)
+
+  // Consulta libera com documentos enviados + pagamento confirmado.
+  const { data: documents } = await supabase
+    .from('documents').select('type').eq('patient_id', patient.id)
+  const docsComplete =
+    (documents ?? []).some((d) => d.type === 'identity') &&
+    (documents ?? []).some((d) => d.type === 'address')
+
+  const { count: answersCount } = await supabase
+    .from('chat_history')
+    .select('id', { count: 'exact', head: true })
+    .eq('patient_id', patient.id)
+    .eq('role', 'user')
+  const consultaDone = (answersCount ?? 0) >= TOTAL_ANSWERS
 
   return (
     <div className="min-h-screen">
@@ -55,13 +70,13 @@ export default async function DashboardPage() {
           {patient.status === 'cadastro_incompleto' && hasPersonalData && (
             <div className="mt-5 flex flex-col gap-3">
               <p className="text-sm text-navy-300">
-                Agora faça a triagem inicial com nosso assistente para prosseguir.
+                Continue as etapas do cadastro para prosseguir com sua consulta.
               </p>
               <Link
-                href="/dashboard/chat"
+                href="/registro"
                 className="w-fit rounded-full bg-brand-500 px-5 py-3 text-sm font-bold text-primary-on"
               >
-                Iniciar triagem
+                Continuar cadastro
               </Link>
             </div>
           )}
@@ -69,6 +84,50 @@ export default async function DashboardPage() {
           {patient.status === 'aguardando_pagamento' && (
             <div className="mt-5">
               <PaymentPanel cpf={patient.personal_data?.cpf ?? ''} />
+            </div>
+          )}
+
+          {patient.status === 'aguardando_medico' && !consultaDone && (
+            <div className="mt-5 flex flex-col gap-3">
+              {docsComplete ? (
+                <>
+                  <p className="text-sm text-navy-300">
+                    Responda as perguntas da nossa assistente para o médico analisar seu caso.
+                  </p>
+                  <Link
+                    href="/dashboard/chat"
+                    className="w-fit rounded-full bg-brand-500 px-5 py-3 text-sm font-bold text-primary-on"
+                  >
+                    Iniciar consulta
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm text-navy-300">
+                    Envie seus documentos em &quot;Meus dados&quot; para liberar a consulta.
+                  </p>
+                  <Link
+                    href="/dashboard/dados"
+                    className="w-fit rounded-full bg-brand-500 px-5 py-3 text-sm font-bold text-primary-on"
+                  >
+                    Enviar documentos
+                  </Link>
+                </>
+              )}
+            </div>
+          )}
+
+          {patient.status === 'aguardando_medico' && consultaDone && (
+            <div className="mt-5 flex flex-col gap-3">
+              <p className="text-sm text-navy-300">
+                Consulta realizada! O médico está analisando suas respostas e em breve libera sua receita e laudo.
+              </p>
+              <Link
+                href="/dashboard/chat"
+                className="w-fit rounded-full border border-line-300 bg-surface-page px-5 py-3 text-sm font-bold text-navy-700"
+              >
+                Rever minha consulta
+              </Link>
             </div>
           )}
         </div>

@@ -1,11 +1,21 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { createClient, getUser } from '@/lib/supabase/server'
-import { ASSISTANT_QUESTIONS, buildSummary } from '@/lib/assistant'
+import { ASSISTANT_QUESTIONS, TOTAL_ANSWERS, buildGreeting, buildSummary } from '@/lib/assistant'
+
+// A consulta só libera depois de documentos enviados e pagamento confirmado
+// (status aguardando_medico em diante).
+const ALLOWED_STATUS = ['aguardando_medico', 'retido_admin', 'concluido']
 
 async function getPatient(supabase: Awaited<ReturnType<typeof createClient>>, userId: string) {
-  const { data } = await supabase.from('patients').select('id, personal_data, status').eq('user_id', userId).single()
+  const { data } = await supabase.from('patients').select('id, status').eq('user_id', userId).single()
   return data
+}
+
+async function getDoctorName(supabase: Awaited<ReturnType<typeof createClient>>) {
+  const { data } = await supabase
+    .from('profiles').select('name').eq('role', 'doctor').limit(1).maybeSingle()
+  return data?.name ?? 'Dra. Helena Vasconcelos'
 }
 
 export async function GET() {
@@ -16,13 +26,23 @@ export async function GET() {
   const patient = await getPatient(supabase, user.id)
   if (!patient) return NextResponse.json({ error: 'Paciente não encontrado' }, { status: 404 })
 
+  if (!ALLOWED_STATUS.includes(patient.status)) {
+    return NextResponse.json(
+      { error: 'A consulta é liberada após o envio dos documentos e a confirmação do pagamento.' },
+      { status: 403 }
+    )
+  }
+
   const { data: messages } = await supabase
     .from('chat_history').select('*').eq('patient_id', patient.id).order('created_at', { ascending: true })
 
   if (!messages || messages.length === 0) {
-    return NextResponse.json({ messages: [{ role: 'assistant', content: ASSISTANT_QUESTIONS[0] }] })
+    const doctorName = await getDoctorName(supabase)
+    return NextResponse.json({ messages: [{ role: 'assistant', content: buildGreeting(doctorName) }], done: false })
   }
-  return NextResponse.json({ messages })
+
+  const answered = messages.filter((m) => m.role === 'user').length
+  return NextResponse.json({ messages, done: answered >= TOTAL_ANSWERS })
 }
 
 const schema = z.object({ content: z.string().min(1) })
@@ -39,12 +59,20 @@ export async function POST(request: Request) {
   const patient = await getPatient(supabase, user.id)
   if (!patient) return NextResponse.json({ error: 'Paciente não encontrado' }, { status: 404 })
 
+  if (patient.status !== 'aguardando_medico') {
+    return NextResponse.json(
+      { error: 'A consulta é liberada após o envio dos documentos e a confirmação do pagamento.' },
+      { status: 403 }
+    )
+  }
+
   const { data: history } = await supabase
     .from('chat_history').select('*').eq('patient_id', patient.id).order('created_at', { ascending: true })
 
   const userAnswers = (history ?? []).filter((m) => m.role === 'user').map((m) => m.content)
-  const nextIndex = userAnswers.length
-  const isLastQuestion = nextIndex === ASSISTANT_QUESTIONS.length - 1
+  if (userAnswers.length >= TOTAL_ANSWERS) {
+    return NextResponse.json({ error: 'A consulta já foi concluída.' }, { status: 400 })
+  }
 
   await supabase.from('chat_history').insert({
     patient_id: patient.id,
@@ -53,28 +81,10 @@ export async function POST(request: Request) {
   })
 
   const allAnswers = [...userAnswers, parsed.data.content]
-  let assistantReply: string
+  const done = allAnswers.length >= TOTAL_ANSWERS
+  const assistantReply = done ? buildSummary(allAnswers) : ASSISTANT_QUESTIONS[allAnswers.length - 1]
 
-  if (isLastQuestion) {
-    assistantReply = buildSummary(allAnswers)
-    await supabase.from('chat_history').insert({ patient_id: patient.id, role: 'assistant', content: assistantReply })
+  await supabase.from('chat_history').insert({ patient_id: patient.id, role: 'assistant', content: assistantReply })
 
-    const personalData = (patient.personal_data ?? {}) as Record<string, unknown>
-    const nextStatus = personalData.full_name ? 'aguardando_pagamento' : patient.status
-
-    await supabase.from('patients').update({
-      triage: {
-        main_symptom: allAnswers[0],
-        pain_location: allAnswers[3],
-        pain_intensity: Number(allAnswers[2]) || 0,
-        medical_history: allAnswers[5],
-      },
-      status: nextStatus,
-    }).eq('id', patient.id)
-  } else {
-    assistantReply = ASSISTANT_QUESTIONS[nextIndex + 1]
-    await supabase.from('chat_history').insert({ patient_id: patient.id, role: 'assistant', content: assistantReply })
-  }
-
-  return NextResponse.json({ reply: assistantReply, done: isLastQuestion })
+  return NextResponse.json({ reply: assistantReply, done })
 }
