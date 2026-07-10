@@ -24,8 +24,6 @@ export function ConsultationCard({ patient }: { patient: Patient }) {
       <div className="mb-2 text-xs font-extrabold tracking-wide text-navy-200">CONSULTA</div>
       <div className="flex flex-col gap-1.5 text-sm text-navy-600">
         <p><span className="text-navy-300">😊 Sintomas:</span> {triage.main_symptom}</p>
-        <p><span className="text-navy-300">📍 Local:</span> {triage.pain_location}</p>
-        <p><span className="text-navy-300">📊 Intensidade:</span> {triage.pain_intensity}/10</p>
 
         {expanded && (
           <>
