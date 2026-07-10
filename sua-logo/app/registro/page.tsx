@@ -73,7 +73,6 @@ interface FormState {
   cidade: string
   estado: string
   senha: string
-  senha2: string
   objetivos: string[]
   objetivoOutros: string
   saude: Record<string, string>
@@ -88,7 +87,7 @@ interface FormState {
 const EMPTY_FORM: FormState = {
   nome: '', email: '', cpf: '', rg: '', nascimento: '', telefone: '',
   cep: '', endereco: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '',
-  senha: '', senha2: '', objetivos: [], objetivoOutros: '', saude: {}, saudeMental: [],
+  senha: '', objetivos: [], objetivoOutros: '', saude: {}, saudeMental: [],
   altura: '', peso: '', sexo: '', sexoOutros: '', produtos: [],
 }
 
@@ -157,7 +156,6 @@ export default function RegistroPage() {
       cidade: form.cidade.trim() ? null : 'Informe a cidade.',
       estado: form.estado.trim() ? null : 'Informe o estado.',
       senha: validatePassword(form.senha),
-      senha2: form.senha2 !== form.senha ? 'As senhas não coincidem.' : null,
     }
     setErrors(next)
     return Object.values(next).every((e) => !e)
@@ -357,18 +355,14 @@ export default function RegistroPage() {
                   <Field label="Endereço" value={form.endereco} onChange={(v) => update('endereco', v)} placeholder="Rua, avenida..." error={errors.endereco} />
                   <Field label="Número" value={form.numero} onChange={(v) => update('numero', v)} placeholder="123" inputMode="numeric" error={errors.numero} />
                   <Field label="Complemento (opcional)" value={form.complemento} onChange={(v) => update('complemento', v)} placeholder="Apto, bloco..." />
-                  <Field label="Bairro" value={form.bairro} onChange={(v) => update('bairro', v)} placeholder="Bairro" error={errors.bairro} />
+                  <Field label="Bairro" value={form.bairro} onChange={(v) => update('bairro', v)} placeholder="Bairro" error={errors.bairro} wide />
                   <Field label="Cidade" value={form.cidade} onChange={(v) => update('cidade', v)} placeholder="Cidade" error={errors.cidade} />
                   <Field label="Estado" value={form.estado} onChange={(v) => update('estado', v)} placeholder="UF" error={errors.estado} />
-                  <div className="grid grid-cols-1 gap-4 sm:col-span-2 sm:grid-cols-2">
+                  <div className="sm:col-span-2">
                     <PasswordField
                       label="Senha" value={form.senha} onChange={(v) => update('senha', v)}
                       placeholder="Crie uma senha" error={errors.senha}
                       hint="Mínimo 8 caracteres, com maiúscula, minúscula e número."
-                    />
-                    <PasswordField
-                      label="Confirmar senha" value={form.senha2} onChange={(v) => update('senha2', v)}
-                      placeholder="Repita a senha" error={errors.senha2}
                     />
                   </div>
                 </div>
@@ -644,12 +638,12 @@ export default function RegistroPage() {
   )
 }
 
-function Field({ label, value, onChange, placeholder, type = 'text', error, inputMode }: {
+function Field({ label, value, onChange, placeholder, type = 'text', error, inputMode, wide }: {
   label: string; value: string; onChange: (v: string) => void; placeholder?: string
-  type?: string; error?: string | null; inputMode?: 'numeric' | 'tel'
+  type?: string; error?: string | null; inputMode?: 'numeric' | 'tel'; wide?: boolean
 }) {
   return (
-    <div>
+    <div className={wide ? 'sm:col-span-2' : undefined}>
       <label className="mb-1.5 block text-[13px] font-bold text-navy-700">{label}</label>
       <input
         type={type}
