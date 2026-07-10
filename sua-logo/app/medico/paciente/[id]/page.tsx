@@ -43,7 +43,7 @@ export default async function PacientePage({ params }: { params: Promise<{ id: s
           <Link
             href="/medico"
             aria-label="Voltar ao painel"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-line-300 text-navy-500 hover:bg-surface-page"
+            className="flex h-9 w-9 items-center justify-center rounded-[4px] border border-line-300 text-navy-500 hover:bg-surface-page"
           >
             ←
           </Link>

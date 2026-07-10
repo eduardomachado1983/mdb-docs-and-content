@@ -74,7 +74,7 @@ export function SupportChat() {
             key={faq.q}
             type="button"
             onClick={() => ask(faq.q, faq.a)}
-            className="rounded-full border border-line-300 px-3.5 py-1.5 text-xs font-bold text-navy-600 hover:border-brand-300"
+            className="rounded-[4px] border border-line-300 px-3.5 py-1.5 text-xs font-bold text-navy-600 hover:border-brand-300"
           >
             {faq.q}
           </button>
@@ -90,7 +90,7 @@ export function SupportChat() {
         />
         <button
           type="submit"
-          className="shrink-0 rounded-full bg-brand-500 px-5 py-2.5 text-sm font-bold text-primary-on"
+          className="shrink-0 rounded-[4px] bg-brand-500 px-5 py-2.5 text-sm font-bold text-primary-on"
         >
           Enviar
         </button>
