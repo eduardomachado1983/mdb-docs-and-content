@@ -85,6 +85,19 @@ export default async function PacientePage({ params }: { params: Promise<{ id: s
           </Card>
         )}
 
+        {patient.triage?.mental_health && patient.triage.mental_health.length > 0 && (
+          <Card>
+            <CardHeader><CardTitle className="text-base">Saúde mental</CardTitle></CardHeader>
+            <CardContent className="flex flex-wrap gap-2">
+              {patient.triage.mental_health.map((item) => (
+                <span key={item} className="rounded-full bg-surface-muted px-3 py-1 text-xs font-semibold text-navy-700">
+                  {item}
+                </span>
+              ))}
+            </CardContent>
+          </Card>
+        )}
+
         <Card>
           <CardHeader><CardTitle className="text-base">Documentos enviados</CardTitle></CardHeader>
           <CardContent className="flex flex-col gap-2">

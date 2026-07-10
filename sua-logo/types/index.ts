@@ -42,6 +42,7 @@ export interface TriageData {
   pain_intensity: number
   medical_history: string
   health_history?: Record<string, string>
+  mental_health?: string[]
 }
 
 export interface PaymentData {
