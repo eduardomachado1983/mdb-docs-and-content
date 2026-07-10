@@ -98,6 +98,17 @@ export default async function PacientePage({ params }: { params: Promise<{ id: s
           </Card>
         )}
 
+        {(patient.triage?.height || patient.triage?.weight || patient.triage?.sex) && (
+          <Card>
+            <CardHeader><CardTitle className="text-base">Informações físicas</CardTitle></CardHeader>
+            <CardContent className="grid gap-2 text-sm text-navy-600">
+              {patient.triage.height && <p><strong>Altura:</strong> {patient.triage.height}</p>}
+              {patient.triage.weight && <p><strong>Peso:</strong> {patient.triage.weight}</p>}
+              {patient.triage.sex && <p><strong>Sexo:</strong> {patient.triage.sex}</p>}
+            </CardContent>
+          </Card>
+        )}
+
         <Card>
           <CardHeader><CardTitle className="text-base">Documentos enviados</CardTitle></CardHeader>
           <CardContent className="flex flex-col gap-2">
