@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { Eye, EyeOff } from 'lucide-react'
@@ -102,6 +102,11 @@ export default function RegistroPage() {
   const [loading, setLoading] = useState(false)
   const [cepLoading, setCepLoading] = useState(false)
   const [uploadedDocs, setUploadedDocs] = useState<Document[]>([])
+
+  // A cada mudança de etapa, volta o scroll para o topo da página.
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [step])
 
   const hasIdentity = uploadedDocs.some((d) => d.type === 'identity')
   const hasAddress = uploadedDocs.some((d) => d.type === 'address')
