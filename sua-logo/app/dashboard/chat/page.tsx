@@ -19,12 +19,20 @@ export default function ChatPage() {
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(true)
   const [done, setDone] = useState(false)
+  const [locked, setLocked] = useState<string | null>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     fetch('/api/patient/assistant')
-      .then((r) => r.json())
-      .then((data) => setMessages(data.messages ?? []))
+      .then(async (r) => {
+        const data = await r.json()
+        if (!r.ok) {
+          setLocked(data.error ?? 'Consulta indisponível no momento.')
+          return
+        }
+        setMessages(data.messages ?? [])
+        setDone(Boolean(data.done))
+      })
       .finally(() => setLoading(false))
   }, [])
 
@@ -57,10 +65,24 @@ export default function ChatPage() {
     }
   }
 
+  if (locked) {
+    return (
+      <main className="mx-auto grid min-h-screen max-w-[1140px] justify-items-center px-6 py-8">
+        <div className="flex w-full max-w-lg flex-col gap-4">
+          <h1 className="text-lg font-semibold">Consulta</h1>
+          <Card>
+            <CardContent className="p-6 text-sm text-navy-600">{locked}</CardContent>
+          </Card>
+          <Button onClick={() => router.push('/dashboard')}>Voltar ao painel</Button>
+        </div>
+      </main>
+    )
+  }
+
   return (
     <main className="mx-auto grid min-h-screen max-w-[1140px] justify-items-center px-6 py-8">
       <div className="flex w-full max-w-lg flex-col gap-4">
-        <h1 className="text-lg font-semibold">Assistente de triagem</h1>
+        <h1 className="text-lg font-semibold">Consulta</h1>
         <Card className="flex-1">
           <CardContent className="flex h-[60vh] flex-col gap-3 overflow-y-auto p-4">
             {messages.map((m, i) => (
