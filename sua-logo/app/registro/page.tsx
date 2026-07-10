@@ -83,9 +83,6 @@ interface FormState {
   sexo: string
   sexoOutros: string
   produtos: string[]
-  local: string
-  intensidade: number
-  historico: string
 }
 
 const EMPTY_FORM: FormState = {
@@ -93,7 +90,6 @@ const EMPTY_FORM: FormState = {
   cep: '', endereco: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '',
   senha: '', senha2: '', objetivos: [], objetivoOutros: '', saude: {}, saudeMental: [],
   altura: '', peso: '', sexo: '', sexoOutros: '', produtos: [],
-  local: '', intensidade: 5, historico: '',
 }
 
 type FieldErrors = Partial<Record<keyof FormState, string | null>>
@@ -276,7 +272,6 @@ export default function RegistroPage() {
         : sexoOutrosMissing
           ? 'Descreva o sexo em "Outros".'
           : null,
-      local: form.local.trim() ? null : 'Informe a localização.',
     }
     setErrors((prev) => ({ ...prev, ...next }))
     return Object.values(next).every((e) => !e)
@@ -293,8 +288,7 @@ export default function RegistroPage() {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          main_symptom: objetivosText(), pain_location: form.local,
-          pain_intensity: form.intensidade, medical_history: form.historico,
+          main_symptom: objetivosText(),
           health_history: form.saude, mental_health: form.saudeMental,
           height: form.altura, weight: form.peso, sex: sexoText(),
           product_preferences: form.produtos,
@@ -538,15 +532,6 @@ export default function RegistroPage() {
                       })}
                     </div>
                   </div>
-                  <Field label="Localização" value={form.local} onChange={(v) => update('local', v)} placeholder="Ex.: cabeça, garganta, abdômen..." error={errors.local} />
-                  <div>
-                    <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Intensidade — {form.intensidade}/10</label>
-                    <input
-                      type="range" min={1} max={10} value={form.intensidade}
-                      onChange={(e) => update('intensidade', Number(e.target.value))}
-                      className="w-full accent-brand-500"
-                    />
-                  </div>
                   <div className="sm:col-span-2">
                     <label className="mb-2 block text-[13px] font-bold text-navy-700">Histórico de saúde</label>
                     <div className="flex flex-col gap-2">
@@ -579,9 +564,6 @@ export default function RegistroPage() {
                       ))}
                     </div>
                     {errors.saude && <p className="mt-1 text-xs font-semibold text-error-500">{errors.saude}</p>}
-                  </div>
-                  <div className="sm:col-span-2">
-                    <TextAreaField label="Histórico médico" value={form.historico} onChange={(v) => update('historico', v)} placeholder="Ex.: alergia a dipirona, uso de losartana..." />
                   </div>
                   <div className="sm:col-span-2">
                     <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Documento de consultas anteriores (opcional)</label>
@@ -713,28 +695,6 @@ function PasswordField({ label, value, onChange, placeholder, error, hint }: {
       ) : hint ? (
         <p className="mt-1 text-xs text-navy-200">{hint}</p>
       ) : null}
-    </div>
-  )
-}
-
-function TextAreaField({ label, value, onChange, placeholder, error }: {
-  label: string; value: string; onChange: (v: string) => void; placeholder?: string; error?: string | null
-}) {
-  return (
-    <div>
-      <label className="mb-1.5 block text-[13px] font-bold text-navy-700">{label}</label>
-      <textarea
-        rows={3}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        aria-invalid={Boolean(error)}
-        className={cn(
-          'w-full rounded-[10px] border px-3.5 py-3 text-[15px] outline-none focus:ring-2 focus:ring-brand-200',
-          error ? 'border-error-500 focus:border-error-500' : 'border-line-400 focus:border-brand-500'
-        )}
-      />
-      {error && <p className="mt-1 text-xs font-semibold text-error-500">{error}</p>}
     </div>
   )
 }
