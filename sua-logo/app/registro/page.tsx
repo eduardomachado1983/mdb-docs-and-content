@@ -45,6 +45,15 @@ const SAUDE_PERGUNTAS: string[] = [
   'Tem problemas digestivos?',
 ]
 
+const SAUDE_MENTAL: string[] = [
+  'Sente muita tristeza',
+  'Perde o foco facilmente',
+  'Tem problemas de memória',
+  'Fica facilmente irritado ou triste',
+  'Possui problema com estresse',
+  'Já teve episódios de pânico?',
+]
+
 interface FormState {
   nome: string
   email: string
@@ -64,6 +73,7 @@ interface FormState {
   objetivos: string[]
   objetivoOutros: string
   saude: Record<string, string>
+  saudeMental: string[]
   local: string
   intensidade: number
   historico: string
@@ -72,7 +82,7 @@ interface FormState {
 const EMPTY_FORM: FormState = {
   nome: '', email: '', cpf: '', rg: '', nascimento: '', telefone: '',
   cep: '', endereco: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '',
-  senha: '', senha2: '', objetivos: [], objetivoOutros: '', saude: {},
+  senha: '', senha2: '', objetivos: [], objetivoOutros: '', saude: {}, saudeMental: [],
   local: '', intensidade: 5, historico: '',
 }
 
@@ -210,6 +220,15 @@ export default function RegistroPage() {
     setErrors((prev) => (prev.saude ? { ...prev, saude: null } : prev))
   }
 
+  function toggleSaudeMental(value: string) {
+    setForm((prev) => ({
+      ...prev,
+      saudeMental: prev.saudeMental.includes(value)
+        ? prev.saudeMental.filter((o) => o !== value)
+        : [...prev.saudeMental, value],
+    }))
+  }
+
   function validateStep2(): boolean {
     const outrosMissing = form.objetivos.includes('outros') && !form.objetivoOutros.trim()
     const saudeCompleto = SAUDE_PERGUNTAS.every((p) => form.saude[p])
@@ -239,7 +258,7 @@ export default function RegistroPage() {
         body: JSON.stringify({
           main_symptom: objetivosText(), pain_location: form.local,
           pain_intensity: form.intensidade, medical_history: form.historico,
-          health_history: form.saude,
+          health_history: form.saude, mental_health: form.saudeMental,
         }),
       })
       const data = await res.json()
@@ -371,6 +390,39 @@ export default function RegistroPage() {
                       </div>
                     )}
                     {errors.objetivos && <p className="mt-1 text-xs font-semibold text-error-500">{errors.objetivos}</p>}
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="mb-1.5 block text-[13px] font-bold text-navy-700">
+                      Saúde mental <span className="font-normal text-navy-200">(pode escolher mais de um)</span>
+                    </label>
+                    <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                      {SAUDE_MENTAL.map((item) => {
+                        const selected = form.saudeMental.includes(item)
+                        return (
+                          <button
+                            key={item}
+                            type="button"
+                            aria-pressed={selected}
+                            onClick={() => toggleSaudeMental(item)}
+                            className={cn(
+                              'flex items-center gap-3 rounded-[12px] border p-3.5 text-left transition',
+                              selected ? 'border-brand-500 bg-brand-50' : 'border-line-300 hover:border-brand-200'
+                            )}
+                          >
+                            <span
+                              className={cn(
+                                'flex h-5 w-5 shrink-0 items-center justify-center rounded-md border text-xs',
+                                selected ? 'border-brand-500 bg-brand-500 text-primary-on' : 'border-line-400 text-transparent'
+                              )}
+                              aria-hidden="true"
+                            >
+                              ✓
+                            </span>
+                            <span className="text-sm font-bold text-navy-800">{item}</span>
+                          </button>
+                        )
+                      })}
+                    </div>
                   </div>
                   <Field label="Localização" value={form.local} onChange={(v) => update('local', v)} placeholder="Ex.: cabeça, garganta, abdômen..." error={errors.local} />
                   <div>
