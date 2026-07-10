@@ -8,6 +8,7 @@ import { cn, initials } from '@/lib/utils'
 const TABS = [
   { href: '/dashboard', label: 'Minhas consultas' },
   { href: '/dashboard/dados', label: 'Meus dados' },
+  { href: '/dashboard/ajuda', label: 'Ajuda' },
 ]
 
 export function PatientHeader({ patientName, statusLabel }: { patientName: string; statusLabel?: string }) {
