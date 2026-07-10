@@ -375,12 +375,11 @@ export default function RegistroPage() {
 
             {step === 2 && (
               <div className="animate-fade-up">
-                <div className="mb-1 text-lg font-extrabold">Triagem</div>
-                <div className="mb-[18px] text-sm text-navy-300">Qual seu objetivo com o uso de Cannabis?</div>
+                <div className="mb-[18px] text-lg font-extrabold">Triagem</div>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="sm:col-span-2">
                     <label className="mb-1.5 block text-[13px] font-bold text-navy-700">
-                      Objetivo principal <span className="font-normal text-navy-200">(pode escolher mais de um)</span>
+                      Objetivo principal para o uso de Cannabis <span className="font-normal text-navy-200">(pode escolher mais de um)</span>
                     </label>
                     <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
                       {OBJETIVOS.map((o) => {
@@ -392,7 +391,7 @@ export default function RegistroPage() {
                             aria-pressed={selected}
                             onClick={() => toggleObjetivo(o.value)}
                             className={cn(
-                              'flex items-start gap-3 rounded-[12px] border p-3.5 text-left transition',
+                              'flex items-start gap-3 rounded-[4px] border p-3.5 text-left transition',
                               selected ? 'border-brand-500 bg-brand-50' : 'border-line-300 hover:border-brand-200'
                             )}
                           >
@@ -427,6 +426,7 @@ export default function RegistroPage() {
                     )}
                     {errors.objetivos && <p className="mt-1 text-xs font-semibold text-error-500">{errors.objetivos}</p>}
                   </div>
+                  <div className="sm:col-span-2 border-t border-line-200" aria-hidden="true" />
                   <div className="sm:col-span-2">
                     <label className="mb-1.5 block text-[13px] font-bold text-navy-700">
                       Saúde mental <span className="font-normal text-navy-200">(pode escolher mais de um)</span>
@@ -441,7 +441,7 @@ export default function RegistroPage() {
                             aria-pressed={selected}
                             onClick={() => toggleSaudeMental(item)}
                             className={cn(
-                              'flex items-center gap-3 rounded-[12px] border p-3.5 text-left transition',
+                              'flex items-center gap-3 rounded-[4px] border p-3.5 text-left transition',
                               selected ? 'border-brand-500 bg-brand-50' : 'border-line-300 hover:border-brand-200'
                             )}
                           >
@@ -460,6 +460,7 @@ export default function RegistroPage() {
                       })}
                     </div>
                   </div>
+                  <div className="sm:col-span-2 border-t border-line-200" aria-hidden="true" />
                   <div className="sm:col-span-2">
                     <label className="mb-2 block text-[13px] font-bold text-navy-700">Informações físicas</label>
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -477,7 +478,7 @@ export default function RegistroPage() {
                                 aria-pressed={selected}
                                 onClick={() => setSexo(opt)}
                                 className={cn(
-                                  'rounded-full border px-6 py-1.5 text-sm font-bold transition',
+                                  'rounded-[4px] border px-6 py-1.5 text-sm font-bold transition',
                                   selected ? 'border-brand-500 bg-brand-500 text-primary-on' : 'border-line-300 text-navy-500 hover:border-brand-200'
                                 )}
                               >
@@ -502,6 +503,7 @@ export default function RegistroPage() {
                       </div>
                     </div>
                   </div>
+                  <div className="sm:col-span-2 border-t border-line-200" aria-hidden="true" />
                   <div className="sm:col-span-2">
                     <label className="mb-1.5 block text-[13px] font-bold text-navy-700">
                       Produtos de preferência <span className="font-normal text-navy-200">(pode escolher mais de um)</span>
@@ -516,7 +518,7 @@ export default function RegistroPage() {
                             aria-pressed={selected}
                             onClick={() => toggleProduto(item)}
                             className={cn(
-                              'flex items-center gap-3 rounded-[12px] border p-3.5 text-left transition',
+                              'flex items-center gap-3 rounded-[4px] border p-3.5 text-left transition',
                               selected ? 'border-brand-500 bg-brand-50' : 'border-line-300 hover:border-brand-200'
                             )}
                           >
@@ -535,6 +537,7 @@ export default function RegistroPage() {
                       })}
                     </div>
                   </div>
+                  <div className="sm:col-span-2 border-t border-line-200" aria-hidden="true" />
                   <div className="sm:col-span-2">
                     <label className="mb-2 block text-[13px] font-bold text-navy-700">Histórico de saúde</label>
                     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -554,7 +557,7 @@ export default function RegistroPage() {
                                   aria-pressed={selected}
                                   onClick={() => setSaude(pergunta, opt)}
                                   className={cn(
-                                    'rounded-full border px-6 py-1.5 text-sm font-bold transition',
+                                    'rounded-[4px] border px-6 py-1.5 text-sm font-bold transition',
                                     selected ? 'border-brand-500 bg-brand-500 text-primary-on' : 'border-line-300 text-navy-500 hover:border-brand-200'
                                   )}
                                 >
@@ -568,6 +571,7 @@ export default function RegistroPage() {
                     </div>
                     {errors.saude && <p className="mt-1 text-xs font-semibold text-error-500">{errors.saude}</p>}
                   </div>
+                  <div className="sm:col-span-2 border-t border-line-200" aria-hidden="true" />
                   <div className="sm:col-span-2">
                     <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Documento de consultas anteriores (opcional)</label>
                     <SingleDocumentUpload type="previous_consultation" label="Ex.: consultas anteriores, exames..." />
@@ -602,7 +606,7 @@ export default function RegistroPage() {
                   </p>
                   <button
                     onClick={() => router.push('/dashboard')}
-                    className="w-full rounded-[11px] border border-line-300 bg-surface-page py-3 text-sm font-bold text-navy-700"
+                    className="w-full rounded-[4px] border border-line-300 bg-surface-page py-3 text-sm font-bold text-navy-700"
                   >
                     Finalizar cadastro e pagar depois
                   </button>
@@ -615,14 +619,14 @@ export default function RegistroPage() {
                 {step > 1 ? (
                   <button
                     onClick={() => setStep(step - 1)}
-                    className="rounded-[11px] border border-line-300 bg-surface-page px-5 py-3 text-sm font-bold text-navy-500"
+                    className="rounded-[4px] border border-line-300 bg-surface-page px-5 py-3 text-sm font-bold text-navy-500"
                   >
                     ← Voltar
                   </button>
                 ) : <span />}
                 <button
                   onClick={step === 1 ? handleStep1 : step === 2 ? handleStep2 : handleStep3}
-                  className="rounded-full bg-brand-500 px-6 py-3 text-[15px] font-bold text-primary-on"
+                  className="rounded-[4px] bg-brand-500 px-6 py-3 text-[15px] font-bold text-primary-on"
                 >
                   {loading ? 'Salvando...' : 'Continuar →'}
                 </button>
