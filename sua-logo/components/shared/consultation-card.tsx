@@ -27,9 +27,6 @@ export function ConsultationCard({ patient }: { patient: Patient }) {
 
         {expanded && (
           <>
-            {triage.medical_history && (
-              <p><span className="text-navy-300">📋 Histórico:</span> {triage.medical_history}</p>
-            )}
             <p><span className="text-navy-300">💳 Pagamento:</span> {paymentLabel}</p>
             <p><span className="text-navy-300">🗓️ Início da consulta:</span> {formatDateTimeBR(patient.created_at)}</p>
             <p><span className="text-navy-300">🔄 Última atualização:</span> {formatDateTimeBR(patient.updated_at)}</p>
