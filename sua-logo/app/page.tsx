@@ -175,7 +175,7 @@ export default function LandingPage() {
           </div>
           <Link
             href="/registro"
-            className="whitespace-nowrap rounded-xl bg-white px-7 py-[15px] text-base font-extrabold text-brand-600"
+            className="whitespace-nowrap rounded-[4px] bg-white px-7 py-[15px] text-base font-extrabold text-brand-600"
           >
             Iniciar consulta →
           </Link>
