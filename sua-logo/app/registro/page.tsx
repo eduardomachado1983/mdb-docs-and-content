@@ -54,6 +54,8 @@ const SAUDE_MENTAL: string[] = [
   'Já teve episódios de pânico?',
 ]
 
+const SEXO_OPCOES = ['Masculino', 'Feminino', 'Outros'] as const
+
 interface FormState {
   nome: string
   email: string
@@ -74,6 +76,10 @@ interface FormState {
   objetivoOutros: string
   saude: Record<string, string>
   saudeMental: string[]
+  altura: string
+  peso: string
+  sexo: string
+  sexoOutros: string
   local: string
   intensidade: number
   historico: string
@@ -83,6 +89,7 @@ const EMPTY_FORM: FormState = {
   nome: '', email: '', cpf: '', rg: '', nascimento: '', telefone: '',
   cep: '', endereco: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '',
   senha: '', senha2: '', objetivos: [], objetivoOutros: '', saude: {}, saudeMental: [],
+  altura: '', peso: '', sexo: '', sexoOutros: '',
   local: '', intensidade: 5, historico: '',
 }
 
@@ -229,9 +236,20 @@ export default function RegistroPage() {
     }))
   }
 
+  function setSexo(value: string) {
+    update('sexo', value)
+  }
+
+  // Junta o sexo escolhido com o texto de "Outros", quando informado.
+  function sexoText(): string {
+    if (form.sexo === 'Outros' && form.sexoOutros.trim()) return form.sexoOutros.trim()
+    return form.sexo
+  }
+
   function validateStep2(): boolean {
     const outrosMissing = form.objetivos.includes('outros') && !form.objetivoOutros.trim()
     const saudeCompleto = SAUDE_PERGUNTAS.every((p) => form.saude[p])
+    const sexoOutrosMissing = form.sexo === 'Outros' && !form.sexoOutros.trim()
     const next: FieldErrors = {
       objetivos: form.objetivos.length === 0
         ? 'Selecione ao menos um objetivo.'
@@ -239,6 +257,13 @@ export default function RegistroPage() {
           ? 'Descreva o objetivo em "Outros".'
           : null,
       saude: saudeCompleto ? null : 'Responda todas as perguntas do histórico de saúde.',
+      altura: form.altura.trim() ? null : 'Informe a altura.',
+      peso: form.peso.trim() ? null : 'Informe o peso.',
+      sexo: !form.sexo
+        ? 'Selecione o sexo.'
+        : sexoOutrosMissing
+          ? 'Descreva o sexo em "Outros".'
+          : null,
       local: form.local.trim() ? null : 'Informe a localização.',
     }
     setErrors((prev) => ({ ...prev, ...next }))
@@ -259,6 +284,7 @@ export default function RegistroPage() {
           main_symptom: objetivosText(), pain_location: form.local,
           pain_intensity: form.intensidade, medical_history: form.historico,
           health_history: form.saude, mental_health: form.saudeMental,
+          height: form.altura, weight: form.peso, sex: sexoText(),
         }),
       })
       const data = await res.json()
@@ -422,6 +448,48 @@ export default function RegistroPage() {
                           </button>
                         )
                       })}
+                    </div>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="mb-2 block text-[13px] font-bold text-navy-700">Informações físicas</label>
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      <Field label="Altura" value={form.altura} onChange={(v) => update('altura', v)} placeholder="Ex.: 1,70m" error={errors.altura} />
+                      <Field label="Peso" value={form.peso} onChange={(v) => update('peso', v)} placeholder="Ex.: 70kg" error={errors.peso} />
+                      <div className="sm:col-span-2">
+                        <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Sexo</label>
+                        <div className="flex flex-wrap gap-2.5">
+                          {SEXO_OPCOES.map((opt) => {
+                            const selected = form.sexo === opt
+                            return (
+                              <button
+                                key={opt}
+                                type="button"
+                                aria-pressed={selected}
+                                onClick={() => setSexo(opt)}
+                                className={cn(
+                                  'rounded-full border px-6 py-1.5 text-sm font-bold transition',
+                                  selected ? 'border-brand-500 bg-brand-500 text-primary-on' : 'border-line-300 text-navy-500 hover:border-brand-200'
+                                )}
+                              >
+                                {opt}
+                              </button>
+                            )
+                          })}
+                        </div>
+                        {form.sexo === 'Outros' && (
+                          <div className="mt-2.5">
+                            <input
+                              type="text"
+                              value={form.sexoOutros}
+                              onChange={(e) => update('sexoOutros', e.target.value)}
+                              placeholder="Descreva"
+                              aria-invalid={Boolean(errors.sexo)}
+                              className="w-full rounded-[10px] border border-line-400 px-3.5 py-3 text-[15px] outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+                            />
+                          </div>
+                        )}
+                        {errors.sexo && <p className="mt-1 text-xs font-semibold text-error-500">{errors.sexo}</p>}
+                      </div>
                     </div>
                   </div>
                   <Field label="Localização" value={form.local} onChange={(v) => update('local', v)} placeholder="Ex.: cabeça, garganta, abdômen..." error={errors.local} />

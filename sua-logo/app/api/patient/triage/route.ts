@@ -9,6 +9,9 @@ const schema = z.object({
   medical_history: z.string().min(1),
   health_history: z.record(z.string()).optional(),
   mental_health: z.array(z.string()).optional(),
+  height: z.string().optional(),
+  weight: z.string().optional(),
+  sex: z.string().optional(),
 })
 
 export async function PATCH(request: Request) {

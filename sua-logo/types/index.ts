@@ -43,6 +43,9 @@ export interface TriageData {
   medical_history: string
   health_history?: Record<string, string>
   mental_health?: string[]
+  height?: string
+  weight?: string
+  sex?: string
 }
 
 export interface PaymentData {
