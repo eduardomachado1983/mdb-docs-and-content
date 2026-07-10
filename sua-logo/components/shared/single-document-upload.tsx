@@ -48,7 +48,7 @@ export function SingleDocumentUpload({ type, label }: { type: string; label: str
           ref={inputRef} type="file" accept="image/*,.pdf" className="hidden"
           onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])}
         />
-        <Button size="sm" variant="outline" disabled={loading} onClick={() => inputRef.current?.click()}>
+        <Button size="sm" variant="outline" disabled={loading} onClick={() => inputRef.current?.click()} className="rounded-[4px]">
           {loading ? 'Enviando...' : uploaded ? 'Trocar' : 'Enviar'}
         </Button>
       </div>
