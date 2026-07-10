@@ -162,6 +162,7 @@ export default function RegistroPage() {
   }
 
   async function handleStep1() {
+    if (loading) return
     if (!validateStep1()) {
       toast.error('Revise os campos destacados.')
       return
@@ -281,6 +282,7 @@ export default function RegistroPage() {
   }
 
   async function handleStep2() {
+    if (loading) return
     if (!validateStep2()) {
       toast.error('Revise os campos destacados.')
       return
@@ -306,6 +308,14 @@ export default function RegistroPage() {
     } finally {
       setLoading(false)
     }
+  }
+
+  function handleStep3() {
+    if (!docsComplete) {
+      toast.error('Envie o documento de identidade e o comprovante de residência para continuar.')
+      return
+    }
+    setStep(4)
   }
 
   return (
@@ -617,9 +627,8 @@ export default function RegistroPage() {
                   </button>
                 ) : <span />}
                 <button
-                  onClick={step === 1 ? handleStep1 : step === 2 ? handleStep2 : () => setStep(4)}
-                  disabled={loading || (step === 3 && !docsComplete)}
-                  className="rounded-full bg-brand-500 px-6 py-3 text-[15px] font-bold text-primary-on disabled:opacity-60"
+                  onClick={step === 1 ? handleStep1 : step === 2 ? handleStep2 : handleStep3}
+                  className="rounded-full bg-brand-500 px-6 py-3 text-[15px] font-bold text-primary-on"
                 >
                   {loading ? 'Salvando...' : 'Continuar →'}
                 </button>
