@@ -68,10 +68,8 @@ interface FormState {
   cep: string
   endereco: string
   numero: string
-  complemento: string
   bairro: string
   cidade: string
-  estado: string
   senha: string
   objetivos: string[]
   objetivoOutros: string
@@ -86,7 +84,7 @@ interface FormState {
 
 const EMPTY_FORM: FormState = {
   nome: '', email: '', cpf: '', rg: '', nascimento: '', telefone: '',
-  cep: '', endereco: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '',
+  cep: '', endereco: '', numero: '', bairro: '', cidade: '',
   senha: '', objetivos: [], objetivoOutros: '', saude: {}, saudeMental: [],
   altura: '', peso: '', sexo: '', sexoOutros: '', produtos: [],
 }
@@ -126,14 +124,14 @@ export default function RegistroPage() {
         toast.error('CEP não encontrado.')
         return
       }
+      const cidadeEstado = [data.localidade, data.uf].filter(Boolean).join(' - ')
       setForm((prev) => ({
         ...prev,
         endereco: data.logradouro || prev.endereco,
         bairro: data.bairro || prev.bairro,
-        cidade: data.localidade || prev.cidade,
-        estado: data.uf || prev.estado,
+        cidade: cidadeEstado || prev.cidade,
       }))
-      setErrors((prev) => ({ ...prev, endereco: null, bairro: null, cidade: null, estado: null }))
+      setErrors((prev) => ({ ...prev, endereco: null, bairro: null, cidade: null }))
     } catch {
       toast.error('Não foi possível buscar o CEP. Preencha o endereço manualmente.')
     } finally {
@@ -151,10 +149,9 @@ export default function RegistroPage() {
       telefone: validatePhone(form.telefone),
       cep: validateCEP(form.cep),
       endereco: form.endereco.trim() ? null : 'Informe o endereço.',
-      numero: form.numero.trim() ? null : 'Informe o número.',
+      numero: form.numero.trim() ? null : 'Informe o número e o complemento.',
       bairro: form.bairro.trim() ? null : 'Informe o bairro.',
-      cidade: form.cidade.trim() ? null : 'Informe a cidade.',
-      estado: form.estado.trim() ? null : 'Informe o estado.',
+      cidade: form.cidade.trim() ? null : 'Informe a cidade e o estado.',
       senha: validatePassword(form.senha),
     }
     setErrors(next)
@@ -187,8 +184,7 @@ export default function RegistroPage() {
           full_name: form.nome, cpf: form.cpf, rg: form.rg,
           birth_date: form.nascimento, phone: form.telefone,
           cep: form.cep, address: form.endereco, number: form.numero,
-          complement: form.complemento, neighborhood: form.bairro,
-          city: form.cidade, state: form.estado,
+          neighborhood: form.bairro, city: form.cidade,
         }),
       })
       if (!profileRes.ok) {
@@ -363,11 +359,9 @@ export default function RegistroPage() {
                     inputMode="numeric" error={errors.cep}
                   />
                   <Field label="Endereço" value={form.endereco} onChange={(v) => update('endereco', v)} placeholder="Rua, avenida..." error={errors.endereco} />
-                  <Field label="Número" value={form.numero} onChange={(v) => update('numero', v)} placeholder="123" inputMode="numeric" error={errors.numero} />
-                  <Field label="Complemento (opcional)" value={form.complemento} onChange={(v) => update('complemento', v)} placeholder="Apto, bloco..." />
-                  <Field label="Bairro" value={form.bairro} onChange={(v) => update('bairro', v)} placeholder="Bairro" error={errors.bairro} wide />
-                  <Field label="Cidade" value={form.cidade} onChange={(v) => update('cidade', v)} placeholder="Cidade" error={errors.cidade} />
-                  <Field label="Estado" value={form.estado} onChange={(v) => update('estado', v)} placeholder="UF" error={errors.estado} />
+                  <Field label="Número e complemento" value={form.numero} onChange={(v) => update('numero', v)} placeholder="Ex.: 123, apto 45" error={errors.numero} />
+                  <Field label="Bairro" value={form.bairro} onChange={(v) => update('bairro', v)} placeholder="Bairro" error={errors.bairro} />
+                  <Field label="Cidade e estado" value={form.cidade} onChange={(v) => update('cidade', v)} placeholder="Ex.: São Paulo - SP" error={errors.cidade} wide />
                   <div className="sm:col-span-2">
                     <PasswordField
                       label="Senha" value={form.senha} onChange={(v) => update('senha', v)}
@@ -468,7 +462,7 @@ export default function RegistroPage() {
                   </div>
                   <div className="sm:col-span-2">
                     <label className="mb-2 block text-[13px] font-bold text-navy-700">Informações físicas</label>
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                       <Field label="Altura" value={form.altura} onChange={(v) => update('altura', v)} placeholder="Ex.: 1,70m" error={errors.altura} />
                       <Field label="Peso" value={form.peso} onChange={(v) => update('peso', v)} placeholder="Ex.: 70kg" error={errors.peso} />
                       <div className="sm:col-span-2">
