@@ -424,7 +424,7 @@ export default function RegistroPage() {
                     )}
                     {errors.objetivos && <p className="mt-1 text-xs font-semibold text-error-500">{errors.objetivos}</p>}
                   </div>
-                  <div className="sm:col-span-2 border-t border-line-200" aria-hidden="true" />
+                  <div className="sm:col-span-2 my-2 border-t border-line-200" aria-hidden="true" />
                   <div className="sm:col-span-2">
                     <label className="mb-1.5 block text-[13px] font-bold text-navy-700">
                       Saúde mental <span className="font-normal text-navy-200">(pode escolher mais de um)</span>
@@ -458,7 +458,7 @@ export default function RegistroPage() {
                       })}
                     </div>
                   </div>
-                  <div className="sm:col-span-2 border-t border-line-200" aria-hidden="true" />
+                  <div className="sm:col-span-2 my-2 border-t border-line-200" aria-hidden="true" />
                   <div className="sm:col-span-2">
                     <label className="mb-2 block text-[13px] font-bold text-navy-700">Informações físicas</label>
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -501,7 +501,7 @@ export default function RegistroPage() {
                       </div>
                     </div>
                   </div>
-                  <div className="sm:col-span-2 border-t border-line-200" aria-hidden="true" />
+                  <div className="sm:col-span-2 my-2 border-t border-line-200" aria-hidden="true" />
                   <div className="sm:col-span-2">
                     <label className="mb-1.5 block text-[13px] font-bold text-navy-700">
                       Produtos de preferência <span className="font-normal text-navy-200">(pode escolher mais de um)</span>
@@ -535,7 +535,7 @@ export default function RegistroPage() {
                       })}
                     </div>
                   </div>
-                  <div className="sm:col-span-2 border-t border-line-200" aria-hidden="true" />
+                  <div className="sm:col-span-2 my-2 border-t border-line-200" aria-hidden="true" />
                   <div className="sm:col-span-2">
                     <label className="mb-2 block text-[13px] font-bold text-navy-700">Histórico de saúde</label>
                     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -569,7 +569,7 @@ export default function RegistroPage() {
                     </div>
                     {errors.saude && <p className="mt-1 text-xs font-semibold text-error-500">{errors.saude}</p>}
                   </div>
-                  <div className="sm:col-span-2 border-t border-line-200" aria-hidden="true" />
+                  <div className="sm:col-span-2 my-2 border-t border-line-200" aria-hidden="true" />
                   <div className="sm:col-span-2">
                     <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Documento de consultas anteriores (opcional)</label>
                     <SingleDocumentUpload type="previous_consultation" label="Ex.: consultas anteriores, exames..." />
