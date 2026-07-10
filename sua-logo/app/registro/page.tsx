@@ -56,6 +56,8 @@ const SAUDE_MENTAL: string[] = [
 
 const SEXO_OPCOES = ['Masculino', 'Feminino', 'Outros'] as const
 
+const PRODUTOS: string[] = ['Flores', 'Óleos', 'Extrações', 'Gummies', 'Pomadas']
+
 interface FormState {
   nome: string
   email: string
@@ -80,6 +82,7 @@ interface FormState {
   peso: string
   sexo: string
   sexoOutros: string
+  produtos: string[]
   local: string
   intensidade: number
   historico: string
@@ -89,7 +92,7 @@ const EMPTY_FORM: FormState = {
   nome: '', email: '', cpf: '', rg: '', nascimento: '', telefone: '',
   cep: '', endereco: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '',
   senha: '', senha2: '', objetivos: [], objetivoOutros: '', saude: {}, saudeMental: [],
-  altura: '', peso: '', sexo: '', sexoOutros: '',
+  altura: '', peso: '', sexo: '', sexoOutros: '', produtos: [],
   local: '', intensidade: 5, historico: '',
 }
 
@@ -246,6 +249,15 @@ export default function RegistroPage() {
     return form.sexo
   }
 
+  function toggleProduto(value: string) {
+    setForm((prev) => ({
+      ...prev,
+      produtos: prev.produtos.includes(value)
+        ? prev.produtos.filter((p) => p !== value)
+        : [...prev.produtos, value],
+    }))
+  }
+
   function validateStep2(): boolean {
     const outrosMissing = form.objetivos.includes('outros') && !form.objetivoOutros.trim()
     const saudeCompleto = SAUDE_PERGUNTAS.every((p) => form.saude[p])
@@ -285,6 +297,7 @@ export default function RegistroPage() {
           pain_intensity: form.intensidade, medical_history: form.historico,
           health_history: form.saude, mental_health: form.saudeMental,
           height: form.altura, weight: form.peso, sex: sexoText(),
+          product_preferences: form.produtos,
         }),
       })
       const data = await res.json()
@@ -490,6 +503,39 @@ export default function RegistroPage() {
                         )}
                         {errors.sexo && <p className="mt-1 text-xs font-semibold text-error-500">{errors.sexo}</p>}
                       </div>
+                    </div>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="mb-1.5 block text-[13px] font-bold text-navy-700">
+                      Produtos de preferência <span className="font-normal text-navy-200">(pode escolher mais de um)</span>
+                    </label>
+                    <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                      {PRODUTOS.map((item) => {
+                        const selected = form.produtos.includes(item)
+                        return (
+                          <button
+                            key={item}
+                            type="button"
+                            aria-pressed={selected}
+                            onClick={() => toggleProduto(item)}
+                            className={cn(
+                              'flex items-center gap-3 rounded-[12px] border p-3.5 text-left transition',
+                              selected ? 'border-brand-500 bg-brand-50' : 'border-line-300 hover:border-brand-200'
+                            )}
+                          >
+                            <span
+                              className={cn(
+                                'flex h-5 w-5 shrink-0 items-center justify-center rounded-md border text-xs',
+                                selected ? 'border-brand-500 bg-brand-500 text-primary-on' : 'border-line-400 text-transparent'
+                              )}
+                              aria-hidden="true"
+                            >
+                              ✓
+                            </span>
+                            <span className="text-sm font-bold text-navy-800">{item}</span>
+                          </button>
+                        )
+                      })}
                     </div>
                   </div>
                   <Field label="Localização" value={form.local} onChange={(v) => update('local', v)} placeholder="Ex.: cabeça, garganta, abdômen..." error={errors.local} />

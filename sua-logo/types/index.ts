@@ -46,6 +46,7 @@ export interface TriageData {
   height?: string
   weight?: string
   sex?: string
+  product_preferences?: string[]
 }
 
 export interface PaymentData {
