@@ -42,7 +42,7 @@ export function MobileNavMenu() {
         aria-label={open ? 'Fechar menu' : 'Abrir menu'}
         aria-expanded={open}
         aria-controls="mobile-nav-panel"
-        className="flex h-9 w-9 items-center justify-center rounded-full border border-line-300 text-navy-700"
+        className="flex h-9 w-9 items-center justify-center rounded-[4px] border border-line-300 text-navy-700"
       >
         {open ? '✕' : '☰'}
       </button>
@@ -82,7 +82,7 @@ export function MobileNavMenu() {
             <Link
               href="/registro"
               onClick={() => setOpen(false)}
-              className="mt-1.5 block rounded-full bg-brand-500 px-3 py-2.5 text-center text-sm font-bold text-primary-on"
+              className="mt-1.5 block rounded-[4px] bg-brand-500 px-3 py-2.5 text-center text-sm font-bold text-primary-on"
             >
               Iniciar consulta
             </Link>

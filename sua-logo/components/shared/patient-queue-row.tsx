@@ -54,7 +54,7 @@ export function PatientQueueRow({
         {editHref && (
           <Link
             href={editHref}
-            className="rounded-full border border-line-300 px-5 py-2.5 text-sm font-bold text-navy-700 hover:bg-surface-page"
+            className="rounded-[4px] border border-line-300 px-5 py-2.5 text-sm font-bold text-navy-700 hover:bg-surface-page"
           >
             ✏️ Editar
           </Link>
@@ -62,7 +62,7 @@ export function PatientQueueRow({
         <Link
           href={href}
           className={cn(
-            'rounded-full px-5 py-2.5 text-sm font-bold',
+            'rounded-[4px] px-5 py-2.5 text-sm font-bold',
             accent === 'admin' ? 'bg-admin-500 text-white' : 'bg-teal-500 text-primary-on'
           )}
         >

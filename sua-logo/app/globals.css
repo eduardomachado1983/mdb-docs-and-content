@@ -13,14 +13,14 @@
   --color-brand-200: #bff1db;
   --color-brand-400: #a4edce;
   --color-brand-500: #8ce7c0;
-  --color-brand-600: #2f9d75;
+  --color-brand-600: #278362;
   --color-brand-700: #1c6b52;
 
   /* Verde-claro (#8EE88E) — acento do médico (glass/fundo). 600 = texto legível. */
   --color-teal-50: #f0fcef;
   --color-teal-100: #ddf7dd;
   --color-teal-500: #8ee88e;
-  --color-teal-600: #3a9a54;
+  --color-teal-600: #328448;
 
   /* Forest — autoridade / admin */
   --color-admin-50: #e9f1f0;
@@ -28,16 +28,19 @@
   --color-admin-500: #015249;
   --color-admin-600: #013632;
 
-  /* Forest — escala de texto (on-surface) */
+  /* Forest — escala de texto (on-surface). 100–400 escurecidos em relação ao
+     tom original para garantir contraste AA (4.5:1) em texto sobre branco —
+     essas variantes carregam conteúdo real (descrições, nomes de arquivo,
+     mensagens de estado vazio), não apenas decoração. */
   --color-navy-900: #015249;
   --color-navy-800: #0b3d37;
   --color-navy-700: #16544c;
   --color-navy-600: #2a6960;
   --color-navy-500: #4a6b67;
-  --color-navy-400: #5f7d79;
-  --color-navy-300: #77938d;
-  --color-navy-200: #8fa6a1;
-  --color-navy-100: #a5a5af;
+  --color-navy-400: #55706c;
+  --color-navy-300: #5d756f;
+  --color-navy-200: #627c76;
+  --color-navy-100: #8c8c99;
 
   --color-line-100: #e3ece9;
   --color-line-200: #c8d8d6;
@@ -53,10 +56,10 @@
   --color-amber-50: #fdf4ec;
   --color-amber-100: #f9e3d1;
   --color-amber-200: #f2cdaa;
-  --color-amber-800: #9a5a2c;
+  --color-amber-800: #95572a;
 
   /* Coral suave (#E89B8E) — erros / alertas. 500 é escurecido p/ contraste de texto. */
-  --color-error-500: #cf5f4c;
+  --color-error-500: #c94b36;
   --color-error-50: #fcece8;
 
   /* Texto sobre botão Marine — nunca branco (contraste 3.2:1 insuficiente) */

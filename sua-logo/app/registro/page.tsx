@@ -361,14 +361,12 @@ export default function RegistroPage() {
                   <Field label="Endereço" value={form.endereco} onChange={(v) => update('endereco', v)} placeholder="Rua, avenida..." error={errors.endereco} />
                   <Field label="Número e complemento" value={form.numero} onChange={(v) => update('numero', v)} placeholder="Ex.: 123, apto 45" error={errors.numero} />
                   <Field label="Bairro" value={form.bairro} onChange={(v) => update('bairro', v)} placeholder="Bairro" error={errors.bairro} />
-                  <Field label="Cidade e estado" value={form.cidade} onChange={(v) => update('cidade', v)} placeholder="Ex.: São Paulo - SP" error={errors.cidade} wide />
-                  <div className="sm:col-span-2">
-                    <PasswordField
-                      label="Senha" value={form.senha} onChange={(v) => update('senha', v)}
-                      placeholder="Crie uma senha" error={errors.senha}
-                      hint="Mínimo 8 caracteres, com maiúscula, minúscula e número."
-                    />
-                  </div>
+                  <Field label="Cidade e estado" value={form.cidade} onChange={(v) => update('cidade', v)} placeholder="Ex.: São Paulo - SP" error={errors.cidade} />
+                  <PasswordField
+                    label="Senha" value={form.senha} onChange={(v) => update('senha', v)}
+                    placeholder="Crie uma senha" error={errors.senha}
+                    hint="Mínimo 8 caracteres, com maiúscula, minúscula e número."
+                  />
                 </div>
               </div>
             )}

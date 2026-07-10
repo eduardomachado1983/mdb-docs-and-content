@@ -124,7 +124,7 @@ function RedefinirSenhaForm() {
               <button
                 type="submit"
                 disabled={loading}
-                className="mt-1 rounded-full bg-brand-500 py-3.5 text-[15px] font-bold text-primary-on disabled:opacity-60"
+                className="mt-1 rounded-[4px] bg-brand-500 py-3.5 text-[15px] font-bold text-primary-on disabled:opacity-60"
               >
                 {loading ? 'Salvando...' : 'Salvar nova senha'}
               </button>

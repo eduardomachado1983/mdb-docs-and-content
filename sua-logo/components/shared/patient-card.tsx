@@ -79,7 +79,7 @@ export function PatientCard({
         <Link
           href={href}
           className={cn(
-            'rounded-full px-5 py-2.5 text-sm font-bold',
+            'rounded-[4px] px-5 py-2.5 text-sm font-bold',
             accent === 'admin' ? 'bg-admin-500 text-white' : 'bg-teal-500 text-primary-on'
           )}
         >

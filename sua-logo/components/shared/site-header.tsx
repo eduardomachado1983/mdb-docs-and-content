@@ -20,7 +20,7 @@ export function SiteHeader() {
             <LoginMenu />
             <Link
               href="/registro"
-              className="rounded-full bg-brand-500 px-[17px] py-2.5 text-sm font-bold text-primary-on"
+              className="rounded-[4px] bg-brand-500 px-[17px] py-2.5 text-sm font-bold text-primary-on"
             >
               Iniciar consulta
             </Link>

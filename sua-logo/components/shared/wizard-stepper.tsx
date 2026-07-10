@@ -8,7 +8,7 @@ const STATUS_LABEL = { done: 'Concluído', current: 'Em andamento', pending: 'Pe
 
 export function WizardStepper({ steps, current }: { steps: WizardStep[]; current: number }) {
   return (
-    <div className="rounded-2xl border border-white/30 bg-white/65 backdrop-blur-xl p-6 shadow-[0_10px_30px_rgba(20,50,90,.06)]">
+    <div>
       <div className="flex items-center">
         {steps.map((_, i) => {
           const n = i + 1
@@ -38,7 +38,6 @@ export function WizardStepper({ steps, current }: { steps: WizardStep[]; current
           const state = n < current ? 'done' : n === current ? 'current' : 'pending'
           return (
             <div key={step.title}>
-              <div className="mb-0.5 text-[10.5px] font-bold tracking-wide text-navy-100">STEP {n}</div>
               <div className={cn('mb-1.5 text-sm font-bold', state === 'pending' ? 'text-navy-200' : 'text-navy-800')}>
                 {step.title}
               </div>
