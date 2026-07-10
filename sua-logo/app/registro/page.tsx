@@ -384,7 +384,7 @@ export default function RegistroPage() {
                     <label className="mb-1.5 block text-[13px] font-bold text-navy-700">
                       Objetivo principal <span className="font-normal text-navy-200">(pode escolher mais de um)</span>
                     </label>
-                    <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
                       {OBJETIVOS.map((o) => {
                         const selected = form.objetivos.includes(o.value)
                         return (
@@ -433,7 +433,7 @@ export default function RegistroPage() {
                     <label className="mb-1.5 block text-[13px] font-bold text-navy-700">
                       Saúde mental <span className="font-normal text-navy-200">(pode escolher mais de um)</span>
                     </label>
-                    <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
                       {SAUDE_MENTAL.map((item) => {
                         const selected = form.saudeMental.includes(item)
                         return (
@@ -508,7 +508,7 @@ export default function RegistroPage() {
                     <label className="mb-1.5 block text-[13px] font-bold text-navy-700">
                       Produtos de preferência <span className="font-normal text-navy-200">(pode escolher mais de um)</span>
                     </label>
-                    <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
                       {PRODUTOS.map((item) => {
                         const selected = form.produtos.includes(item)
                         return (
@@ -539,7 +539,7 @@ export default function RegistroPage() {
                   </div>
                   <div className="sm:col-span-2">
                     <label className="mb-2 block text-[13px] font-bold text-navy-700">Histórico de saúde</label>
-                    <div className="flex flex-col gap-2">
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                       {SAUDE_PERGUNTAS.map((pergunta) => (
                         <div
                           key={pergunta}
