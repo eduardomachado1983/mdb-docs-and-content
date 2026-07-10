@@ -1,6 +1,8 @@
+import { AlertTriangle } from 'lucide-react'
 import { createServiceClient, getProfile } from '@/lib/supabase/server'
 import { MedicoHeader } from '@/components/shared/medico-header'
 import { PatientQueueRow } from '@/components/shared/patient-queue-row'
+import { RefreshButton } from '@/components/shared/refresh-button'
 import type { Patient } from '@/types'
 
 export default async function MedicoPage() {
@@ -34,8 +36,15 @@ export default async function MedicoPage() {
         <p className="mb-5 text-[15px] text-navy-300">Fila de atendimento</p>
 
         {!queue?.length && (
-          <div className="rounded-2xl border border-white/30 bg-white/65 backdrop-blur-xl px-6 py-8 text-center text-sm text-navy-200">
-            Nenhum paciente na fila.
+          <div className="flex flex-col items-center gap-3 rounded-2xl border border-white/30 bg-white/65 backdrop-blur-xl px-6 py-10 text-center">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 text-amber-800">
+              <AlertTriangle className="h-6 w-6" aria-hidden="true" />
+            </div>
+            <div className="text-base font-bold text-navy-800">Nenhum paciente na fila</div>
+            <p className="max-w-sm text-sm text-navy-300">
+              Doutor, neste momento você não tem paciente na fila de atendimento.
+            </p>
+            <RefreshButton label="Atualize a fila de pacientes" />
           </div>
         )}
 
