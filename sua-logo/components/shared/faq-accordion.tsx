@@ -2,25 +2,7 @@
 
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
-
-const FAQS = [
-  {
-    q: 'A consulta tem validade médica?',
-    a: 'Sim. Todos os atendimentos são feitos por médicos registrados no CRM, e as receitas e laudos possuem assinatura e validação clínica.',
-  },
-  {
-    q: 'Preciso pagar antes de me cadastrar?',
-    a: 'Não. Você pode finalizar o cadastro e pagar depois, direto na sua área. O médico só é acionado após a confirmação do pagamento.',
-  },
-  {
-    q: 'Meus dados estão seguros?',
-    a: 'Sim. Tratamos seus dados conforme a LGPD. Documentos e informações de saúde ficam visíveis apenas para os profissionais responsáveis pelo seu caso.',
-  },
-  {
-    q: 'Como recebo minha receita e laudo?',
-    a: 'Após a consulta e a validação administrativa, os documentos ficam disponíveis para download e impressão na sua área de paciente.',
-  },
-]
+import { FAQS } from '@/lib/faq'
 
 export function FaqAccordion() {
   const [open, setOpen] = useState<number | null>(0)
