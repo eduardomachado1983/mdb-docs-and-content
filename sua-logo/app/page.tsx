@@ -39,7 +39,7 @@ export default function LandingPage() {
 
       <section className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-12 px-6 pb-10 pt-16 md:grid-cols-[1.05fr_.95fr]">
         <div className="animate-fade-up">
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-[#e3f1ee] px-3.5 py-1.5 text-[13px] font-bold text-teal-600">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-teal-100 px-3.5 py-1.5 text-[13px] font-bold text-teal-600">
             ● Atendimento por médicos registrados
           </div>
           <h1 className="mb-[18px] text-[32px] font-extrabold leading-[1.1] tracking-tight sm:text-[44px]">
@@ -52,7 +52,7 @@ export default function LandingPage() {
           <div className="flex flex-wrap gap-3.5">
             <Link
               href="/registro"
-              className="rounded-full bg-brand-500 px-6 py-3.5 text-base font-bold text-primary-on shadow-[0_10px_22px_rgba(87,188,144,.30)]"
+              className="rounded-full bg-brand-500 px-6 py-3.5 text-base font-bold text-primary-on shadow-[0_10px_22px_rgba(140,231,192,.5)]"
             >
               Iniciar minha consulta →
             </Link>
@@ -78,7 +78,7 @@ export default function LandingPage() {
               <div className="text-[15px] font-bold">Consulta por vídeo</div>
               <div className="text-[13px] text-navy-200">Clínico geral • agora</div>
             </div>
-            <div className="ml-auto rounded-2xl bg-[#e3f1ee] px-2.5 py-1.5 text-xs font-bold text-teal-600">Online</div>
+            <div className="ml-auto rounded-2xl bg-teal-100 px-2.5 py-1.5 text-xs font-bold text-teal-600">Online</div>
           </div>
           <div className="flex flex-col gap-2.5 py-4">
             {['Triagem inteligente dos sintomas', 'Receita e laudo digitais', 'Validação antes da liberação'].map((t) => (
@@ -168,7 +168,7 @@ export default function LandingPage() {
       </section>
 
       <section className="mx-auto grid max-w-[1140px] px-6 py-14">
-        <div className="flex flex-wrap items-center justify-between gap-7 rounded-[22px] bg-gradient-to-r from-brand-500 to-teal-500 p-8 shadow-[0_20px_44px_rgba(22,104,214,.25)] sm:p-11">
+        <div className="flex flex-wrap items-center justify-between gap-7 rounded-[22px] bg-gradient-to-r from-brand-500 to-teal-500 p-8 shadow-[0_20px_44px_rgba(140,231,192,.45)] sm:p-11">
           <div>
             <h2 className="mb-2 text-2xl font-extrabold text-white sm:text-[28px]">Pronto para começar sua consulta?</h2>
             <p className="text-base text-[#e3f0ff]">Leva poucos minutos. Você pode pagar agora ou depois.</p>
@@ -192,7 +192,7 @@ export default function LandingPage() {
             <div key={t.name} className="rounded-2xl border border-line-100 bg-white p-[26px]">
               <div className="mb-[18px] text-[17px] italic leading-relaxed text-navy-700">&ldquo;{t.quote}&rdquo;</div>
               <div className="flex items-center gap-2.5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#def5e9] font-bold text-brand-700">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-100 font-bold text-brand-700">
                   {t.initials}
                 </div>
                 <div>

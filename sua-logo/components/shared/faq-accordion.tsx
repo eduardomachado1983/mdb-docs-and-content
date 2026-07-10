@@ -16,7 +16,7 @@ export function FaqAccordion() {
             className="flex w-full items-center justify-between gap-3.5 px-5 py-4.5 text-left text-[15px] font-bold text-navy-700"
           >
             {f.q}
-            <span className={cn('text-xl text-brand-500 transition-transform', open === i && 'rotate-45')}>+</span>
+            <span className={cn('text-xl text-brand-600 transition-transform', open === i && 'rotate-45')}>+</span>
           </button>
           {open === i && (
             <div className="px-5 pb-4.5 text-[15px] leading-relaxed text-navy-400">{f.a}</div>

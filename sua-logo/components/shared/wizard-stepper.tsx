@@ -46,7 +46,7 @@ export function WizardStepper({ steps, current }: { steps: WizardStep[]; current
                 className={cn(
                   'inline-block rounded-full px-2 py-0.5 text-[11px] font-bold',
                   state === 'done' && 'bg-teal-100 text-teal-600',
-                  state === 'current' && 'bg-brand-100 text-brand-500',
+                  state === 'current' && 'bg-brand-100 text-brand-700',
                   state === 'pending' && 'border border-line-300 text-navy-100'
                 )}
               >

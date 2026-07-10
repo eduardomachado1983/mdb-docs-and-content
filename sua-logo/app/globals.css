@@ -5,20 +5,22 @@
 @theme {
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, sans-serif;
 
-  /* Marine — CTA / identidade / botão primário (a única cor de ação) */
-  --color-brand-50: #eefaf4;
-  --color-brand-100: #def5e9;
-  --color-brand-200: #c9ecdc;
-  --color-brand-400: #7dd0a8;
-  --color-brand-500: #57bc90;
-  --color-brand-600: #3d9a73;
-  --color-brand-700: #015249;
+  /* Mint (#8CE7C0) — CTA / identidade / botão primário (a única cor de ação).
+     500 é a cor-base (fundo de botão, com texto escuro primary-on); 600/700
+     são tons escuros legíveis usados como texto/links. */
+  --color-brand-50: #eefcf6;
+  --color-brand-100: #d9f8eb;
+  --color-brand-200: #bff1db;
+  --color-brand-400: #a4edce;
+  --color-brand-500: #8ce7c0;
+  --color-brand-600: #2f9d75;
+  --color-brand-700: #1c6b52;
 
-  /* Feather-tinted — acento do médico (glass, nunca texto) */
-  --color-teal-50: #f2faf7;
-  --color-teal-100: #dff3ed;
-  --color-teal-500: #57bc90;
-  --color-teal-600: #3d9a73;
+  /* Verde-claro (#8EE88E) — acento do médico (glass/fundo). 600 = texto legível. */
+  --color-teal-50: #f0fcef;
+  --color-teal-100: #ddf7dd;
+  --color-teal-500: #8ee88e;
+  --color-teal-600: #3a9a54;
 
   /* Forest — autoridade / admin */
   --color-admin-50: #e9f1f0;
@@ -47,8 +49,15 @@
   --color-surface-muted: #eaf1ef;
   --color-surface-soft: #f2f7f6;
 
-  --color-error-500: #ff3b30;
-  --color-error-50: #ffeae8;
+  /* Pêssego (#E8B58E) — avisos / status pendente (amber). 800 = texto legível. */
+  --color-amber-50: #fdf4ec;
+  --color-amber-100: #f9e3d1;
+  --color-amber-200: #f2cdaa;
+  --color-amber-800: #9a5a2c;
+
+  /* Coral suave (#E89B8E) — erros / alertas. 500 é escurecido p/ contraste de texto. */
+  --color-error-500: #cf5f4c;
+  --color-error-50: #fcece8;
 
   /* Texto sobre botão Marine — nunca branco (contraste 3.2:1 insuficiente) */
   --color-primary-on: #015249;
