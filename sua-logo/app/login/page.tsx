@@ -176,7 +176,7 @@ function LoginForm() {
                   setForgotEmail('')
                   setForgotError(null)
                 }}
-                className="mt-6 w-full text-center text-sm font-semibold text-brand-500"
+                className="mt-6 w-full text-center text-sm font-semibold text-brand-600"
               >
                 ← Voltar para o login
               </button>
@@ -226,7 +226,7 @@ function LoginForm() {
                     <button
                       type="button"
                       onClick={() => setForgotMode(true)}
-                      className="text-xs font-semibold text-brand-500"
+                      className="text-xs font-semibold text-brand-600"
                     >
                       Esqueceu a senha?
                     </button>
@@ -270,7 +270,7 @@ function LoginForm() {
               </button>
 
               <p className="mt-6 text-center text-sm text-navy-300">
-                Não tem conta? <Link href="/registro" className="font-semibold text-brand-500">Cadastre-se</Link>
+                Não tem conta? <Link href="/registro" className="font-semibold text-brand-600">Cadastre-se</Link>
               </p>
             </>
           )}

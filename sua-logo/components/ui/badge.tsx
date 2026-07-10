@@ -10,7 +10,7 @@ const badgeVariants = cva('inline-flex items-center gap-1.5 rounded-full px-3 py
       amber: 'bg-amber-100 text-amber-800',
       green: 'bg-teal-100 text-teal-600',
       red: 'bg-error-50 text-error-500',
-      brand: 'bg-brand-100 text-brand-500',
+      brand: 'bg-brand-100 text-brand-700',
     },
   },
   defaultVariants: { variant: 'default' },
