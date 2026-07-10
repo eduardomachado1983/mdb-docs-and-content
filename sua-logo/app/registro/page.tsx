@@ -18,7 +18,7 @@ import type { Document } from '@/types'
 
 const STEPS = [
   { title: 'Dados pessoais' },
-  { title: 'Consulta' },
+  { title: 'Triagem' },
   { title: 'Documentos' },
   { title: 'Pagamento' },
 ]
@@ -372,7 +372,7 @@ export default function RegistroPage() {
 
             {step === 2 && (
               <div className="animate-fade-up">
-                <div className="mb-1 text-lg font-extrabold">Consulta</div>
+                <div className="mb-1 text-lg font-extrabold">Triagem</div>
                 <div className="mb-[18px] text-sm text-navy-300">Qual seu objetivo com o uso de Cannabis?</div>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="sm:col-span-2">
