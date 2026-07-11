@@ -476,7 +476,7 @@ export default function RegistroPage() {
                                 aria-pressed={selected}
                                 onClick={() => setSexo(opt)}
                                 className={cn(
-                                  'rounded-[4px] border px-6 py-1.5 text-sm font-bold transition',
+                                  'min-h-[44px] rounded-[4px] border px-6 py-1.5 text-sm font-bold transition active:scale-[0.97] sm:min-h-0',
                                   selected ? 'border-brand-500 bg-brand-500 text-primary-on' : 'border-line-300 text-navy-500 hover:border-brand-200'
                                 )}
                               >
@@ -555,7 +555,7 @@ export default function RegistroPage() {
                                   aria-pressed={selected}
                                   onClick={() => setSaude(pergunta, opt)}
                                   className={cn(
-                                    'rounded-[4px] border px-6 py-1.5 text-sm font-bold transition',
+                                    'min-h-[44px] rounded-[4px] border px-6 py-1.5 text-sm font-bold transition active:scale-[0.97] sm:min-h-0',
                                     selected ? 'border-brand-500 bg-brand-500 text-primary-on' : 'border-line-300 text-navy-500 hover:border-brand-200'
                                   )}
                                 >
@@ -606,14 +606,14 @@ export default function RegistroPage() {
                 {step > 1 ? (
                   <button
                     onClick={() => setStep(step - 1)}
-                    className="rounded-[4px] border border-line-300 bg-surface-page px-5 py-3 text-sm font-bold text-navy-500"
+                    className="rounded-[4px] border border-line-300 bg-surface-page px-5 py-3 text-sm font-bold text-navy-500 transition active:scale-[0.97]"
                   >
                     ← Voltar
                   </button>
                 ) : <span />}
                 <button
                   onClick={step === 1 ? handleStep1 : step === 2 ? handleStep2 : handleStep3}
-                  className="rounded-[4px] bg-brand-500 px-6 py-3 text-[15px] font-bold text-primary-on"
+                  className="flex-1 rounded-[4px] bg-brand-500 px-6 py-3 text-[15px] font-bold text-primary-on transition active:scale-[0.97] sm:flex-initial"
                 >
                   {loading ? 'Salvando...' : 'Continuar →'}
                 </button>

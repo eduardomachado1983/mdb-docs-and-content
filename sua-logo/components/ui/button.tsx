@@ -18,7 +18,8 @@ const buttonVariants = cva(
       },
       size: {
         default: 'h-11 px-5 text-[15px]',
-        sm: 'h-9 px-3.5 text-sm',
+        // 44px no mobile (alvo de toque mínimo); 36px no desktop.
+        sm: 'h-11 px-3.5 text-sm sm:h-9',
         lg: 'h-[52px] px-7 text-base',
       },
     },
