@@ -45,18 +45,7 @@ const SAUDE_PERGUNTAS: string[] = [
   'Tem problemas digestivos?',
 ]
 
-const SAUDE_MENTAL: string[] = [
-  'Sente muita tristeza',
-  'Perde o foco facilmente',
-  'Tem problemas de memória',
-  'Fica facilmente irritado ou triste',
-  'Possui problema com estresse',
-  'Já teve episódios de pânico?',
-]
-
 const SEXO_OPCOES = ['Masculino', 'Feminino', 'Outros'] as const
-
-const PRODUTOS: string[] = ['Flores', 'Óleos', 'Extrações', 'Gummies', 'Pomadas']
 
 interface FormState {
   nome: string
@@ -74,19 +63,17 @@ interface FormState {
   objetivos: string[]
   objetivoOutros: string
   saude: Record<string, string>
-  saudeMental: string[]
   altura: string
   peso: string
   sexo: string
   sexoOutros: string
-  produtos: string[]
 }
 
 const EMPTY_FORM: FormState = {
   nome: '', email: '', cpf: '', rg: '', nascimento: '', telefone: '',
   cep: '', endereco: '', numero: '', bairro: '', cidade: '',
-  senha: '', objetivos: [], objetivoOutros: '', saude: {}, saudeMental: [],
-  altura: '', peso: '', sexo: '', sexoOutros: '', produtos: [],
+  senha: '', objetivos: [], objetivoOutros: '', saude: {},
+  altura: '', peso: '', sexo: '', sexoOutros: '',
 }
 
 type FieldErrors = Partial<Record<keyof FormState, string | null>>
@@ -226,15 +213,6 @@ export default function RegistroPage() {
     setErrors((prev) => (prev.saude ? { ...prev, saude: null } : prev))
   }
 
-  function toggleSaudeMental(value: string) {
-    setForm((prev) => ({
-      ...prev,
-      saudeMental: prev.saudeMental.includes(value)
-        ? prev.saudeMental.filter((o) => o !== value)
-        : [...prev.saudeMental, value],
-    }))
-  }
-
   function setSexo(value: string) {
     update('sexo', value)
   }
@@ -243,15 +221,6 @@ export default function RegistroPage() {
   function sexoText(): string {
     if (form.sexo === 'Outros' && form.sexoOutros.trim()) return form.sexoOutros.trim()
     return form.sexo
-  }
-
-  function toggleProduto(value: string) {
-    setForm((prev) => ({
-      ...prev,
-      produtos: prev.produtos.includes(value)
-        ? prev.produtos.filter((p) => p !== value)
-        : [...prev.produtos, value],
-    }))
   }
 
   function validateStep2(): boolean {
@@ -290,9 +259,8 @@ export default function RegistroPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           main_symptom: objetivosText(),
-          health_history: form.saude, mental_health: form.saudeMental,
+          health_history: form.saude,
           height: form.altura, weight: form.peso, sex: sexoText(),
-          product_preferences: form.produtos,
         }),
       })
       const data = await res.json()
@@ -376,6 +344,92 @@ export default function RegistroPage() {
                 <div className="mb-[18px] text-lg font-extrabold">Triagem</div>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="sm:col-span-2">
+                    <label className="mb-2 block text-[13px] font-bold text-navy-700">Histórico de saúde</label>
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                      {SAUDE_PERGUNTAS.map((pergunta) => (
+                        <div
+                          key={pergunta}
+                          className="flex flex-col gap-2 rounded-[12px] border border-line-300 p-3.5 sm:flex-row sm:items-center sm:justify-between"
+                        >
+                          <span className="text-sm font-semibold text-navy-700">{pergunta}</span>
+                          <div className="flex shrink-0 gap-2">
+                            {['Sim', 'Não'].map((opt) => {
+                              const selected = form.saude[pergunta] === opt
+                              return (
+                                <button
+                                  key={opt}
+                                  type="button"
+                                  aria-pressed={selected}
+                                  onClick={() => setSaude(pergunta, opt)}
+                                  className={cn(
+                                    'min-h-[44px] rounded-[4px] border px-6 py-1.5 text-sm font-bold transition active:scale-[0.97] sm:min-h-0',
+                                    selected ? 'border-brand-500 bg-brand-500 text-primary-on' : 'border-line-300 text-navy-500 hover:border-brand-200'
+                                  )}
+                                >
+                                  {opt}
+                                </button>
+                              )
+                            })}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    {errors.saude && <p className="mt-1 text-xs font-semibold text-error-500">{errors.saude}</p>}
+                  </div>
+                  <div className="sm:col-span-2 my-2 border-t border-line-200" aria-hidden="true" />
+                  <div className="sm:col-span-2">
+                    <label className="mb-2 block text-[13px] font-bold text-navy-700">Informações físicas</label>
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                      <Field label="Altura" value={form.altura} onChange={(v) => update('altura', v)} placeholder="Ex.: 1,70m" error={errors.altura} />
+                      <Field label="Peso" value={form.peso} onChange={(v) => update('peso', v)} placeholder="Ex.: 70kg" error={errors.peso} />
+                      <div className="sm:col-span-2">
+                        <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Sexo</label>
+                        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
+                          {SEXO_OPCOES.map((opt) => {
+                            const selected = form.sexo === opt
+                            return (
+                              <button
+                                key={opt}
+                                type="button"
+                                aria-pressed={selected}
+                                onClick={() => setSexo(opt)}
+                                className={cn(
+                                  'flex items-center gap-3 rounded-[4px] border p-3.5 text-left transition',
+                                  selected ? 'border-brand-500 bg-brand-50' : 'border-line-300 hover:border-brand-200'
+                                )}
+                              >
+                                <span
+                                  className={cn(
+                                    'flex h-5 w-5 shrink-0 items-center justify-center rounded-md border text-xs',
+                                    selected ? 'border-brand-500 bg-brand-500 text-primary-on' : 'border-line-400 text-transparent'
+                                  )}
+                                  aria-hidden="true"
+                                >
+                                  ✓
+                                </span>
+                                <span className="text-sm font-bold text-navy-800">{opt}</span>
+                              </button>
+                            )
+                          })}
+                        </div>
+                        {form.sexo === 'Outros' && (
+                          <div className="mt-2.5">
+                            <input
+                              type="text"
+                              value={form.sexoOutros}
+                              onChange={(e) => update('sexoOutros', e.target.value)}
+                              placeholder="Descreva"
+                              aria-invalid={Boolean(errors.sexo)}
+                              className="w-full rounded-[10px] border border-line-400 px-3.5 py-3 text-[15px] outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+                            />
+                          </div>
+                        )}
+                        {errors.sexo && <p className="mt-1 text-xs font-semibold text-error-500">{errors.sexo}</p>}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="sm:col-span-2 my-2 border-t border-line-200" aria-hidden="true" />
+                  <div className="sm:col-span-2">
                     <label className="mb-1.5 block text-[13px] font-bold text-navy-700">
                       Objetivo principal para o uso de Cannabis <span className="font-normal text-navy-200">(pode escolher mais de um)</span>
                     </label>
@@ -423,151 +477,6 @@ export default function RegistroPage() {
                       </div>
                     )}
                     {errors.objetivos && <p className="mt-1 text-xs font-semibold text-error-500">{errors.objetivos}</p>}
-                  </div>
-                  <div className="sm:col-span-2 my-2 border-t border-line-200" aria-hidden="true" />
-                  <div className="sm:col-span-2">
-                    <label className="mb-1.5 block text-[13px] font-bold text-navy-700">
-                      Saúde mental <span className="font-normal text-navy-200">(pode escolher mais de um)</span>
-                    </label>
-                    <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
-                      {SAUDE_MENTAL.map((item) => {
-                        const selected = form.saudeMental.includes(item)
-                        return (
-                          <button
-                            key={item}
-                            type="button"
-                            aria-pressed={selected}
-                            onClick={() => toggleSaudeMental(item)}
-                            className={cn(
-                              'flex items-center gap-3 rounded-[4px] border p-3.5 text-left transition',
-                              selected ? 'border-brand-500 bg-brand-50' : 'border-line-300 hover:border-brand-200'
-                            )}
-                          >
-                            <span
-                              className={cn(
-                                'flex h-5 w-5 shrink-0 items-center justify-center rounded-md border text-xs',
-                                selected ? 'border-brand-500 bg-brand-500 text-primary-on' : 'border-line-400 text-transparent'
-                              )}
-                              aria-hidden="true"
-                            >
-                              ✓
-                            </span>
-                            <span className="text-sm font-bold text-navy-800">{item}</span>
-                          </button>
-                        )
-                      })}
-                    </div>
-                  </div>
-                  <div className="sm:col-span-2 my-2 border-t border-line-200" aria-hidden="true" />
-                  <div className="sm:col-span-2">
-                    <label className="mb-2 block text-[13px] font-bold text-navy-700">Informações físicas</label>
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                      <Field label="Altura" value={form.altura} onChange={(v) => update('altura', v)} placeholder="Ex.: 1,70m" error={errors.altura} />
-                      <Field label="Peso" value={form.peso} onChange={(v) => update('peso', v)} placeholder="Ex.: 70kg" error={errors.peso} />
-                      <div className="sm:col-span-2">
-                        <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Sexo</label>
-                        <div className="flex flex-wrap gap-2.5">
-                          {SEXO_OPCOES.map((opt) => {
-                            const selected = form.sexo === opt
-                            return (
-                              <button
-                                key={opt}
-                                type="button"
-                                aria-pressed={selected}
-                                onClick={() => setSexo(opt)}
-                                className={cn(
-                                  'min-h-[44px] rounded-[4px] border px-6 py-1.5 text-sm font-bold transition active:scale-[0.97] sm:min-h-0',
-                                  selected ? 'border-brand-500 bg-brand-500 text-primary-on' : 'border-line-300 text-navy-500 hover:border-brand-200'
-                                )}
-                              >
-                                {opt}
-                              </button>
-                            )
-                          })}
-                        </div>
-                        {form.sexo === 'Outros' && (
-                          <div className="mt-2.5">
-                            <input
-                              type="text"
-                              value={form.sexoOutros}
-                              onChange={(e) => update('sexoOutros', e.target.value)}
-                              placeholder="Descreva"
-                              aria-invalid={Boolean(errors.sexo)}
-                              className="w-full rounded-[10px] border border-line-400 px-3.5 py-3 text-[15px] outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
-                            />
-                          </div>
-                        )}
-                        {errors.sexo && <p className="mt-1 text-xs font-semibold text-error-500">{errors.sexo}</p>}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="sm:col-span-2 my-2 border-t border-line-200" aria-hidden="true" />
-                  <div className="sm:col-span-2">
-                    <label className="mb-1.5 block text-[13px] font-bold text-navy-700">
-                      Produtos de preferência <span className="font-normal text-navy-200">(pode escolher mais de um)</span>
-                    </label>
-                    <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
-                      {PRODUTOS.map((item) => {
-                        const selected = form.produtos.includes(item)
-                        return (
-                          <button
-                            key={item}
-                            type="button"
-                            aria-pressed={selected}
-                            onClick={() => toggleProduto(item)}
-                            className={cn(
-                              'flex items-center gap-3 rounded-[4px] border p-3.5 text-left transition',
-                              selected ? 'border-brand-500 bg-brand-50' : 'border-line-300 hover:border-brand-200'
-                            )}
-                          >
-                            <span
-                              className={cn(
-                                'flex h-5 w-5 shrink-0 items-center justify-center rounded-md border text-xs',
-                                selected ? 'border-brand-500 bg-brand-500 text-primary-on' : 'border-line-400 text-transparent'
-                              )}
-                              aria-hidden="true"
-                            >
-                              ✓
-                            </span>
-                            <span className="text-sm font-bold text-navy-800">{item}</span>
-                          </button>
-                        )
-                      })}
-                    </div>
-                  </div>
-                  <div className="sm:col-span-2 my-2 border-t border-line-200" aria-hidden="true" />
-                  <div className="sm:col-span-2">
-                    <label className="mb-2 block text-[13px] font-bold text-navy-700">Histórico de saúde</label>
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                      {SAUDE_PERGUNTAS.map((pergunta) => (
-                        <div
-                          key={pergunta}
-                          className="flex flex-col gap-2 rounded-[12px] border border-line-300 p-3.5 sm:flex-row sm:items-center sm:justify-between"
-                        >
-                          <span className="text-sm font-semibold text-navy-700">{pergunta}</span>
-                          <div className="flex shrink-0 gap-2">
-                            {['Sim', 'Não'].map((opt) => {
-                              const selected = form.saude[pergunta] === opt
-                              return (
-                                <button
-                                  key={opt}
-                                  type="button"
-                                  aria-pressed={selected}
-                                  onClick={() => setSaude(pergunta, opt)}
-                                  className={cn(
-                                    'min-h-[44px] rounded-[4px] border px-6 py-1.5 text-sm font-bold transition active:scale-[0.97] sm:min-h-0',
-                                    selected ? 'border-brand-500 bg-brand-500 text-primary-on' : 'border-line-300 text-navy-500 hover:border-brand-200'
-                                  )}
-                                >
-                                  {opt}
-                                </button>
-                              )
-                            })}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    {errors.saude && <p className="mt-1 text-xs font-semibold text-error-500">{errors.saude}</p>}
                   </div>
                   <div className="sm:col-span-2 my-2 border-t border-line-200" aria-hidden="true" />
                   <div className="sm:col-span-2">
