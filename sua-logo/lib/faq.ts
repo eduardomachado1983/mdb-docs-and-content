@@ -10,9 +10,14 @@ export interface Faq {
 
 export const FAQS: Faq[] = [
   {
-    q: 'A consulta tem validade médica?',
-    a: 'Sim. Todos os atendimentos são feitos por médicos registrados no CRM, e as receitas e laudos possuem assinatura e validação clínica.',
-    keywords: ['validade', 'válida', 'valida', 'médica', 'medica', 'crm', 'receita', 'laudo', 'legal'],
+    q: 'Cannabis medicinal é legal no Brasil?',
+    a: 'Sim. O tratamento com cannabis medicinal é regulamentado pela Anvisa. Com a receita de um médico prescritor, você adquire produtos autorizados de forma 100% legal.',
+    keywords: ['legal', 'lei', 'anvisa', 'regulament', 'permitido', 'cannabis', 'proibido'],
+  },
+  {
+    q: 'Quais condições podem ser tratadas?',
+    a: 'Insônia, ansiedade, dor crônica, epilepsia e outras condições. O médico avalia seu caso individualmente e indica o tratamento apenas quando for apropriado.',
+    keywords: ['condi', 'trata', 'insônia', 'insonia', 'ansiedade', 'dor', 'epilepsia', 'serve', 'indica'],
   },
   {
     q: 'Preciso pagar antes de me cadastrar?',

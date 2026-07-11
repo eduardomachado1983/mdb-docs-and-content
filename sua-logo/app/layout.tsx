@@ -5,7 +5,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Sua Logo Telemedicina',
-  description: 'Consultas médicas online, com validação e segurança de verdade.',
+  description: 'Cannabis medicinal com acompanhamento médico, triagem guiada e receita e laudo digitais — 100% dentro da lei.',
 }
 
 // Fonte SF Pro via stack nativo (-apple-system, BlinkMacSystemFont), sem
