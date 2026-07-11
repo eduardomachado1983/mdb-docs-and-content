@@ -74,7 +74,7 @@ export function SupportChat() {
             key={faq.q}
             type="button"
             onClick={() => ask(faq.q, faq.a)}
-            className="rounded-[4px] border border-line-300 px-3.5 py-1.5 text-xs font-bold text-navy-600 hover:border-brand-300"
+            className="min-h-[44px] rounded-[4px] border border-line-300 px-3.5 py-1.5 text-xs font-bold text-navy-600 transition hover:border-brand-300 active:scale-[0.97] sm:min-h-0"
           >
             {faq.q}
           </button>
@@ -86,11 +86,11 @@ export function SupportChat() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Digite sua dúvida..."
-          className="w-full rounded-full border border-line-400 px-4 py-2.5 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+          className="min-h-[44px] w-full rounded-full border border-line-400 px-4 py-2.5 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
         />
         <button
           type="submit"
-          className="shrink-0 rounded-[4px] bg-brand-500 px-5 py-2.5 text-sm font-bold text-primary-on"
+          className="min-h-[44px] shrink-0 rounded-[4px] bg-brand-500 px-5 py-2.5 text-sm font-bold text-primary-on transition active:scale-[0.97]"
         >
           Enviar
         </button>

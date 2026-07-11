@@ -32,7 +32,11 @@ export function WizardStepper({ steps, current }: { steps: WizardStep[]; current
           )
         })}
       </div>
-      <div className="mt-3 grid gap-4" style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }}>
+      {/* No mobile os 4 títulos não cabem lado a lado: mostra só a etapa atual. */}
+      <div className="mt-3 text-center text-sm font-bold text-navy-800 sm:hidden">
+        {steps[current - 1]?.title}
+      </div>
+      <div className="mt-3 hidden gap-4 sm:grid" style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }}>
         {steps.map((step, i) => {
           const n = i + 1
           const state = n < current ? 'done' : n === current ? 'current' : 'pending'

@@ -42,7 +42,7 @@ export function MobileNavMenu() {
         aria-label={open ? 'Fechar menu' : 'Abrir menu'}
         aria-expanded={open}
         aria-controls="mobile-nav-panel"
-        className="flex h-9 w-9 items-center justify-center rounded-[4px] border border-line-300 text-navy-700"
+        className="flex h-11 w-11 items-center justify-center rounded-[4px] border border-line-300 text-navy-700"
       >
         {open ? '✕' : '☰'}
       </button>
@@ -59,7 +59,7 @@ export function MobileNavMenu() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="block rounded-[9px] px-3 py-2.5 text-sm font-semibold text-navy-700 hover:bg-surface-soft"
+                className="flex min-h-[44px] items-center rounded-[9px] px-3 py-2.5 text-sm font-semibold text-navy-700 hover:bg-surface-soft"
               >
                 {link.label}
               </Link>
@@ -72,7 +72,7 @@ export function MobileNavMenu() {
                 key={role.href}
                 href={role.href}
                 onClick={() => setOpen(false)}
-                className="flex items-center gap-2.5 rounded-[9px] px-3 py-2.5 text-sm font-semibold text-navy-700 hover:bg-surface-soft"
+                className="flex min-h-[44px] items-center gap-2.5 rounded-[9px] px-3 py-2.5 text-sm font-semibold text-navy-700 hover:bg-surface-soft"
               >
                 <span aria-hidden="true">{role.icon}</span>
                 {role.label}
@@ -82,7 +82,7 @@ export function MobileNavMenu() {
             <Link
               href="/registro"
               onClick={() => setOpen(false)}
-              className="mt-1.5 block rounded-[4px] bg-brand-500 px-3 py-2.5 text-center text-sm font-bold text-primary-on"
+              className="mt-1.5 flex min-h-[44px] items-center justify-center rounded-[4px] bg-brand-500 px-3 py-2.5 text-sm font-bold text-primary-on"
             >
               Iniciar consulta
             </Link>
