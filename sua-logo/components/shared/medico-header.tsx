@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { ClipboardList, Users } from 'lucide-react'
 import { BottomNav, type BottomNavItem } from '@/components/shared/bottom-nav'
 import { LogoutButton } from '@/components/shared/logout-button'
+import { SiteLogo } from '@/components/shared/site-logo'
 import { cn, initials } from '@/lib/utils'
 
 const TABS = [
@@ -31,13 +32,10 @@ export function MedicoHeader({
 
   return (
     <>
-      <header className="sticky top-0 z-30 border-b border-line-200 bg-white/85 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 border-b border-line-200 bg-white/90 backdrop-blur-md">
         <div className="mx-auto grid max-w-[1140px] grid-cols-[1fr_auto_1fr] items-center px-6">
-          <div className="flex items-center gap-2.5 py-[13px]">
-            <div className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-teal-500 text-[11px] font-extrabold text-white">
-              SL
-            </div>
-            <span className="text-[15px] font-extrabold">Sua Logo</span>
+          <div className="py-[15px]">
+            <SiteLogo href="/medico" iconClassName="bg-teal-500" />
           </div>
           <nav className="hidden items-center gap-6 justify-self-center md:flex">
             {TABS.map((tab) => (

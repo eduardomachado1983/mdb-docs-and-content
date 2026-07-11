@@ -192,7 +192,7 @@ function LoginForm() {
                   <div className="text-[21px] font-extrabold leading-tight">{config.label}</div>
                 </div>
               </div>
-              <p className="mb-6 text-sm leading-relaxed text-navy-300">{config.desc}</p>
+              <p className="mb-6 min-h-[45px] text-sm leading-relaxed text-navy-300">{config.desc}</p>
 
               <form
                 className="flex flex-col gap-4"
