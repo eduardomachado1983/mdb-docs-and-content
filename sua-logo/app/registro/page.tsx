@@ -629,8 +629,8 @@ export default function RegistroPage() {
                   ← Voltar
                 </button>
                 <button
-                  onClick={() => router.push('/dashboard')}
-                  className="rounded-[4px] px-5 py-3 text-sm font-bold text-error-500"
+                  onClick={() => router.push('/')}
+                  className="rounded-[4px] px-5 py-3 text-sm font-bold text-navy-500"
                 >
                   Cancelar consulta
                 </button>
