@@ -50,115 +50,117 @@ export default async function PacientePage({ params }: { params: Promise<{ id: s
           <h1 className="text-xl font-extrabold">Detalhes do paciente</h1>
         </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>{patient.personal_data?.full_name}</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-2 text-sm text-navy-600">
-            <p>CPF: {patient.personal_data?.cpf}</p>
-            <p>Nascimento: {patient.personal_data?.birth_date}</p>
-            <p>Telefone: {patient.personal_data?.phone}</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader><CardTitle className="text-base">Consulta</CardTitle></CardHeader>
-          <CardContent className="grid gap-2 text-sm text-navy-600">
-            <p><strong>Objetivo:</strong> {patient.triage?.main_symptom}</p>
-            {patient.triage?.pain_location && <p><strong>Local:</strong> {patient.triage.pain_location}</p>}
-            {patient.triage?.pain_intensity && <p><strong>Intensidade:</strong> {patient.triage.pain_intensity}/10</p>}
-          </CardContent>
-        </Card>
-
-        {patient.triage?.health_history && Object.keys(patient.triage.health_history).length > 0 && (
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <Card>
-            <CardHeader><CardTitle className="text-base">Histórico de saúde</CardTitle></CardHeader>
+            <CardHeader>
+              <CardTitle>{patient.personal_data?.full_name}</CardTitle>
+            </CardHeader>
             <CardContent className="grid gap-2 text-sm text-navy-600">
-              {Object.entries(patient.triage.health_history).map(([pergunta, resposta]) => (
-                <p key={pergunta} className="flex items-center justify-between gap-3">
-                  <span>{pergunta}</span>
-                  <strong className="shrink-0 text-navy-800">{resposta}</strong>
-                </p>
-              ))}
+              <p>CPF: {patient.personal_data?.cpf}</p>
+              <p>Nascimento: {patient.personal_data?.birth_date}</p>
+              <p>Telefone: {patient.personal_data?.phone}</p>
             </CardContent>
           </Card>
-        )}
 
-        {patient.triage?.mental_health && patient.triage.mental_health.length > 0 && (
           <Card>
-            <CardHeader><CardTitle className="text-base">Saúde mental</CardTitle></CardHeader>
-            <CardContent className="flex flex-wrap gap-2">
-              {patient.triage.mental_health.map((item) => (
-                <span key={item} className="rounded-full bg-surface-muted px-3 py-1 text-xs font-semibold text-navy-700">
-                  {item}
-                </span>
-              ))}
-            </CardContent>
-          </Card>
-        )}
-
-        {(patient.triage?.height || patient.triage?.weight || patient.triage?.sex) && (
-          <Card>
-            <CardHeader><CardTitle className="text-base">Informações físicas</CardTitle></CardHeader>
+            <CardHeader><CardTitle className="text-base">Consulta</CardTitle></CardHeader>
             <CardContent className="grid gap-2 text-sm text-navy-600">
-              {patient.triage.height && <p><strong>Altura:</strong> {patient.triage.height}</p>}
-              {patient.triage.weight && <p><strong>Peso:</strong> {patient.triage.weight}</p>}
-              {patient.triage.sex && <p><strong>Sexo:</strong> {patient.triage.sex}</p>}
+              <p><strong>Objetivo:</strong> {patient.triage?.main_symptom}</p>
+              {patient.triage?.pain_location && <p><strong>Local:</strong> {patient.triage.pain_location}</p>}
+              {patient.triage?.pain_intensity && <p><strong>Intensidade:</strong> {patient.triage.pain_intensity}/10</p>}
             </CardContent>
           </Card>
-        )}
 
-        {patient.triage?.product_preferences && patient.triage.product_preferences.length > 0 && (
+          {patient.triage?.health_history && Object.keys(patient.triage.health_history).length > 0 && (
+            <Card>
+              <CardHeader><CardTitle className="text-base">Histórico de saúde</CardTitle></CardHeader>
+              <CardContent className="grid gap-2 text-sm text-navy-600">
+                {Object.entries(patient.triage.health_history).map(([pergunta, resposta]) => (
+                  <p key={pergunta} className="flex items-center justify-between gap-3">
+                    <span>{pergunta}</span>
+                    <strong className="shrink-0 text-navy-800">{resposta}</strong>
+                  </p>
+                ))}
+              </CardContent>
+            </Card>
+          )}
+
+          {patient.triage?.mental_health && patient.triage.mental_health.length > 0 && (
+            <Card>
+              <CardHeader><CardTitle className="text-base">Saúde mental</CardTitle></CardHeader>
+              <CardContent className="flex flex-wrap gap-2">
+                {patient.triage.mental_health.map((item) => (
+                  <span key={item} className="rounded-full bg-surface-muted px-3 py-1 text-xs font-semibold text-navy-700">
+                    {item}
+                  </span>
+                ))}
+              </CardContent>
+            </Card>
+          )}
+
+          {(patient.triage?.height || patient.triage?.weight || patient.triage?.sex) && (
+            <Card>
+              <CardHeader><CardTitle className="text-base">Informações físicas</CardTitle></CardHeader>
+              <CardContent className="grid gap-2 text-sm text-navy-600">
+                {patient.triage.height && <p><strong>Altura:</strong> {patient.triage.height}</p>}
+                {patient.triage.weight && <p><strong>Peso:</strong> {patient.triage.weight}</p>}
+                {patient.triage.sex && <p><strong>Sexo:</strong> {patient.triage.sex}</p>}
+              </CardContent>
+            </Card>
+          )}
+
+          {patient.triage?.product_preferences && patient.triage.product_preferences.length > 0 && (
+            <Card>
+              <CardHeader><CardTitle className="text-base">Produtos de preferência</CardTitle></CardHeader>
+              <CardContent className="flex flex-wrap gap-2">
+                {patient.triage.product_preferences.map((item) => (
+                  <span key={item} className="rounded-full bg-surface-muted px-3 py-1 text-xs font-semibold text-navy-700">
+                    {item}
+                  </span>
+                ))}
+              </CardContent>
+            </Card>
+          )}
+
           <Card>
-            <CardHeader><CardTitle className="text-base">Produtos de preferência</CardTitle></CardHeader>
-            <CardContent className="flex flex-wrap gap-2">
-              {patient.triage.product_preferences.map((item) => (
-                <span key={item} className="rounded-full bg-surface-muted px-3 py-1 text-xs font-semibold text-navy-700">
-                  {item}
-                </span>
+            <CardHeader><CardTitle className="text-base">Documentos enviados</CardTitle></CardHeader>
+            <CardContent className="flex flex-col gap-2">
+              {documentsWithUrls.length === 0 && (
+                <p className="text-sm text-navy-200">Nenhum documento enviado ainda.</p>
+              )}
+              {documentsWithUrls.map((d) => (
+                <a
+                  key={d.id}
+                  href={d.url ?? '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between gap-2.5 rounded-[11px] border border-line-100 bg-surface-subtle px-3.5 py-2.5 text-sm font-semibold text-navy-700 hover:border-teal-300"
+                >
+                  <span>📄 {DOC_TYPE_LABEL[d.type] ?? d.type}</span>
+                  <span className="truncate text-xs font-normal text-navy-200">{d.filename}</span>
+                </a>
               ))}
             </CardContent>
           </Card>
-        )}
 
-        <Card>
-          <CardHeader><CardTitle className="text-base">Documentos enviados</CardTitle></CardHeader>
-          <CardContent className="flex flex-col gap-2">
-            {documentsWithUrls.length === 0 && (
-              <p className="text-sm text-navy-200">Nenhum documento enviado ainda.</p>
-            )}
-            {documentsWithUrls.map((d) => (
-              <a
-                key={d.id}
-                href={d.url ?? '#'}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between gap-2.5 rounded-[11px] border border-line-100 bg-surface-subtle px-3.5 py-2.5 text-sm font-semibold text-navy-700 hover:border-teal-300"
-              >
-                <span>📄 {DOC_TYPE_LABEL[d.type] ?? d.type}</span>
-                <span className="truncate text-xs font-normal text-navy-200">{d.filename}</span>
-              </a>
-            ))}
-          </CardContent>
-        </Card>
-
-        {chatHistory && chatHistory.length > 0 && (
-          <Card>
-            <CardHeader><CardTitle className="text-base">Conversa com o assistente</CardTitle></CardHeader>
-            <CardContent className="flex flex-col gap-2 text-sm">
-              {chatHistory.map((m) => (
-                <p key={m.id} className={m.role === 'assistant' ? 'text-navy-200' : 'text-navy-700'}>
-                  <strong>{m.role === 'assistant' ? 'Assistente' : 'Paciente'}:</strong> {m.content}
-                </p>
-              ))}
-            </CardContent>
-          </Card>
-        )}
+          {chatHistory && chatHistory.length > 0 && (
+            <Card>
+              <CardHeader><CardTitle className="text-base">Conversa com o assistente</CardTitle></CardHeader>
+              <CardContent className="flex flex-col gap-2 text-sm">
+                {chatHistory.map((m) => (
+                  <p key={m.id} className={m.role === 'assistant' ? 'text-navy-200' : 'text-navy-700'}>
+                    <strong>{m.role === 'assistant' ? 'Assistente' : 'Paciente'}:</strong> {m.content}
+                  </p>
+                ))}
+              </CardContent>
+            </Card>
+          )}
+        </div>
 
         <Card>
           <CardHeader><CardTitle className="text-base">Prontuário</CardTitle></CardHeader>
           <CardContent>
-            <ProntuarioForm patientId={patient.id} />
+            <ProntuarioForm patientId={patient.id} patient={patient} />
           </CardContent>
         </Card>
       </main>
