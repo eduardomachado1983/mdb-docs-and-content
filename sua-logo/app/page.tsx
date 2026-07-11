@@ -4,32 +4,32 @@ import { SiteLogo } from '@/components/shared/site-logo'
 import { FaqAccordion } from '@/components/shared/faq-accordion'
 
 const FEATURES = [
+  { icon: '⚖️', title: '100% legal', desc: 'Tratamento regulamentado, conforme as normas da Anvisa.' },
+  { icon: '🩺', title: 'Médicos prescritores', desc: 'Profissionais com CRM ativo, especializados em cannabis medicinal.' },
   { icon: '🔒', title: 'Dados protegidos', desc: 'Conformidade com a LGPD e acesso restrito.' },
-  { icon: '🩺', title: 'Médicos registrados', desc: 'Profissionais com CRM ativo e verificado.' },
-  { icon: '✅', title: 'Dupla validação', desc: 'Revisão clínica e administrativa antes da entrega.' },
-  { icon: '⚡', title: 'Rápido e simples', desc: 'Do cadastro ao documento em poucos passos.' },
+  { icon: '🤝', title: 'Acompanhamento contínuo', desc: 'Equipe disponível para ajustar seu tratamento quando precisar.' },
 ]
 
 const CONSULTAS = [
-  { icon: '🩺', title: 'Clínica geral', desc: 'Avaliação de sintomas gerais e orientação médica.' },
-  { icon: '💊', title: 'Renovação de receita', desc: 'Continue seu tratamento sem sair de casa.' },
-  { icon: '📄', title: 'Laudos e atestados', desc: 'Documentos médicos com validação clínica.' },
-  { icon: '🧠', title: 'Saúde mental', desc: 'Acolhimento e acompanhamento profissional.' },
-  { icon: '🧸', title: 'Pediatria', desc: 'Cuidado especializado para os pequenos.' },
-  { icon: '🔬', title: 'Interpretação de exames', desc: 'Entenda seus resultados com um médico.' },
+  { icon: '😴', title: 'Insônia', desc: 'Recupere noites de sono reparador com um tratamento individualizado.' },
+  { icon: '🧠', title: 'Ansiedade', desc: 'Mais equilíbrio e qualidade de vida no seu dia a dia.' },
+  { icon: '🤕', title: 'Dor crônica', desc: 'Alternativa terapêutica para dores persistentes e difíceis de controlar.' },
+  { icon: '💆', title: 'Saúde mental', desc: 'Acolhimento e acompanhamento profissional contínuo.' },
+  { icon: '🏃', title: 'Performance e bem-estar', desc: 'Recuperação física e qualidade de vida para quem treina.' },
+  { icon: '⚡', title: 'Condições neurológicas', desc: 'Suporte a epilepsia e outras condições, com acompanhamento próximo.' },
 ]
 
 const STEPS = [
-  { t: 'Cadastre-se e faça a triagem', d: 'Preencha seus dados, responda algumas perguntas sobre os sintomas e envie seus documentos.' },
-  { t: 'Pague quando puder', d: 'Escolha Pix ou cartão. Se preferir, finalize o cadastro e pague depois pela sua área.' },
-  { t: 'Seja atendido por um médico', d: 'Um profissional registrado revisa seu caso e emite a receita e o laudo necessários.' },
-  { t: 'Receba seus documentos', d: 'Após a validação administrativa, baixe sua receita e laudo com segurança.' },
+  { t: 'Faça a triagem guiada', d: 'Cadastre-se e conte seus objetivos de saúde. A triagem prepara sua consulta para um atendimento mais focado.' },
+  { t: 'Pague com Pix ou cartão', d: 'Pagamento seguro pelo Mercado Pago. O médico é acionado logo após a confirmação.' },
+  { t: 'Consulte com um médico prescritor', d: 'Avaliação individual do seu caso e construção de um plano de tratamento personalizado.' },
+  { t: 'Receba receita e laudo digitais', d: 'Após a validação, baixe seus documentos e inicie o tratamento com acompanhamento contínuo.' },
 ]
 
 const TESTEMUNHOS = [
-  { quote: 'Consegui renovar minha receita em menos de uma hora, sem filas. O acompanhamento pelo painel é muito claro.', initials: 'CM', name: 'Carla Mendes', city: 'São Paulo, SP' },
-  { quote: 'Adorei saber exatamente em que etapa estava. Recebi o laudo já validado, tudo muito seguro.', initials: 'RS', name: 'Rafael Souza', city: 'Curitiba, PR' },
-  { quote: 'O assistente de triagem me ajudou a explicar os sintomas direitinho. Atendimento humano e ágil.', initials: 'JA', name: 'Juliana Alves', city: 'Recife, PE' },
+  { quote: 'Depois de anos de insônia, voltei a dormir bem. A triagem me preparou para a consulta e o médico entendeu exatamente o que eu precisava.', initials: 'CM', name: 'Carla Mendes', city: 'São Paulo, SP' },
+  { quote: 'Tudo claro e dentro da lei. Recebi a receita e o laudo digitais já validados, sem sair de casa.', initials: 'RS', name: 'Rafael Souza', city: 'Curitiba, PR' },
+  { quote: 'Trato minha ansiedade com acompanhamento de verdade. A equipe ajusta o tratamento sempre que preciso.', initials: 'JA', name: 'Juliana Alves', city: 'Recife, PE' },
 ]
 
 export default function LandingPage() {
@@ -40,14 +40,14 @@ export default function LandingPage() {
       <section className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-12 px-6 pb-10 pt-16 md:grid-cols-[1.05fr_.95fr]">
         <div className="animate-fade-up">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-teal-100 px-3.5 py-1.5 text-[13px] font-bold text-teal-600">
-            ● Atendimento por médicos registrados
+            ● Cannabis medicinal, 100% dentro da lei
           </div>
           <h1 className="mb-[18px] text-[32px] font-extrabold leading-[1.1] tracking-tight sm:text-[44px]">
-            Consulta médica online, com validação e segurança de verdade
+            Cannabis medicinal com acompanhamento médico de verdade
           </h1>
           <p className="mb-7 max-w-[520px] text-lg leading-relaxed text-navy-500">
-            Conecte-se a médicos registrados para consultas online, renovação de receitas e laudos — com
-            acompanhamento claro e revisão administrativa antes da liberação dos seus documentos.
+            Trate insônia, ansiedade, dor crônica e outras condições com médicos prescritores — triagem
+            guiada, plano de tratamento personalizado e receita e laudo digitais, sempre conforme a Anvisa.
           </p>
           <div className="flex flex-wrap gap-3.5">
             <Link
@@ -61,7 +61,7 @@ export default function LandingPage() {
             </a>
           </div>
           <div className="mt-9 flex gap-6">
-            {[['24/7', 'Cadastro a qualquer hora'], ['LGPD', 'Dados protegidos'], ['CRM', 'Médicos verificados']].map(([n, d]) => (
+            {[['100%', 'Legal, conforme Anvisa'], ['CRM', 'Médicos prescritores'], ['LGPD', 'Dados protegidos']].map(([n, d]) => (
               <div key={n}>
                 <div className="text-2xl font-extrabold text-navy-900">{n}</div>
                 <div className="text-[13px] font-semibold text-navy-200">{d}</div>
@@ -76,12 +76,12 @@ export default function LandingPage() {
             </div>
             <div>
               <div className="text-[15px] font-bold">Consulta por vídeo</div>
-              <div className="text-[13px] text-navy-200">Clínico geral • agora</div>
+              <div className="text-[13px] text-navy-200">Médico prescritor • agora</div>
             </div>
             <div className="ml-auto rounded-2xl bg-teal-100 px-2.5 py-1.5 text-xs font-bold text-teal-600">Online</div>
           </div>
           <div className="flex flex-col gap-2.5 py-4">
-            {['Triagem inteligente dos sintomas', 'Receita e laudo digitais', 'Validação antes da liberação'].map((t) => (
+            {['Triagem guiada dos seus objetivos', 'Plano de tratamento personalizado', 'Receita e laudo digitais'].map((t) => (
               <div key={t} className="flex items-center gap-2.5 text-sm text-navy-600">
                 <span className="flex h-[26px] w-[26px] items-center justify-center rounded-lg bg-[#def5e9]">✓</span>
                 {t}
@@ -102,12 +102,12 @@ export default function LandingPage() {
           <div>
             <div className="mb-3 text-[13px] font-extrabold tracking-wide text-brand-700">QUEM SOMOS</div>
             <h2 className="mb-4 text-[26px] font-extrabold tracking-tight sm:text-[31px]">
-              Saúde de verdade, com responsabilidade médica
+              Medicina, tecnologia e cuidado humano
             </h2>
             <p className="mb-3.5 text-base leading-relaxed text-navy-500">
-              A Sua Logo Telemedicina conecta pacientes a médicos registrados no CRM para consultas online
-              seguras. Cada atendimento passa por revisão clínica e validação administrativa antes de
-              qualquer documento ser liberado.
+              A Sua Logo é uma clínica digital especializada em cannabis medicinal. Conectamos você a
+              médicos prescritores registrados no CRM, que avaliam seu caso individualmente e constroem um
+              plano de tratamento sob medida — sempre dentro da lei e das normas da Anvisa.
             </p>
             <p className="text-base leading-relaxed text-navy-500">
               Levamos a privacidade a sério: seus dados pessoais, documentos e informações de saúde são
@@ -129,8 +129,8 @@ export default function LandingPage() {
 
       <section id="consultas" className="mx-auto grid max-w-[1140px] px-6 py-14">
         <div className="mb-9 text-center">
-          <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-brand-700">TIPOS DE CONSULTA</div>
-          <h2 className="text-[26px] font-extrabold tracking-tight sm:text-[31px]">Para o que você precisa hoje</h2>
+          <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-brand-700">O QUE TRATAMOS</div>
+          <h2 className="text-[26px] font-extrabold tracking-tight sm:text-[31px]">Para o que a cannabis medicinal pode ajudar</h2>
         </div>
         <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
           {CONSULTAS.map((c) => (
@@ -150,7 +150,7 @@ export default function LandingPage() {
           <div className="mb-10 text-center">
             <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-[#5fb0ff]">COMO FUNCIONA</div>
             <h2 className="text-[26px] font-extrabold tracking-tight sm:text-[31px]">
-              Do cadastro aos documentos, em 4 passos
+              Do primeiro contato ao tratamento, em 4 passos
             </h2>
           </div>
           <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-4">
@@ -170,8 +170,8 @@ export default function LandingPage() {
       <section className="mx-auto grid max-w-[1140px] px-6 py-14">
         <div className="flex flex-wrap items-center justify-between gap-7 rounded-[22px] bg-gradient-to-r from-brand-500 to-teal-500 p-8 shadow-[0_20px_44px_rgba(140,231,192,.45)] sm:p-11">
           <div>
-            <h2 className="mb-2 text-2xl font-extrabold text-white sm:text-[28px]">Pronto para começar sua consulta?</h2>
-            <p className="text-base text-[#e3f0ff]">Leva poucos minutos. Você pode pagar agora ou depois.</p>
+            <h2 className="mb-2 text-2xl font-extrabold text-white sm:text-[28px]">Pronto para começar seu tratamento?</h2>
+            <p className="text-base text-[#e3f0ff]">Leva poucos minutos. Triagem guiada e atendimento humanizado.</p>
           </div>
           <Link
             href="/registro"
@@ -185,7 +185,7 @@ export default function LandingPage() {
       <section className="mx-auto grid max-w-[1140px] px-6 pb-14 pt-5">
         <div className="mb-9 text-center">
           <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-brand-700">DEPOIMENTOS</div>
-          <h2 className="text-[26px] font-extrabold sm:text-[31px]">Quem já se consultou</h2>
+          <h2 className="text-[26px] font-extrabold sm:text-[31px]">Quem já começou o tratamento</h2>
         </div>
         <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
           {TESTEMUNHOS.map((t) => (
@@ -222,8 +222,8 @@ export default function LandingPage() {
               <SiteLogo light />
             </div>
             <p className="max-w-[320px] text-sm leading-relaxed text-[#9db4cc]">
-              Plataforma de telemedicina com médicos registrados e validação de documentos. Este é um
-              ambiente de demonstração.
+              Clínica digital especializada em cannabis medicinal, com médicos prescritores e validação
+              de documentos. Este é um ambiente de demonstração.
             </p>
           </div>
           <div>
