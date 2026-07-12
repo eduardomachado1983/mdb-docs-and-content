@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ClipboardList, Users } from 'lucide-react'
+import { AreaDrawer } from '@/components/shared/area-drawer'
 import { BottomNav, type BottomNavItem } from '@/components/shared/bottom-nav'
 import { LogoutButton } from '@/components/shared/logout-button'
 import { SiteLogo } from '@/components/shared/site-logo'
@@ -52,20 +53,28 @@ export function MedicoHeader({
             ))}
           </nav>
           <div className="col-start-3 flex items-center justify-self-end gap-3.5">
-            <div className="flex items-center gap-2">
-              <div className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-teal-100 text-[13px] font-bold text-navy-900">
-                {initials(doctorName)}
+            <div className="hidden items-center gap-3.5 md:flex">
+              <div className="flex items-center gap-2">
+                <div className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-teal-100 text-[13px] font-bold text-navy-900">
+                  {initials(doctorName)}
+                </div>
+                <div>
+                  <div className="text-sm font-bold leading-tight">{doctorName}</div>
+                  {(specialty || crm) && (
+                    <div className="text-xs leading-tight text-navy-200">
+                      {specialty}{specialty && crm ? ' · CRM/SC ' : crm ? 'CRM/SC ' : ''}{crm}
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="hidden sm:block">
-                <div className="text-sm font-bold leading-tight">{doctorName}</div>
-                {(specialty || crm) && (
-                  <div className="text-xs leading-tight text-navy-200">
-                    {specialty}{specialty && crm ? ' · CRM/SC ' : crm ? 'CRM/SC ' : ''}{crm}
-                  </div>
-                )}
-              </div>
+              <LogoutButton />
             </div>
-            <LogoutButton />
+            <AreaDrawer
+              tabs={TABS}
+              userName={doctorName}
+              userDetail={specialty || (crm ? `CRM/SC ${crm}` : null)}
+              avatarClass="bg-teal-100 text-navy-900"
+            />
           </div>
         </div>
       </header>

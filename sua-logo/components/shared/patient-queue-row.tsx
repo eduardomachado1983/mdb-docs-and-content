@@ -26,23 +26,23 @@ export function PatientQueueRow({
   const paid = Boolean(patient.payment?.confirmed)
 
   return (
-    <div className="flex items-center justify-between gap-4 rounded-2xl border border-white/30 bg-white/65 backdrop-blur-xl px-6 py-5">
-      <div className="flex items-center gap-3">
+    <div className="flex flex-col gap-4 rounded-2xl border border-white/30 bg-white/65 backdrop-blur-xl px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-5">
+      <div className="flex min-w-0 items-start gap-3 sm:items-center">
         <div
           className={cn(
-            'flex h-11 w-11 items-center justify-center rounded-full text-[13px] font-bold',
+            'flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[13px] font-bold',
             accent === 'admin' ? 'bg-admin-100 text-admin-500' : 'bg-teal-100 text-navy-900'
           )}
         >
           {initials(name)}
         </div>
-        <div>
-          <div className="text-[15px] font-bold text-navy-800">{name}</div>
-          <div className="flex items-center gap-3 text-[13px] text-navy-200">
-            <span>{email}</span>
+        <div className="min-w-0">
+          <div className="truncate text-[15px] font-bold text-navy-800">{name}</div>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[13px] text-navy-200">
+            <span className="max-w-full truncate">{email}</span>
             {phone && <span>📞 {phone}</span>}
           </div>
-          <div className="mt-2 flex items-center gap-2">
+          <div className="mt-2 flex flex-wrap items-center gap-2">
             <Badge variant="amber">{statusLabel}</Badge>
             {paid && <Badge variant="teal">✓ Pago</Badge>}
             {docsComplete && <Badge variant="teal">✓ Docs enviados</Badge>}
@@ -54,7 +54,7 @@ export function PatientQueueRow({
         {editHref && (
           <Link
             href={editHref}
-            className="rounded-[4px] border border-line-300 px-5 py-2.5 text-sm font-bold text-navy-700 hover:bg-surface-page"
+            className="flex-1 rounded-[4px] border border-line-300 px-5 py-2.5 text-center text-sm font-bold text-navy-700 hover:bg-surface-page sm:flex-none"
           >
             ✏️ Editar
           </Link>
@@ -62,7 +62,7 @@ export function PatientQueueRow({
         <Link
           href={href}
           className={cn(
-            'rounded-[4px] px-5 py-2.5 text-sm font-bold',
+            'flex-1 rounded-[4px] px-5 py-2.5 text-center text-sm font-bold sm:flex-none',
             accent === 'admin' ? 'bg-admin-500 text-white' : 'bg-teal-500 text-primary-on'
           )}
         >
