@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ShieldCheck, Users } from 'lucide-react'
+import { AreaDrawer } from '@/components/shared/area-drawer'
 import { BottomNav, type BottomNavItem } from '@/components/shared/bottom-nav'
 import { LogoutButton } from '@/components/shared/logout-button'
 import { SiteLogo } from '@/components/shared/site-logo'
@@ -44,16 +45,24 @@ export function AdminHeader({ adminName }: { adminName: string }) {
             ))}
           </nav>
           <div className="col-start-3 flex items-center justify-self-end gap-3.5">
-            <div className="flex items-center gap-2">
-              <div className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-admin-100 text-[13px] font-bold text-admin-500">
-                {initials(adminName)}
+            <div className="hidden items-center gap-3.5 md:flex">
+              <div className="flex items-center gap-2">
+                <div className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-admin-100 text-[13px] font-bold text-admin-500">
+                  {initials(adminName)}
+                </div>
+                <div>
+                  <div className="text-sm font-bold leading-tight">{adminName}</div>
+                  <div className="text-xs leading-tight text-navy-200">Administrador</div>
+                </div>
               </div>
-              <div className="hidden sm:block">
-                <div className="text-sm font-bold leading-tight">{adminName}</div>
-                <div className="text-xs leading-tight text-navy-200">Administrador</div>
-              </div>
+              <LogoutButton />
             </div>
-            <LogoutButton />
+            <AreaDrawer
+              tabs={TABS}
+              userName={adminName}
+              userDetail="Administrador"
+              avatarClass="bg-admin-100 text-admin-500"
+            />
           </div>
         </div>
       </header>

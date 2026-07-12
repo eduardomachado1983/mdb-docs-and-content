@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { CalendarDays, CircleHelp, UserRound } from 'lucide-react'
+import { AreaDrawer } from '@/components/shared/area-drawer'
 import { BottomNav, type BottomNavItem } from '@/components/shared/bottom-nav'
 import { LogoutButton } from '@/components/shared/logout-button'
 import { SiteLogo } from '@/components/shared/site-logo'
@@ -46,16 +47,24 @@ export function PatientHeader({ patientName, statusLabel }: { patientName: strin
             ))}
           </nav>
           <div className="col-start-3 flex items-center justify-self-end gap-3.5">
-            <div className="flex items-center gap-2">
-              <div className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-brand-100 text-[13px] font-bold text-brand-700">
-                {initials(patientName)}
+            <div className="hidden items-center gap-3.5 md:flex">
+              <div className="flex items-center gap-2">
+                <div className="flex h-[34px] w-[34px] items-center justify-center rounded-full bg-brand-100 text-[13px] font-bold text-brand-700">
+                  {initials(patientName)}
+                </div>
+                <div>
+                  <div className="text-sm font-bold leading-tight">{patientName}</div>
+                  {statusLabel && <div className="text-xs leading-tight text-navy-200">{statusLabel}</div>}
+                </div>
               </div>
-              <div className="hidden sm:block">
-                <div className="text-sm font-bold leading-tight">{patientName}</div>
-                {statusLabel && <div className="text-xs leading-tight text-navy-200">{statusLabel}</div>}
-              </div>
+              <LogoutButton />
             </div>
-            <LogoutButton />
+            <AreaDrawer
+              tabs={TABS}
+              userName={patientName}
+              userDetail={statusLabel}
+              avatarClass="bg-brand-100 text-brand-700"
+            />
           </div>
         </div>
       </header>

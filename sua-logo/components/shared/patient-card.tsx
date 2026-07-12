@@ -43,18 +43,18 @@ export function PatientCard({
 
   return (
     <div className="overflow-hidden rounded-2xl border border-white/30 bg-white/65 backdrop-blur-xl">
-      <div className="flex items-center justify-between px-6 py-4">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-4 sm:px-6">
+        <div className="flex min-w-0 items-center gap-3">
           <div
             className={cn(
-              'flex h-11 w-11 items-center justify-center rounded-full text-[13px] font-bold',
+              'flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[13px] font-bold',
               accent === 'admin' ? 'bg-admin-100 text-admin-500' : 'bg-teal-100 text-navy-900'
             )}
           >
             {initials(name)}
           </div>
-          <div>
-            <div className="text-[15px] font-bold text-navy-800">{name}</div>
+          <div className="min-w-0">
+            <div className="truncate text-[15px] font-bold text-navy-800">{name}</div>
             <div className="text-[13px] text-navy-200">{patientCode(patient.id)}</div>
           </div>
         </div>
@@ -62,7 +62,7 @@ export function PatientCard({
       </div>
 
       {hasTriage && (
-        <div className="border-t border-line-100 px-6 py-4 text-sm text-navy-600">
+        <div className="border-t border-line-100 px-4 py-4 text-sm text-navy-600 sm:px-6">
           <div className="mb-2 text-xs font-extrabold tracking-wide text-navy-200">CONSULTA</div>
           <div className="flex flex-col gap-1.5">
             <p className="line-clamp-2"><span className="text-navy-300">😊 Sintomas:</span> {triage.main_symptom}</p>
@@ -70,8 +70,8 @@ export function PatientCard({
         </div>
       )}
 
-      <div className="flex items-center justify-between border-t border-line-100 px-6 py-4">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line-100 px-4 py-4 sm:px-6">
+        <div className="flex flex-wrap items-center gap-2">
           {docsComplete && <Badge variant="teal">✓ Docs enviados</Badge>}
           {paid && <Badge variant="teal">✓ Pago{methodLabel ? ` (${methodLabel})` : ''}</Badge>}
           {patient.clinical?.saved_by_doctor && <Badge variant="brand">✓ Prontuário do médico</Badge>}
@@ -79,7 +79,7 @@ export function PatientCard({
         <Link
           href={href}
           className={cn(
-            'rounded-[4px] px-5 py-2.5 text-sm font-bold',
+            'w-full rounded-[4px] px-5 py-2.5 text-center text-sm font-bold sm:w-auto',
             accent === 'admin' ? 'bg-admin-500 text-white' : 'bg-teal-500 text-primary-on'
           )}
         >
