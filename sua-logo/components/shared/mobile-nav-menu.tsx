@@ -9,7 +9,6 @@ const LINKS = [
   { href: '/#quem-somos', label: 'Quem somos' },
   { href: '/#consultas', label: 'Consultas' },
   { href: '/#como-funciona', label: 'Como funciona' },
-  { href: '/#faq', label: 'Dúvidas' },
 ]
 
 const ROLES = [

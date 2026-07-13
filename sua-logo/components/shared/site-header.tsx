@@ -13,7 +13,6 @@ export function SiteHeader() {
           <Link href="/#quem-somos">Quem somos</Link>
           <Link href="/#consultas">Consultas</Link>
           <Link href="/#como-funciona">Como funciona</Link>
-          <Link href="/#faq">Dúvidas</Link>
         </nav>
         <div className="flex items-center gap-2.5">
           <div className="hidden items-center gap-2.5 md:flex">
