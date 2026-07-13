@@ -11,7 +11,6 @@ export function SiteHeader() {
         <nav className="hidden items-center gap-6 text-[0.700rem] font-semibold text-navy-500 md:flex">
           <Link href="/">Início</Link>
           <Link href="/#quem-somos">Quem somos</Link>
-          <Link href="/#consultas">Consultas</Link>
           <Link href="/#como-funciona">Como funciona</Link>
         </nav>
         <div className="flex items-center gap-2.5">
