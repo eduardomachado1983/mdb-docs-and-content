@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { createServiceClient, getProfile } from '@/lib/supabase/server'
 import { MedicoHeader } from '@/components/shared/medico-header'
+import { PatientDetailHero } from '@/components/shared/patient-detail-hero'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ProntuarioForm } from '@/components/shared/prontuario-form'
 import { DOCUMENTS_BUCKET } from '@/lib/storage'
@@ -34,26 +35,27 @@ export default async function PacientePage({ params }: { params: Promise<{ id: s
     })
   )
 
+  const docsComplete =
+    (documents ?? []).some((d) => d.type === 'identity') && (documents ?? []).some((d) => d.type === 'address')
+
   return (
     <div className="min-h-screen">
       <MedicoHeader doctorName={profile?.name ?? 'Médico'} crm={profile?.crm} specialty={profile?.specialty} />
 
       <main className="mx-auto grid max-w-[1140px] gap-6 px-6 py-8">
-        <div className="flex items-center gap-3">
-          <Link
-            href="/medico"
-            aria-label="Voltar ao painel"
-            className="flex h-9 w-9 items-center justify-center rounded-[4px] border border-line-300 text-navy-500 hover:bg-surface-page"
-          >
-            ←
-          </Link>
-          <h1 className="text-xl font-extrabold">Detalhes do paciente</h1>
-        </div>
+        <Link
+          href="/medico"
+          className="flex w-fit items-center gap-1.5 text-sm font-bold text-navy-500 hover:text-navy-700"
+        >
+          ← Voltar ao painel
+        </Link>
+
+        <PatientDetailHero patient={patient} docsComplete={docsComplete} />
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <Card>
             <CardHeader>
-              <CardTitle>{patient.personal_data?.full_name}</CardTitle>
+              <CardTitle className="text-base">Dados pessoais</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-2 text-sm text-navy-600">
               <p>CPF: {patient.personal_data?.cpf}</p>
