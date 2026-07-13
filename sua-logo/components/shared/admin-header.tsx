@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ShieldCheck, Users } from 'lucide-react'
+import { MessageCircle, ShieldCheck, Users } from 'lucide-react'
 import { AreaDrawer } from '@/components/shared/area-drawer'
 import { BottomNav, type BottomNavItem } from '@/components/shared/bottom-nav'
 import { LogoutButton } from '@/components/shared/logout-button'
@@ -12,12 +12,14 @@ import { cn, initials } from '@/lib/utils'
 const TABS = [
   { href: '/admin', label: 'Aguardando validação' },
   { href: '/admin/pacientes', label: 'Lista de pacientes' },
+  { href: '/admin/whatsapp', label: 'WhatsApp' },
 ]
 
 // Rótulos curtos para a barra inferior do mobile.
 const BOTTOM_TABS: BottomNavItem[] = [
   { href: '/admin', label: 'Validação', icon: ShieldCheck },
   { href: '/admin/pacientes', label: 'Pacientes', icon: Users },
+  { href: '/admin/whatsapp', label: 'WhatsApp', icon: MessageCircle },
 ]
 
 export function AdminHeader({ adminName }: { adminName: string }) {

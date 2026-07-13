@@ -128,6 +128,48 @@ export interface Database {
         Update: Partial<Database['public']['Tables']['payment_transactions']['Insert']>
         Relationships: []
       }
+      whatsapp_conversations: {
+        Row: {
+          id: string
+          phone: string
+          contact_name: string | null
+          unread_count: number
+          last_message_at: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          phone: string
+          contact_name?: string | null
+          unread_count?: number
+          last_message_at?: string
+          created_at?: string
+        }
+        Update: Partial<Database['public']['Tables']['whatsapp_conversations']['Insert']>
+        Relationships: []
+      }
+      whatsapp_messages: {
+        Row: {
+          id: string
+          conversation_id: string
+          direction: 'inbound' | 'outbound'
+          content: string
+          wa_message_id: string | null
+          status: 'received' | 'sent' | 'failed'
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          conversation_id: string
+          direction: 'inbound' | 'outbound'
+          content: string
+          wa_message_id?: string | null
+          status?: 'received' | 'sent' | 'failed'
+          created_at?: string
+        }
+        Update: Partial<Database['public']['Tables']['whatsapp_messages']['Insert']>
+        Relationships: []
+      }
     }
     Views: Record<string, never>
     Functions: Record<string, never>

@@ -281,6 +281,23 @@ Se status=approved: atualizar patient.status → aguardando_medico
 
 ---
 
+## Inbox de WhatsApp (admin)
+
+Integração com o WhatsApp Cloud API (Meta) para o admin atender pelo
+WhatsApp direto do painel, em `/admin/whatsapp`.
+
+```
+Webhook a cadastrar na Meta: POST {SITE_URL}/api/whatsapp/webhook
+Verificação (GET):           hub.verify_token deve bater com WHATSAPP_VERIFY_TOKEN
+```
+
+Tabelas: `whatsapp_conversations` (uma por telefone) e `whatsapp_messages`
+(inbound/outbound). Sem `WHATSAPP_ACCESS_TOKEN`/`WHATSAPP_PHONE_NUMBER_ID`
+configurados, o envio roda em modo simulado (mensagem só é salva no banco,
+não é enviada de fato) — mesmo padrão do Mercado Pago sem token.
+
+---
+
 ## Upload de documentos
 
 Usar **Supabase Storage** com bucket privado.
@@ -338,6 +355,12 @@ SUPABASE_SERVICE_ROLE_KEY=
 # Mercado Pago
 MERCADOPAGO_ACCESS_TOKEN=
 MERCADOPAGO_WEBHOOK_SECRET=
+
+# WhatsApp Cloud API (Meta) — opcional, sem elas o envio roda simulado
+WHATSAPP_ACCESS_TOKEN=
+WHATSAPP_PHONE_NUMBER_ID=
+WHATSAPP_VERIFY_TOKEN=
+WHATSAPP_APP_SECRET=
 
 # Site
 NEXT_PUBLIC_SITE_URL=https://sua-logo.vercel.app
