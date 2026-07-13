@@ -62,7 +62,7 @@ export function MedicoHeader({
                   <div className="text-sm font-bold leading-tight">{doctorName}</div>
                   {(specialty || crm) && (
                     <div className="text-xs leading-tight text-navy-200">
-                      {specialty}{specialty && crm ? ' · CRM/SC ' : crm ? 'CRM/SC ' : ''}{crm}
+                      {[specialty, crm].filter(Boolean).join(' · ')}
                     </div>
                   )}
                 </div>
@@ -72,7 +72,7 @@ export function MedicoHeader({
             <AreaDrawer
               tabs={TABS}
               userName={doctorName}
-              userDetail={specialty || (crm ? `CRM/SC ${crm}` : null)}
+              userDetail={[specialty, crm].filter(Boolean).join(' · ') || null}
               avatarClass="bg-teal-100 text-navy-900"
             />
           </div>
