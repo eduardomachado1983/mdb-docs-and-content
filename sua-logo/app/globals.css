@@ -81,14 +81,6 @@ body {
   font-family: var(--font-sans);
 }
 
-/* Quando a página tem a barra de navegação inferior (mobile), reserva
-   espaço no fim do body para o conteúdo não ficar atrás da barra fixa. */
-@media (max-width: 767px) {
-  body:has([data-bottom-nav]) {
-    padding-bottom: calc(72px + env(safe-area-inset-bottom));
-  }
-}
-
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: none; }
