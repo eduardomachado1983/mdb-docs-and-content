@@ -35,8 +35,8 @@ export function MedicoHeader({
               key={tab.href}
               href={tab.href}
               className={cn(
-                'border-b-2 py-[18px] text-sm font-bold',
-                pathname === tab.href ? 'border-teal-500 text-navy-900' : 'border-transparent text-navy-700'
+                'py-[18px] text-sm font-bold',
+                pathname === tab.href ? 'text-teal-600' : 'text-navy-700'
               )}
             >
               {tab.label}

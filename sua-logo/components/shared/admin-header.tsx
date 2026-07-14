@@ -28,8 +28,8 @@ export function AdminHeader({ adminName }: { adminName: string }) {
               key={tab.href}
               href={tab.href}
               className={cn(
-                'border-b-2 py-[18px] text-sm font-bold',
-                pathname === tab.href ? 'border-admin-500 text-admin-500' : 'border-transparent text-navy-700'
+                'py-[18px] text-sm font-bold',
+                pathname === tab.href ? 'text-admin-500' : 'text-navy-700'
               )}
             >
               {tab.label}

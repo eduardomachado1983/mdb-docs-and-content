@@ -28,8 +28,8 @@ export function PatientHeader({ patientName, statusLabel }: { patientName: strin
               key={tab.href}
               href={tab.href}
               className={cn(
-                'border-b-2 py-[18px] text-sm font-bold',
-                pathname === tab.href ? 'border-brand-500 text-navy-900' : 'border-transparent text-navy-700'
+                'py-[18px] text-sm font-bold',
+                pathname === tab.href ? 'text-brand-600' : 'text-navy-700'
               )}
             >
               {tab.label}
