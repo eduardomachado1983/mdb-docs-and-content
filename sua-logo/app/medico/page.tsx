@@ -1,7 +1,7 @@
 import { AlertTriangle } from 'lucide-react'
 import { createServiceClient, getProfile } from '@/lib/supabase/server'
 import { MedicoHeader } from '@/components/shared/medico-header'
-import { PatientQueueRow } from '@/components/shared/patient-queue-row'
+import { MedicoPatientCard } from '@/components/shared/medico-patient-card'
 import { RefreshButton } from '@/components/shared/refresh-button'
 import type { Patient } from '@/types'
 
@@ -15,17 +15,6 @@ export default async function MedicoPage() {
     .eq('status', 'aguardando_medico')
     .order('updated_at', { ascending: true })
     .returns<Patient[]>()
-
-  const patientIds = queue?.map((p) => p.id) ?? []
-  const docsByPatient = new Map<string, Set<string>>()
-  if (patientIds.length > 0) {
-    const { data: docs } = await supabase.from('documents').select('patient_id, type').in('patient_id', patientIds)
-    docs?.forEach((d) => {
-      const set = docsByPatient.get(d.patient_id) ?? new Set<string>()
-      set.add(d.type)
-      docsByPatient.set(d.patient_id, set)
-    })
-  }
 
   return (
     <div className="min-h-screen">
@@ -49,21 +38,9 @@ export default async function MedicoPage() {
         )}
 
         <div className="flex flex-col gap-4">
-          {queue?.map((patient) => {
-            const docs = docsByPatient.get(patient.id)
-            const docsComplete = Boolean(docs?.has('identity') && docs?.has('address'))
-            return (
-              <PatientQueueRow
-                key={patient.id}
-                patient={patient}
-                docsComplete={docsComplete}
-                statusLabel="Na fila do médico"
-                actionLabel="Visualizar"
-                href={`/medico/paciente/${patient.id}`}
-                accent="teal"
-              />
-            )
-          })}
+          {queue?.map((patient) => (
+            <MedicoPatientCard key={patient.id} patient={patient} href={`/medico/paciente/${patient.id}`} />
+          ))}
         </div>
       </div>
     </div>

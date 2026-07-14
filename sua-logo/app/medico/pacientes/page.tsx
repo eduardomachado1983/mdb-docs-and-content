@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { createServiceClient, getProfile } from '@/lib/supabase/server'
 import { MedicoHeader } from '@/components/shared/medico-header'
-import { PatientCard } from '@/components/shared/patient-card'
+import { MedicoPatientCard } from '@/components/shared/medico-patient-card'
 import { cn } from '@/lib/utils'
 import type { Patient } from '@/types'
 
@@ -27,17 +27,6 @@ export default async function MedicoPacientesPage({
 
   const totalPages = Math.max(1, Math.ceil((count ?? 0) / PAGE_SIZE))
 
-  const patientIds = allPatients?.map((p) => p.id) ?? []
-  const docsByPatient = new Map<string, Set<string>>()
-  if (patientIds.length > 0) {
-    const { data: docs } = await supabase.from('documents').select('patient_id, type').in('patient_id', patientIds)
-    docs?.forEach((d) => {
-      const set = docsByPatient.get(d.patient_id) ?? new Set<string>()
-      set.add(d.type)
-      docsByPatient.set(d.patient_id, set)
-    })
-  }
-
   return (
     <div className="min-h-screen">
       <MedicoHeader doctorName={profile?.name ?? 'Médico'} crm={profile?.crm} specialty={profile?.specialty} />
@@ -53,19 +42,9 @@ export default async function MedicoPacientesPage({
         )}
 
         <div className="flex flex-col gap-4">
-          {allPatients?.map((patient) => {
-            const docs = docsByPatient.get(patient.id)
-            const docsComplete = Boolean(docs?.has('identity') && docs?.has('address'))
-            return (
-              <PatientCard
-                key={patient.id}
-                patient={patient}
-                docsComplete={docsComplete}
-                href={`/medico/paciente/${patient.id}`}
-                accent="teal"
-              />
-            )
-          })}
+          {allPatients?.map((patient) => (
+            <MedicoPatientCard key={patient.id} patient={patient} href={`/medico/paciente/${patient.id}`} />
+          ))}
         </div>
 
         {(count ?? 0) > 0 && (
