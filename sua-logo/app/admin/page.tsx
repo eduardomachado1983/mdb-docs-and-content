@@ -1,7 +1,7 @@
 import { AlertTriangle } from 'lucide-react'
 import { createServiceClient, getProfile } from '@/lib/supabase/server'
 import { AdminHeader } from '@/components/shared/admin-header'
-import { PatientQueueRow } from '@/components/shared/patient-queue-row'
+import { AdminPatientCard } from '@/components/shared/admin-patient-card'
 import { RefreshButton } from '@/components/shared/refresh-button'
 import type { Patient } from '@/types'
 
@@ -53,15 +53,13 @@ export default async function AdminPage() {
             const docs = docsByPatient.get(patient.id)
             const docsComplete = Boolean(docs?.has('identity') && docs?.has('address'))
             return (
-              <PatientQueueRow
+              <AdminPatientCard
                 key={patient.id}
                 patient={patient}
                 docsComplete={docsComplete}
-                statusLabel="Aguardando validação"
+                identifier="cpf"
                 actionLabel="Validar"
                 href={`/admin/validacao/${patient.id}`}
-                editHref={`/admin/validacao/${patient.id}?edit=1`}
-                accent="admin"
               />
             )
           })}

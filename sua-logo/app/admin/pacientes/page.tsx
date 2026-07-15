@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { createServiceClient, getProfile } from '@/lib/supabase/server'
 import { AdminHeader } from '@/components/shared/admin-header'
-import { PatientCard } from '@/components/shared/patient-card'
+import { AdminPatientCard } from '@/components/shared/admin-patient-card'
 import { cn } from '@/lib/utils'
 import type { Patient } from '@/types'
 
@@ -57,12 +57,13 @@ export default async function AdminPacientesPage({
             const docs = docsByPatient.get(patient.id)
             const docsComplete = Boolean(docs?.has('identity') && docs?.has('address'))
             return (
-              <PatientCard
+              <AdminPatientCard
                 key={patient.id}
                 patient={patient}
                 docsComplete={docsComplete}
+                identifier="code"
+                actionLabel="Visualizar"
                 href={`/admin/validacao/${patient.id}`}
-                accent="admin"
               />
             )
           })}

@@ -1,23 +1,8 @@
 import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
+import { PATIENT_STATUS_LABEL, PATIENT_STATUS_VARIANT } from '@/lib/patient-status'
 import { initials } from '@/lib/utils'
-import type { Patient, PatientStatus } from '@/types'
-
-const STATUS_LABEL: Record<PatientStatus, string> = {
-  cadastro_incompleto: 'Cadastro incompleto',
-  aguardando_pagamento: 'Aguardando pagamento',
-  aguardando_medico: 'Na fila do médico',
-  retido_admin: 'Na fila do Admin',
-  concluido: 'Concluído',
-}
-
-const STATUS_VARIANT: Record<PatientStatus, 'default' | 'amber' | 'teal'> = {
-  cadastro_incompleto: 'default',
-  aguardando_pagamento: 'amber',
-  aguardando_medico: 'amber',
-  retido_admin: 'amber',
-  concluido: 'teal',
-}
+import type { Patient } from '@/types'
 
 export function MedicoPatientCard({ patient, href }: { patient: Patient; href: string }) {
   const name = patient.personal_data?.full_name || 'Paciente'
@@ -37,7 +22,7 @@ export function MedicoPatientCard({ patient, href }: { patient: Patient; href: s
 
       <div className="sm:w-[180px]">
         <div className="mb-1 text-xs font-semibold text-navy-200">Status</div>
-        <Badge variant={STATUS_VARIANT[patient.status]}>{STATUS_LABEL[patient.status]}</Badge>
+        <Badge variant={PATIENT_STATUS_VARIANT[patient.status]}>{PATIENT_STATUS_LABEL[patient.status]}</Badge>
       </div>
 
       <Link
