@@ -293,16 +293,16 @@ export default function RegistroPage() {
             <p className="mt-1 text-[15px] text-navy-300">Leva poucos minutos. Seus dados são protegidos.</p>
           </div>
 
+          <div className="mb-7">
+            <WizardStepper steps={STEPS} current={step} />
+          </div>
+
           <div
             className={cn(
               'w-full rounded-[22px] border bg-white/65 backdrop-blur-xl p-8 shadow-[0_24px_50px_rgba(20,50,90,.08)]',
               docsComplete ? 'border-teal-500' : 'border-white/30'
             )}
           >
-            <div className="mb-7">
-              <WizardStepper steps={STEPS} current={step} />
-            </div>
-
             {step === 1 && (
               <div className="animate-fade-up">
                 <div className="mb-1 text-lg font-extrabold">Dados pessoais</div>
