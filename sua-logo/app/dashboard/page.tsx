@@ -5,6 +5,7 @@ import { PatientHeader } from '@/components/shared/patient-header'
 import { PatientStepper } from '@/components/shared/patient-stepper'
 import { PaymentPanel } from '@/components/shared/payment-panel'
 import { ConsultationCard } from '@/components/shared/consultation-card'
+import { CompletedConsultationCard } from '@/components/shared/completed-consultation-card'
 import { TOTAL_ANSWERS } from '@/lib/assistant'
 import { STATUS_LABELS, type Patient } from '@/types'
 
@@ -132,7 +133,11 @@ export default async function DashboardPage() {
           )}
         </div>
 
-        <ConsultationCard patient={patient} />
+        {patient.status === 'concluido' ? (
+          <CompletedConsultationCard patient={patient} />
+        ) : (
+          <ConsultationCard patient={patient} />
+        )}
       </div>
     </div>
   )
