@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { SiteHeader } from '@/components/shared/site-header'
 import { SiteLogo } from '@/components/shared/site-logo'
 import { FaqAccordion } from '@/components/shared/faq-accordion'
+import { LeafBackground } from '@/components/shared/leaf-background'
 
 const FEATURES = [
   { icon: '⚖️', title: '100% legal', desc: 'Tratamento regulamentado, conforme as normas da Anvisa.' },
@@ -37,62 +38,23 @@ export default function LandingPage() {
     <div>
       <SiteHeader />
 
-      <section className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-12 px-6 pb-10 pt-16 md:grid-cols-[1.05fr_.95fr]">
-        <div className="animate-fade-up">
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-teal-100 px-3.5 py-1.5 text-[13px] font-bold text-teal-600">
-            ● Cannabis medicinal, 100% dentro da lei
-          </div>
-          <h1 className="mb-[18px] text-[32px] font-extrabold leading-[1.1] tracking-tight sm:text-[44px]">
-            Cannabis medicinal com acompanhamento médico de verdade
+      <section className="relative overflow-hidden">
+        <LeafBackground />
+        <div className="relative mx-auto grid max-w-[720px] justify-items-center gap-5 px-6 pb-16 pt-20 text-center">
+          <h1 className="animate-fade-up text-[32px] font-extrabold leading-[1.15] tracking-tight sm:text-[44px]">
+            <span className="text-brand-700">Cannabis medicinal</span>
+            <br />
+            com acompanhamento médico de verdade
           </h1>
-          <p className="mb-7 max-w-[520px] text-lg leading-relaxed text-navy-500">
+          <p className="animate-fade-up max-w-[560px] text-lg leading-relaxed text-navy-500">
             Trate insônia, ansiedade, dor crônica e outras condições com médicos prescritores — triagem
             guiada, plano de tratamento personalizado e receita e laudo digitais, sempre conforme a Anvisa.
           </p>
-          <div className="flex flex-wrap gap-3.5">
-            <Link
-              href="/registro"
-              className="w-full rounded-[8px] bg-brand-500 px-6 py-3.5 text-center text-base font-bold text-primary-on shadow-[0_10px_22px_rgba(140,231,192,.5)] transition active:scale-[0.98] sm:w-auto"
-            >
-              Iniciar minha consulta →
-            </Link>
-            <a href="#como-funciona" className="w-full rounded-[8px] border border-line-400 bg-white/70 px-[22px] py-3.5 text-center text-base font-bold text-navy-700 backdrop-blur-md transition active:scale-[0.98] sm:w-auto">
-              Como funciona
-            </a>
-          </div>
-          <div className="mt-9 flex gap-6">
-            {[['100%', 'Legal, conforme Anvisa'], ['CRM', 'Médicos prescritores'], ['LGPD', 'Dados protegidos']].map(([n, d]) => (
-              <div key={n}>
-                <div className="text-2xl font-extrabold text-navy-900">{n}</div>
-                <div className="text-[13px] font-semibold text-navy-200">{d}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="animate-fade-up rounded-[22px] border border-white/30 bg-white/65 p-6 shadow-[0_8px_32px_rgba(1,82,73,.14),inset_0_1px_0_rgba(255,255,255,.45)] backdrop-blur-xl">
-          <div className="flex items-center gap-3 border-b border-surface-page pb-4">
-            <div className="flex h-[46px] w-[46px] items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-teal-500 font-extrabold text-primary-on">
-              Dr
-            </div>
-            <div>
-              <div className="text-[15px] font-bold">Consulta por vídeo</div>
-              <div className="text-[13px] text-navy-200">Médico prescritor • agora</div>
-            </div>
-            <div className="ml-auto rounded-2xl bg-teal-100 px-2.5 py-1.5 text-xs font-bold text-teal-600">Online</div>
-          </div>
-          <div className="flex flex-col gap-2.5 py-4">
-            {['Triagem guiada dos seus objetivos', 'Plano de tratamento personalizado', 'Receita e laudo digitais'].map((t) => (
-              <div key={t} className="flex items-center gap-2.5 text-sm text-navy-600">
-                <span className="flex h-[26px] w-[26px] items-center justify-center rounded-lg bg-[#def5e9]">✓</span>
-                {t}
-              </div>
-            ))}
-          </div>
           <Link
             href="/registro"
-            className="block w-full rounded-[8px] bg-teal-500 py-3.5 text-center text-[15px] font-bold text-primary-on"
+            className="animate-fade-up mt-2 rounded-[8px] bg-brand-500 px-7 py-3.5 text-center text-base font-bold text-primary-on shadow-[0_10px_22px_rgba(140,231,192,.5)] transition active:scale-[0.98]"
           >
-            Começar agora
+            Iniciar minha consulta
           </Link>
         </div>
       </section>

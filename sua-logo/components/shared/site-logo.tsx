@@ -11,14 +11,17 @@ export function SiteLogo({
 }) {
   return (
     <Link href={href} className="flex items-center gap-2.5">
-      <div
-        className={`flex h-10 w-10 items-center justify-center rounded-[11px] text-[13px] font-extrabold tracking-wide text-white ${iconClassName}`}
-      >
-        SL
+      <div className={`flex h-10 w-10 items-center justify-center rounded-[11px] text-lg ${iconClassName}`}>
+        🌿
       </div>
       <div className="leading-tight">
-        <div className={`text-base font-extrabold ${light ? 'text-white' : 'text-navy-800'}`}>Sua Logo</div>
-        <div className="text-[11px] font-bold tracking-wide text-navy-200">TELEMEDICINA</div>
+        <div className="text-base font-extrabold">
+          <span className={light ? 'text-white' : 'text-navy-800'}>Bio</span>
+          <span className="text-[#d97706]">Sativa</span>
+        </div>
+        <div className={`text-[11px] font-bold tracking-wide ${light ? 'text-white/70' : 'text-navy-200'}`}>
+          CANNABIS MEDICINAL
+        </div>
       </div>
     </Link>
   )
