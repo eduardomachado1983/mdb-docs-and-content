@@ -38,9 +38,9 @@ export default function LandingPage() {
     <div>
       <SiteHeader />
 
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#eef3fb] to-[#f3f7fc]">
         <LeafBackground />
-        <div className="relative mx-auto grid max-w-[720px] justify-items-center gap-5 px-6 pb-16 pt-20 text-center">
+        <div className="relative mx-auto grid max-w-[720px] justify-items-center gap-5 px-6 pb-20 pt-20 text-center">
           <h1 className="animate-fade-up text-[32px] font-extrabold leading-[1.15] tracking-tight sm:text-[44px]">
             <span className="text-brand-700">Cannabis medicinal</span>
             <br />
