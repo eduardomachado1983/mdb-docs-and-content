@@ -13,7 +13,7 @@ const TABS = [
   { href: '/dashboard/ajuda', label: 'Ajuda' },
 ]
 
-export function PatientHeader({ patientName, statusLabel }: { patientName: string; statusLabel?: string }) {
+export function PatientHeader({ patientName }: { patientName: string }) {
   const pathname = usePathname()
 
   return (
@@ -44,7 +44,7 @@ export function PatientHeader({ patientName, statusLabel }: { patientName: strin
               </div>
               <div>
                 <div className="text-sm font-bold leading-tight">{patientName}</div>
-                {statusLabel && <div className="text-xs leading-tight text-navy-200">{statusLabel}</div>}
+                <div className="text-xs leading-tight text-navy-200">Paciente</div>
               </div>
             </div>
             <LogoutButton />
@@ -52,7 +52,7 @@ export function PatientHeader({ patientName, statusLabel }: { patientName: strin
           <AreaDrawer
             tabs={TABS}
             userName={patientName}
-            userDetail={statusLabel}
+            userDetail="Paciente"
             avatarClass="bg-brand-100 text-brand-700"
           />
         </div>

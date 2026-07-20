@@ -3,7 +3,7 @@ import { createClient, getUserAndProfile } from '@/lib/supabase/server'
 import { PatientHeader } from '@/components/shared/patient-header'
 import { PersonalDataForm } from '@/components/shared/personal-data-form'
 import { DocumentUpload } from '@/components/shared/document-upload'
-import { STATUS_LABELS, type Patient } from '@/types'
+import type { Patient } from '@/types'
 
 const DOCS_UNLOCKED: Patient['status'][] = ['aguardando_medico', 'retido_admin', 'concluido']
 
@@ -33,7 +33,7 @@ export default async function DadosPage() {
 
   return (
     <div className="min-h-screen">
-      <PatientHeader patientName={profile?.name ?? 'Paciente'} statusLabel={STATUS_LABELS[patient.status]} />
+      <PatientHeader patientName={profile?.name ?? 'Paciente'} />
 
       <div className="mx-auto grid max-w-[1140px] px-6 py-7">
         <h1 className="mb-1 text-2xl font-extrabold">Meus dados</h1>
