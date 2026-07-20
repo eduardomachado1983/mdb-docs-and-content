@@ -18,7 +18,7 @@ function IdeasPanel({ title, ideas, onUse }: { title: string; ideas: string[]; o
         <button
           type="button"
           onClick={onUse}
-          className="min-h-[32px] shrink-0 rounded-[4px] border border-teal-300 bg-white px-2.5 text-xs font-bold text-teal-700 transition hover:bg-teal-100 active:scale-[0.97]"
+          className="min-h-[32px] shrink-0 rounded-[8px] border border-teal-300 bg-white px-2.5 text-xs font-bold text-teal-700 transition hover:bg-teal-100 active:scale-[0.97]"
         >
           Inserir no campo
         </button>

@@ -23,8 +23,8 @@ export function CompletedConsultationCard({ patient }: { patient: Patient }) {
       </div>
 
       <Link
-        href="/dashboard/dados"
-        className="rounded-[4px] border border-brand-500 bg-white px-6 py-2.5 text-center text-sm font-bold text-brand-600 transition hover:bg-brand-50 active:scale-[0.98]"
+        href="/dashboard/consulta"
+        className="rounded-[8px] border border-brand-500 bg-white px-6 py-2.5 text-center text-sm font-bold text-brand-600 transition hover:bg-brand-50 active:scale-[0.98]"
       >
         Visualizar
       </Link>

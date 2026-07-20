@@ -49,7 +49,7 @@ export function AdminPatientCard({
 
       <Link
         href={href}
-        className="rounded-[4px] border border-teal-500 bg-white px-6 py-2.5 text-center text-sm font-bold text-teal-600 transition hover:bg-teal-50 active:scale-[0.98]"
+        className="rounded-[8px] border border-teal-500 bg-white px-6 py-2.5 text-center text-sm font-bold text-teal-600 transition hover:bg-teal-50 active:scale-[0.98]"
       >
         {actionLabel}
       </Link>

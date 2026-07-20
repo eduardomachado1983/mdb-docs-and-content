@@ -52,11 +52,11 @@ export default function LandingPage() {
           <div className="flex flex-wrap gap-3.5">
             <Link
               href="/registro"
-              className="w-full rounded-[4px] bg-brand-500 px-6 py-3.5 text-center text-base font-bold text-primary-on shadow-[0_10px_22px_rgba(140,231,192,.5)] transition active:scale-[0.98] sm:w-auto"
+              className="w-full rounded-[8px] bg-brand-500 px-6 py-3.5 text-center text-base font-bold text-primary-on shadow-[0_10px_22px_rgba(140,231,192,.5)] transition active:scale-[0.98] sm:w-auto"
             >
               Iniciar minha consulta →
             </Link>
-            <a href="#como-funciona" className="w-full rounded-[4px] border border-line-400 bg-white/70 px-[22px] py-3.5 text-center text-base font-bold text-navy-700 backdrop-blur-md transition active:scale-[0.98] sm:w-auto">
+            <a href="#como-funciona" className="w-full rounded-[8px] border border-line-400 bg-white/70 px-[22px] py-3.5 text-center text-base font-bold text-navy-700 backdrop-blur-md transition active:scale-[0.98] sm:w-auto">
               Como funciona
             </a>
           </div>
@@ -90,7 +90,7 @@ export default function LandingPage() {
           </div>
           <Link
             href="/registro"
-            className="block w-full rounded-[4px] bg-teal-500 py-3.5 text-center text-[15px] font-bold text-primary-on"
+            className="block w-full rounded-[8px] bg-teal-500 py-3.5 text-center text-[15px] font-bold text-primary-on"
           >
             Começar agora
           </Link>
@@ -175,7 +175,7 @@ export default function LandingPage() {
           </div>
           <Link
             href="/registro"
-            className="whitespace-nowrap rounded-[4px] bg-white px-7 py-[15px] text-base font-extrabold text-brand-600"
+            className="whitespace-nowrap rounded-[8px] bg-white px-7 py-[15px] text-base font-extrabold text-brand-600"
           >
             Iniciar consulta →
           </Link>

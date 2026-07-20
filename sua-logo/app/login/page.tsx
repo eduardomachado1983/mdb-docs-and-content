@@ -164,7 +164,7 @@ function LoginForm() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className={cn('mt-1 rounded-[4px] py-3.5 text-[15px] font-bold disabled:opacity-60', config.bg, config.onBg)}
+                  className={cn('mt-1 rounded-[8px] py-3.5 text-[15px] font-bold disabled:opacity-60', config.bg, config.onBg)}
                 >
                   {loading ? 'Enviando...' : 'Enviar link de recuperação'}
                 </button>
@@ -251,7 +251,7 @@ function LoginForm() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className={cn('mt-1 rounded-[4px] py-3.5 text-[15px] font-bold disabled:opacity-60', config.bg, config.onBg)}
+                  className={cn('mt-1 rounded-[8px] py-3.5 text-[15px] font-bold disabled:opacity-60', config.bg, config.onBg)}
                 >
                   {loading ? 'Entrando...' : 'Entrar'}
                 </button>

@@ -45,7 +45,7 @@ export default async function AdminWhatsAppConversationPage({ params }: { params
           {matchedPatient && (
             <Link
               href={`/admin/validacao/${matchedPatient.id}`}
-              className="rounded-[4px] border border-admin-200 px-4 py-2 text-sm font-bold text-admin-500 hover:bg-admin-50"
+              className="rounded-[8px] border border-admin-200 px-4 py-2 text-sm font-bold text-admin-500 hover:bg-admin-50"
             >
               Ver cadastro do paciente
             </Link>

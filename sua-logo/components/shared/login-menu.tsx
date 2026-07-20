@@ -34,7 +34,7 @@ export function LoginMenu() {
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls="login-menu-panel"
-        className="rounded-[4px] border border-line-400 bg-white px-4 py-2.5 text-sm font-bold text-navy-700"
+        className="rounded-[8px] border border-line-400 bg-white px-4 py-2.5 text-sm font-bold text-navy-700"
       >
         Entrar ▾
       </button>

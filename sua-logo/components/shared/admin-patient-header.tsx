@@ -68,7 +68,7 @@ export function AdminPatientHeader({
           <Link
             href="/admin"
             aria-label="Voltar ao painel"
-            className="flex h-9 w-9 items-center justify-center rounded-[4px] border border-line-300 text-navy-500 hover:bg-surface-page"
+            className="flex h-9 w-9 items-center justify-center rounded-[8px] border border-line-300 text-navy-500 hover:bg-surface-page"
           >
             ←
           </Link>
@@ -81,7 +81,7 @@ export function AdminPatientHeader({
                 type="button"
                 onClick={cancelEdit}
                 disabled={loading}
-                className="rounded-[4px] border border-line-300 px-4 py-2 text-sm font-bold text-navy-500 disabled:opacity-60"
+                className="rounded-[8px] border border-line-300 px-4 py-2 text-sm font-bold text-navy-500 disabled:opacity-60"
               >
                 Cancelar
               </button>
@@ -89,7 +89,7 @@ export function AdminPatientHeader({
                 type="button"
                 onClick={handleSave}
                 disabled={loading}
-                className="rounded-[4px] bg-admin-500 px-5 py-2 text-sm font-bold text-white disabled:opacity-60"
+                className="rounded-[8px] bg-admin-500 px-5 py-2 text-sm font-bold text-white disabled:opacity-60"
               >
                 {loading ? 'Salvando...' : 'Salvar'}
               </button>
@@ -98,7 +98,7 @@ export function AdminPatientHeader({
             <button
               type="button"
               onClick={() => setEditing(true)}
-              className="rounded-[4px] border border-line-300 px-4 py-2 text-sm font-bold text-navy-700 hover:bg-surface-page"
+              className="rounded-[8px] border border-line-300 px-4 py-2 text-sm font-bold text-navy-700 hover:bg-surface-page"
             >
               ✏️ Editar
             </button>

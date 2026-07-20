@@ -62,7 +62,7 @@ export function AreaDrawer({
         aria-label="Abrir menu"
         aria-expanded={open}
         aria-controls="area-drawer"
-        className="flex h-11 w-11 items-center justify-center rounded-[4px] border border-line-300 text-navy-700"
+        className="flex h-11 w-11 items-center justify-center rounded-[8px] border border-line-300 text-navy-700"
       >
         ☰
       </button>
@@ -89,7 +89,7 @@ export function AreaDrawer({
                   type="button"
                   onClick={() => setOpen(false)}
                   aria-label="Fechar menu"
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[4px] border border-line-300 text-navy-700"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[8px] border border-line-300 text-navy-700"
                 >
                   ✕
                 </button>
@@ -115,7 +115,7 @@ export function AreaDrawer({
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="flex min-h-[44px] w-full items-center justify-center gap-2 rounded-[4px] border border-line-300 px-3 py-2.5 text-sm font-bold text-navy-700"
+                  className="flex min-h-[44px] w-full items-center justify-center gap-2 rounded-[8px] border border-line-300 px-3 py-2.5 text-sm font-bold text-navy-700"
                 >
                   <LogOut className="h-4 w-4" aria-hidden="true" />
                   Sair
