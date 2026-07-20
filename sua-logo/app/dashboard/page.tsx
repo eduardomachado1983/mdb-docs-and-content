@@ -7,7 +7,7 @@ import { PaymentPanel } from '@/components/shared/payment-panel'
 import { ConsultationCard } from '@/components/shared/consultation-card'
 import { CompletedConsultationCard } from '@/components/shared/completed-consultation-card'
 import { TOTAL_ANSWERS } from '@/lib/assistant'
-import { STATUS_LABELS, type Patient } from '@/types'
+import type { Patient } from '@/types'
 
 const STATUS_MSG: Record<Patient['status'], string> = {
   cadastro_incompleto: 'Preencha seus dados pessoais para começar sua consulta.',
@@ -47,7 +47,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen">
-      <PatientHeader patientName={profile?.name ?? 'Paciente'} statusLabel={STATUS_LABELS[patient.status]} />
+      <PatientHeader patientName={profile?.name ?? 'Paciente'} />
 
       <div className="mx-auto grid max-w-[1140px] px-6 py-7">
         <h1 className="mb-1 text-2xl font-extrabold">Minhas consultas</h1>

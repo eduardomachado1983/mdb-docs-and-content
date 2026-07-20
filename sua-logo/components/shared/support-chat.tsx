@@ -31,10 +31,12 @@ function findAnswer(text: string): string {
 export function SupportChat() {
   const [messages, setMessages] = useState<Message[]>([{ role: 'bot', content: GREETING }])
   const [input, setInput] = useState('')
-  const bottomRef = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
 
+  // Rola só a caixa de mensagens (não a página) para a última mensagem.
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    const el = listRef.current
+    if (el) el.scrollTop = el.scrollHeight
   }, [messages])
 
   function ask(question: string, answer: string) {
@@ -51,7 +53,7 @@ export function SupportChat() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex h-[46vh] flex-col gap-3 overflow-y-auto rounded-2xl border border-line-100 bg-surface-subtle p-4">
+      <div ref={listRef} className="flex h-[46vh] flex-col gap-3 overflow-y-auto rounded-2xl border border-line-100 bg-surface-subtle p-4">
         {messages.map((m, i) => (
           <div
             key={i}
@@ -65,7 +67,6 @@ export function SupportChat() {
             {m.content}
           </div>
         ))}
-        <div ref={bottomRef} />
       </div>
 
       <div className="flex flex-wrap gap-2">

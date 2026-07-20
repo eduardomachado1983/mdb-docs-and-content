@@ -1,25 +1,17 @@
 import { redirect } from 'next/navigation'
-import { createClient, getUserAndProfile } from '@/lib/supabase/server'
+import { getUserAndProfile } from '@/lib/supabase/server'
 import { PatientHeader } from '@/components/shared/patient-header'
 import { SupportChat } from '@/components/shared/support-chat'
 import { FaqAccordion } from '@/components/shared/faq-accordion'
 import { SUPPORT_EMAIL } from '@/lib/faq'
-import { STATUS_LABELS, type Patient } from '@/types'
 
 export default async function AjudaPage() {
   const { user, profile } = await getUserAndProfile()
   if (!user) redirect('/login')
 
-  const supabase = await createClient()
-  const { data: patient } = await supabase
-    .from('patients').select('status').eq('user_id', user.id).single<Pick<Patient, 'status'>>()
-
   return (
     <div className="min-h-screen">
-      <PatientHeader
-        patientName={profile?.name ?? 'Paciente'}
-        statusLabel={patient ? STATUS_LABELS[patient.status] : undefined}
-      />
+      <PatientHeader patientName={profile?.name ?? 'Paciente'} />
 
       <div className="mx-auto grid max-w-[1140px] px-6 py-7">
         <h1 className="mb-1 text-2xl font-extrabold">Ajuda</h1>
