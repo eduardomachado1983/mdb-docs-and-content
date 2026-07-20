@@ -62,7 +62,7 @@ export default async function DashboardPage() {
           {patient.status === 'cadastro_incompleto' && !hasPersonalData && (
             <div className="mt-5 flex flex-col gap-3">
               <p className="text-sm text-navy-300">Complete seus dados pessoais em &quot;Meus dados&quot; para prosseguir.</p>
-              <Link href="/dashboard/dados" className="w-fit rounded-[4px] bg-brand-500 px-5 py-3 text-sm font-bold text-primary-on">
+              <Link href="/dashboard/dados" className="w-fit rounded-[8px] bg-brand-500 px-5 py-3 text-sm font-bold text-primary-on">
                 Ir para Meus dados
               </Link>
             </div>
@@ -75,7 +75,7 @@ export default async function DashboardPage() {
               </p>
               <Link
                 href="/registro"
-                className="w-fit rounded-[4px] bg-brand-500 px-5 py-3 text-sm font-bold text-primary-on"
+                className="w-fit rounded-[8px] bg-brand-500 px-5 py-3 text-sm font-bold text-primary-on"
               >
                 Continuar cadastro
               </Link>
@@ -97,7 +97,7 @@ export default async function DashboardPage() {
                   </p>
                   <Link
                     href="/dashboard/chat"
-                    className="w-fit rounded-[4px] bg-brand-500 px-5 py-3 text-sm font-bold text-primary-on"
+                    className="w-fit rounded-[8px] bg-brand-500 px-5 py-3 text-sm font-bold text-primary-on"
                   >
                     Iniciar consulta
                   </Link>
@@ -109,7 +109,7 @@ export default async function DashboardPage() {
                   </p>
                   <Link
                     href="/dashboard/dados"
-                    className="w-fit rounded-[4px] bg-brand-500 px-5 py-3 text-sm font-bold text-primary-on"
+                    className="w-fit rounded-[8px] bg-brand-500 px-5 py-3 text-sm font-bold text-primary-on"
                   >
                     Enviar documentos
                   </Link>
@@ -125,7 +125,7 @@ export default async function DashboardPage() {
               </p>
               <Link
                 href="/dashboard/chat"
-                className="w-fit rounded-[4px] border border-line-300 bg-surface-page px-5 py-3 text-sm font-bold text-navy-700"
+                className="w-fit rounded-[8px] border border-line-300 bg-surface-page px-5 py-3 text-sm font-bold text-navy-700"
               >
                 Rever minha consulta
               </Link>

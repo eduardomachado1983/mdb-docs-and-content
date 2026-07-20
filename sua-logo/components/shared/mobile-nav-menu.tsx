@@ -46,7 +46,7 @@ export function MobileNavMenu() {
         aria-label="Abrir menu"
         aria-expanded={open}
         aria-controls="mobile-nav-drawer"
-        className="flex h-11 w-11 items-center justify-center rounded-[4px] border border-line-300 text-navy-700"
+        className="flex h-11 w-11 items-center justify-center rounded-[8px] border border-line-300 text-navy-700"
       >
         ☰
       </button>
@@ -67,7 +67,7 @@ export function MobileNavMenu() {
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Fechar menu"
-                className="flex h-11 w-11 items-center justify-center rounded-[4px] border border-line-300 text-navy-700"
+                className="flex h-11 w-11 items-center justify-center rounded-[8px] border border-line-300 text-navy-700"
               >
                 ✕
               </button>
@@ -104,7 +104,7 @@ export function MobileNavMenu() {
               <Link
                 href="/registro"
                 onClick={() => setOpen(false)}
-                className="flex min-h-[44px] items-center justify-center rounded-[4px] bg-brand-500 px-3 py-2.5 text-sm font-bold text-primary-on"
+                className="flex min-h-[44px] items-center justify-center rounded-[8px] bg-brand-500 px-3 py-2.5 text-sm font-bold text-primary-on"
               >
                 Iniciar consulta
               </Link>

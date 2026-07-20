@@ -9,7 +9,7 @@ export function RefreshButton({ label }: { label: string }) {
     <button
       type="button"
       onClick={() => router.refresh()}
-      className="inline-flex items-center gap-2 rounded-[4px] bg-brand-500 px-5 py-2.5 text-sm font-bold text-primary-on"
+      className="inline-flex items-center gap-2 rounded-[8px] bg-brand-500 px-5 py-2.5 text-sm font-bold text-primary-on"
     >
       <RefreshCw className="h-4 w-4" aria-hidden="true" />
       {label}

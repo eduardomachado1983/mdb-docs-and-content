@@ -362,7 +362,7 @@ export default function RegistroPage() {
                                   aria-pressed={selected}
                                   onClick={() => setSaude(pergunta, opt)}
                                   className={cn(
-                                    'min-h-[44px] rounded-[4px] border px-6 py-1.5 text-sm font-bold transition active:scale-[0.97] sm:min-h-0',
+                                    'min-h-[44px] rounded-[8px] border px-6 py-1.5 text-sm font-bold transition active:scale-[0.97] sm:min-h-0',
                                     selected ? 'border-brand-500 bg-brand-500 text-primary-on' : 'border-line-300 text-navy-500 hover:border-brand-200'
                                   )}
                                 >
@@ -394,7 +394,7 @@ export default function RegistroPage() {
                                 aria-pressed={selected}
                                 onClick={() => setSexo(opt)}
                                 className={cn(
-                                  'flex items-center gap-3 rounded-[4px] border p-3.5 text-left transition',
+                                  'flex items-center gap-3 rounded-[8px] border p-3.5 text-left transition',
                                   selected ? 'border-brand-500 bg-brand-50' : 'border-line-300 hover:border-brand-200'
                                 )}
                               >
@@ -443,7 +443,7 @@ export default function RegistroPage() {
                             aria-pressed={selected}
                             onClick={() => toggleObjetivo(o.value)}
                             className={cn(
-                              'flex items-start gap-3 rounded-[4px] border p-3.5 text-left transition',
+                              'flex items-start gap-3 rounded-[8px] border p-3.5 text-left transition',
                               selected ? 'border-brand-500 bg-brand-50' : 'border-line-300 hover:border-brand-200'
                             )}
                           >
@@ -515,14 +515,14 @@ export default function RegistroPage() {
                 {step > 1 ? (
                   <button
                     onClick={() => setStep(step - 1)}
-                    className="rounded-[4px] border border-line-300 bg-surface-page px-5 py-3 text-sm font-bold text-navy-500 transition active:scale-[0.97]"
+                    className="rounded-[8px] border border-line-300 bg-surface-page px-5 py-3 text-sm font-bold text-navy-500 transition active:scale-[0.97]"
                   >
                     ← Voltar
                   </button>
                 ) : <span />}
                 <button
                   onClick={step === 1 ? handleStep1 : step === 2 ? handleStep2 : handleStep3}
-                  className="flex-1 rounded-[4px] bg-brand-500 px-6 py-3 text-[15px] font-bold text-primary-on transition active:scale-[0.97] sm:flex-initial"
+                  className="flex-1 rounded-[8px] bg-brand-500 px-6 py-3 text-[15px] font-bold text-primary-on transition active:scale-[0.97] sm:flex-initial"
                 >
                   {loading ? 'Salvando...' : 'Continuar →'}
                 </button>
@@ -533,13 +533,13 @@ export default function RegistroPage() {
               <div className="mt-6 flex items-center justify-between gap-3">
                 <button
                   onClick={() => setStep(3)}
-                  className="rounded-[4px] border border-line-300 bg-surface-page px-5 py-3 text-sm font-bold text-navy-500"
+                  className="rounded-[8px] border border-line-300 bg-surface-page px-5 py-3 text-sm font-bold text-navy-500"
                 >
                   ← Voltar
                 </button>
                 <button
                   onClick={() => router.push('/')}
-                  className="rounded-[4px] px-5 py-3 text-sm font-bold text-navy-500"
+                  className="rounded-[8px] px-5 py-3 text-sm font-bold text-navy-500"
                 >
                   Cancelar consulta
                 </button>
