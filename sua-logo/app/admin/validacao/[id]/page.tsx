@@ -54,7 +54,7 @@ export default async function ValidacaoPage({ params }: { params: Promise<{ id: 
 
       <main className="mx-auto grid max-w-[1140px] gap-6 px-6 py-8">
         <div>
-          <h1 className="mb-1 text-2xl font-extrabold">Painel do médico</h1>
+          <h1 className="mb-1 text-2xl font-extrabold">Painel administrativo</h1>
           <Link
             href="/admin"
             className="flex w-fit items-center gap-1.5 text-sm font-bold text-navy-300 hover:text-navy-700"
