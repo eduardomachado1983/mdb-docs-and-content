@@ -2,19 +2,32 @@ import { AlertTriangle } from 'lucide-react'
 import { createServiceClient, getProfile } from '@/lib/supabase/server'
 import { AdminHeader } from '@/components/shared/admin-header'
 import { AdminPatientCard } from '@/components/shared/admin-patient-card'
+import { PageLink } from '@/components/shared/page-link'
 import { RefreshButton } from '@/components/shared/refresh-button'
 import type { Patient } from '@/types'
 
-export default async function AdminPage() {
+const PAGE_SIZE = 5
+
+export default async function AdminPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>
+}) {
+  const { page: pageParam } = await searchParams
+  const page = Math.max(1, Number(pageParam) || 1)
+
   const profile = await getProfile()
   const supabase = await createServiceClient()
 
-  const { data: pending } = await supabase
+  const { data: pending, count } = await supabase
     .from('patients')
-    .select('*')
+    .select('*', { count: 'exact' })
     .eq('status', 'retido_admin')
     .order('updated_at', { ascending: true })
+    .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1)
     .returns<Patient[]>()
+
+  const totalPages = Math.max(1, Math.ceil((count ?? 0) / PAGE_SIZE))
 
   const patientIds = pending?.map((p) => p.id) ?? []
   const docsByPatient = new Map<string, Set<string>>()
@@ -28,11 +41,11 @@ export default async function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-b from-[#eef3fb] to-[#f3f7fc]">
       <AdminHeader adminName={profile?.name ?? 'Administrador'} />
 
       <div className="mx-auto grid max-w-[1140px] px-6 py-7">
-        <h1 className="mb-1 text-2xl font-extrabold">Painel do administrador</h1>
+        <h1 className="mb-1 text-2xl font-extrabold">Painel administrativo</h1>
         <p className="mb-5 text-[15px] text-navy-300">Aguardando validação</p>
 
         {!pending?.length && (
@@ -64,6 +77,19 @@ export default async function AdminPage() {
             )
           })}
         </div>
+
+        {(count ?? 0) > 0 && (
+          <div className="mt-5 flex items-center justify-between">
+            <span className="text-sm text-navy-200">{PAGE_SIZE} itens por página</span>
+            <div className="flex items-center gap-1.5">
+              <PageLink href={`/admin?page=${page - 1}`} disabled={page <= 1}>‹</PageLink>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+                <PageLink key={n} href={`/admin?page=${n}`} active={n === page}>{n}</PageLink>
+              ))}
+              <PageLink href={`/admin?page=${page + 1}`} disabled={page >= totalPages}>›</PageLink>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

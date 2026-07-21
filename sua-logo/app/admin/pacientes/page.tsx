@@ -1,8 +1,7 @@
-import Link from 'next/link'
 import { createServiceClient, getProfile } from '@/lib/supabase/server'
 import { AdminHeader } from '@/components/shared/admin-header'
 import { AdminPatientCard } from '@/components/shared/admin-patient-card'
-import { cn } from '@/lib/utils'
+import { PageLink } from '@/components/shared/page-link'
 import type { Patient } from '@/types'
 
 const PAGE_SIZE = 5
@@ -39,11 +38,11 @@ export default async function AdminPacientesPage({
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-b from-[#eef3fb] to-[#f3f7fc]">
       <AdminHeader adminName={profile?.name ?? 'Administrador'} />
 
       <div className="mx-auto grid max-w-[1140px] px-6 py-7">
-        <h1 className="mb-1 text-2xl font-extrabold">Painel do administrador</h1>
+        <h1 className="mb-1 text-2xl font-extrabold">Painel administrativo</h1>
         <p className="mb-5 text-[15px] text-navy-300">Lista de pacientes</p>
 
         {!allPatients?.length && (
@@ -73,36 +72,15 @@ export default async function AdminPacientesPage({
           <div className="mt-5 flex items-center justify-between">
             <span className="text-sm text-navy-200">{PAGE_SIZE} itens por página</span>
             <div className="flex items-center gap-1.5">
-              <PageLink page={page - 1} disabled={page <= 1}>‹</PageLink>
+              <PageLink href={`/admin/pacientes?page=${page - 1}`} disabled={page <= 1}>‹</PageLink>
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
-                <PageLink key={n} page={n} active={n === page}>{n}</PageLink>
+                <PageLink key={n} href={`/admin/pacientes?page=${n}`} active={n === page}>{n}</PageLink>
               ))}
-              <PageLink page={page + 1} disabled={page >= totalPages}>›</PageLink>
+              <PageLink href={`/admin/pacientes?page=${page + 1}`} disabled={page >= totalPages}>›</PageLink>
             </div>
           </div>
         )}
       </div>
     </div>
-  )
-}
-
-function PageLink({ page, active, disabled, children }: { page: number; active?: boolean; disabled?: boolean; children: React.ReactNode }) {
-  if (disabled) {
-    return (
-      <span className="flex h-8 w-8 items-center justify-center rounded-lg text-sm font-bold text-navy-100">
-        {children}
-      </span>
-    )
-  }
-  return (
-    <Link
-      href={`/admin/pacientes?page=${page}`}
-      className={cn(
-        'flex h-8 w-8 items-center justify-center rounded-lg text-sm font-bold',
-        active ? 'bg-admin-500 text-white' : 'text-navy-500 hover:bg-surface-page'
-      )}
-    >
-      {children}
-    </Link>
   )
 }
