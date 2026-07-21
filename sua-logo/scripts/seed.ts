@@ -125,6 +125,93 @@ async function seed() {
     console.log('✓ Paciente demo populado (status: aguardando_medico)')
   }
 
+  // Conversas de WhatsApp em andamento (inbox do admin)
+  console.log('\n💬 Populando conversas de WhatsApp...')
+
+  const CONVERSATIONS: {
+    phone: string
+    contact_name: string
+    unread_count: number
+    messages: { direction: 'inbound' | 'outbound'; content: string; minutesAgo: number }[]
+  }[] = [
+    {
+      // Mesmo telefone do paciente demo, para linkar com "Ver cadastro do paciente".
+      phone: '(48) 99999-0000',
+      contact_name: 'Eduardo Machado',
+      unread_count: 1,
+      messages: [
+        { direction: 'inbound', content: 'Oi, boa tarde! Já mandei meus documentos, minha consulta já foi liberada?', minutesAgo: 190 },
+        { direction: 'outbound', content: 'Boa tarde, Eduardo! Deixa eu verificar aqui pra você, um instante.', minutesAgo: 185 },
+        { direction: 'outbound', content: 'Vi que seus documentos estão em análise com a nossa equipe médica. Assim que o médico avaliar seu caso, você recebe um aviso por aqui e por e-mail.', minutesAgo: 183 },
+        { direction: 'inbound', content: 'Perfeito, obrigado! E sobre a receita, sai em quanto tempo depois da consulta?', minutesAgo: 20 },
+      ],
+    },
+    {
+      phone: '(11) 98765-4321',
+      contact_name: 'Marina Costa',
+      unread_count: 2,
+      messages: [
+        { direction: 'inbound', content: 'Olá! Vi o anúncio de vocês sobre cannabis medicinal para ansiedade, queria saber como funciona.', minutesAgo: 420 },
+        { direction: 'outbound', content: 'Oi, Marina! Que bom que você chegou até a gente 💚 Funciona assim: você faz um cadastro rápido, passa por uma triagem guiada e depois tem uma consulta com um médico prescritor.', minutesAgo: 415 },
+        { direction: 'outbound', content: 'Ao final, se indicado, você recebe a receita e o laudo digitais, tudo dentro das normas da Anvisa.', minutesAgo: 414 },
+        { direction: 'inbound', content: 'Entendi! E qual o valor da consulta?', minutesAgo: 60 },
+        { direction: 'inbound', content: 'Ah, e vocês atendem em qualquer estado ou só em SP?', minutesAgo: 55 },
+      ],
+    },
+    {
+      phone: '(21) 97654-1230',
+      contact_name: 'Ricardo Alves',
+      unread_count: 0,
+      messages: [
+        { direction: 'inbound', content: 'Bom dia! Fiz o pagamento via Pix ontem mas ainda não vi confirmação no meu painel.', minutesAgo: 1300 },
+        { direction: 'outbound', content: 'Bom dia, Ricardo! Vou verificar o pagamento aqui no sistema, só um momento.', minutesAgo: 1295 },
+        { direction: 'outbound', content: 'Confirmado! Seu pagamento já foi processado e você já está na fila de atendimento médico. 🎉', minutesAgo: 1290 },
+        { direction: 'inbound', content: 'Que ótimo, muito obrigado pela agilidade!', minutesAgo: 1288 },
+      ],
+    },
+  ]
+
+  for (const conv of CONVERSATIONS) {
+    const lastMessage = conv.messages[conv.messages.length - 1]
+    const lastMessageAt = new Date(Date.now() - lastMessage.minutesAgo * 60_000).toISOString()
+
+    const { data: existing } = await supabase
+      .from('whatsapp_conversations').select('id').eq('phone', conv.phone).maybeSingle()
+
+    const conversationId = existing?.id ?? (
+      await supabase
+        .from('whatsapp_conversations')
+        .insert({
+          phone: conv.phone,
+          contact_name: conv.contact_name,
+          unread_count: conv.unread_count,
+          last_message_at: lastMessageAt,
+        })
+        .select('id')
+        .single()
+    ).data?.id
+
+    if (!conversationId) continue
+
+    // Evita duplicar mensagens se o seed rodar mais de uma vez.
+    await supabase.from('whatsapp_messages').delete().eq('conversation_id', conversationId)
+    await supabase.from('whatsapp_messages').insert(
+      conv.messages.map((m) => ({
+        conversation_id: conversationId,
+        direction: m.direction,
+        content: m.content,
+        status: m.direction === 'outbound' ? 'sent' : 'received',
+        created_at: new Date(Date.now() - m.minutesAgo * 60_000).toISOString(),
+      }))
+    )
+    await supabase
+      .from('whatsapp_conversations')
+      .update({ unread_count: conv.unread_count, last_message_at: lastMessageAt })
+      .eq('id', conversationId)
+
+    console.log(`✓ Conversa: ${conv.contact_name} (${conv.messages.length} mensagens)`)
+  }
+
   console.log('\n✅ Seed concluído!')
   console.log('\nAcesse /login e use os botões de acesso rápido para testar.')
 }
