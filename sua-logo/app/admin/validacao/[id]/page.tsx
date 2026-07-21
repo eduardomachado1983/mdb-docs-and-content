@@ -1,36 +1,31 @@
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { createServiceClient, getProfile } from '@/lib/supabase/server'
 import { AdminHeader } from '@/components/shared/admin-header'
-import { AdminPatientHeader } from '@/components/shared/admin-patient-header'
+import { AdminValidationHero } from '@/components/shared/admin-validation-hero'
+import { CollapsibleSection } from '@/components/shared/collapsible-section'
+import { ClinicalDocLink } from '@/components/shared/clinical-doc-link'
+import { ValidationActionButton } from '@/components/shared/validation-action-button'
+import { DetailField } from '@/components/shared/detail-field'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { ValidationForm } from '@/components/shared/validation-form'
-import { NotifyMissingDocsButton } from '@/components/shared/notify-missing-docs-button'
-import { PaymentHistory } from '@/components/shared/payment-history'
 import { DOCUMENTS_BUCKET } from '@/lib/storage'
+import { computeValidationState } from '@/lib/validation-status'
+import { cn } from '@/lib/utils'
 import type { Patient } from '@/types'
 
 const REQUIRED_DOCS: { type: string; label: string }[] = [
-  { type: 'identity', label: 'Documento de identidade' },
+  { type: 'identity', label: 'Documento de identidade e CPF' },
   { type: 'address', label: 'Comprovante de endereço' },
 ]
 
-export default async function ValidacaoPage({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ id: string }>
-  searchParams: Promise<{ edit?: string }>
-}) {
+export default async function ValidacaoPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  const { edit } = await searchParams
   const profile = await getProfile()
   const supabase = await createServiceClient()
   const { data: patient } = await supabase.from('patients').select('*').eq('id', id).single<Patient>()
   if (!patient) notFound()
 
   const { data: documents } = await supabase.from('documents').select('*').eq('patient_id', id)
-  const { data: transactions } = await supabase
-    .from('payment_transactions').select('*').eq('patient_id', id).order('created_at', { ascending: false })
 
   const docsWithUrls = await Promise.all(
     (documents ?? []).map(async (doc) => {
@@ -39,81 +34,146 @@ export default async function ValidacaoPage({
     })
   )
   const docByType = new Map<string, (typeof docsWithUrls)[number]>(docsWithUrls.map((d) => [d.type, d]))
-  const missingDocs = REQUIRED_DOCS.filter((d) => !docByType.has(d.type))
-
   const identityDocs = REQUIRED_DOCS.map((req) => {
     const doc = docByType.get(req.type)
     return { label: req.label, uploaded: Boolean(doc), url: doc?.url ?? null }
   })
+  const docsComplete = identityDocs.every((d) => d.uploaded)
+
+  const paymentConfirmed = Boolean(patient.payment?.confirmed)
   const clinicalPresent = Boolean(patient.clinical?.prescription || patient.clinical?.report)
+  const state = computeValidationState({ docsComplete, paymentConfirmed, clinicalPresent })
+
+  const { personal_data: pd, triage } = patient
+  const cityState = [pd?.city, pd?.state].filter(Boolean).join('-')
+  const numberComplement = [pd?.number, pd?.complement].filter(Boolean).join(' - ')
 
   return (
     <div className="min-h-screen">
       <AdminHeader adminName={profile?.name ?? 'Administrador'} />
 
-      <main className="mx-auto grid max-w-[1140px] px-6 py-8">
-        <AdminPatientHeader patientId={patient.id} initial={patient.personal_data} initialEditing={edit === '1'} />
+      <main className="mx-auto grid max-w-[1140px] gap-6 px-6 py-8">
+        <div>
+          <h1 className="mb-1 text-2xl font-extrabold">Painel do médico</h1>
+          <Link
+            href="/admin"
+            className="flex w-fit items-center gap-1.5 text-sm font-bold text-navy-300 hover:text-navy-700"
+          >
+            ‹ Detalhes do paciente
+          </Link>
+        </div>
 
-        <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_280px]">
-          <div className="flex flex-col gap-6">
-            <Card>
-              <CardHeader><CardTitle className="text-base">Documentos do paciente</CardTitle></CardHeader>
-              <CardContent className="flex flex-col gap-2">
-                {docsWithUrls.length === 0 && (
-                  <p className="text-sm text-navy-200">Nenhum documento enviado ainda.</p>
-                )}
-                {docsWithUrls.map((d) => (
-                  <a
-                    key={d.id}
-                    href={d.url ?? '#'}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between gap-2.5 rounded-[11px] border border-line-100 bg-surface-subtle px-3.5 py-2.5 text-sm font-semibold text-navy-700 hover:border-admin-200"
-                  >
-                    <span>📄 {REQUIRED_DOCS.find((r) => r.type === d.type)?.label ?? d.type}</span>
-                    <span className="truncate text-xs font-normal text-navy-200">{d.filename}</span>
-                  </a>
+        <AdminValidationHero patientId={patient.id} patientName={pd?.full_name || 'Paciente'} state={state} />
+
+        <Card>
+          <CardHeader><CardTitle className="text-base">Informações pessoais</CardTitle></CardHeader>
+          <CardContent className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 lg:grid-cols-5">
+            <DetailField label="Nome" value={pd?.full_name} />
+            <DetailField label="CPF" value={pd?.cpf} />
+            <DetailField label="RG" value={pd?.rg} />
+            <DetailField label="E-mail" value={pd?.email} />
+            <DetailField label="Data de nascimento" value={pd?.birth_date} />
+            <DetailField label="Telefone" value={pd?.phone} />
+            <DetailField label="CEP" value={pd?.cep} />
+            <DetailField label="Endereço" value={pd?.address} />
+            <DetailField label="Número e complemento" value={numberComplement} />
+            <DetailField label="Bairro" value={pd?.neighborhood} />
+            <DetailField label="Cidade e Estado" value={cityState} />
+          </CardContent>
+        </Card>
+
+        <CollapsibleSection title="Informações da consulta">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 lg:grid-cols-5">
+            <DetailField label="Objetivo" value={triage?.main_symptom} />
+            <DetailField label="Local" value={triage?.pain_location} />
+            <DetailField label="Intensidade" value={triage?.pain_intensity ? `${triage.pain_intensity}/10` : undefined} />
+            <DetailField label="Altura" value={triage?.height} />
+            <DetailField label="Peso" value={triage?.weight} />
+            <DetailField label="Sexo" value={triage?.sex} />
+            {triage?.health_history &&
+              Object.entries(triage.health_history).map(([pergunta, resposta]) => (
+                <DetailField key={pergunta} label={pergunta} value={resposta} />
+              ))}
+          </div>
+          {triage?.mental_health && triage.mental_health.length > 0 && (
+            <div className="mt-5">
+              <div className="mb-2 text-sm text-navy-300">Saúde mental</div>
+              <div className="flex flex-wrap gap-2">
+                {triage.mental_health.map((item) => (
+                  <span key={item} className="rounded-full bg-surface-muted px-3 py-1 text-xs font-semibold text-navy-700">
+                    {item}
+                  </span>
                 ))}
-                {missingDocs.length > 0 && (
-                  <div className="mt-2 rounded-[11px] border border-amber-200 bg-amber-50 p-4">
-                    <p className="mb-2 text-sm font-bold text-amber-800">⚠️ Documentos pendentes</p>
-                    <ul className="mb-3 list-disc pl-5 text-sm text-amber-800">
-                      {missingDocs.map((d) => <li key={d.type}>{d.label}</li>)}
-                    </ul>
-                    <NotifyMissingDocsButton
-                      patientId={patient.id}
-                      alreadySent={Boolean(patient.admin_validation?.document_reminder_sent_at)}
-                    />
-                  </div>
+              </div>
+            </div>
+          )}
+          {triage?.product_preferences && triage.product_preferences.length > 0 && (
+            <div className="mt-5">
+              <div className="mb-2 text-sm text-navy-300">Produtos de preferência</div>
+              <div className="flex flex-wrap gap-2">
+                {triage.product_preferences.map((item) => (
+                  <span key={item} className="rounded-full bg-surface-muted px-3 py-1 text-xs font-semibold text-navy-700">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </CollapsibleSection>
+
+        <Card>
+          <CardHeader><CardTitle className="text-base">Validação final</CardTitle></CardHeader>
+          <CardContent className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+            <div>
+              <div className="mb-2 text-sm font-bold text-navy-800">Documentação</div>
+              <div className="flex flex-col gap-2">
+                {identityDocs.map((d) =>
+                  d.uploaded ? (
+                    <a
+                      key={d.label}
+                      href={d.url ?? '#'}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-semibold text-[#2f6fed] hover:underline"
+                    >
+                      {d.label}
+                    </a>
+                  ) : (
+                    <p key={d.label} className="text-sm font-semibold text-error-500">Sem {d.label}</p>
+                  )
                 )}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            <Card>
-              <CardHeader><CardTitle className="text-base">Documentos do médico</CardTitle></CardHeader>
-              <CardContent className="grid gap-2 text-sm whitespace-pre-wrap text-navy-600">
-                <p><strong>Receita:</strong> {patient.clinical?.prescription || '—'}</p>
-                <p><strong>Laudo:</strong> {patient.clinical?.report || '—'}</p>
-              </CardContent>
-            </Card>
+            <div>
+              <div className="mb-2 text-sm font-bold text-navy-800">Pagamento</div>
+              <p className={cn('text-sm font-semibold', paymentConfirmed ? 'text-teal-600' : 'text-error-500')}>
+                {paymentConfirmed ? 'Pagamento realizado' : 'Pagamento não realizado'}
+              </p>
+            </div>
 
-            <Card>
-              <CardHeader><CardTitle className="text-base">Validação final</CardTitle></CardHeader>
-              <CardContent>
-                <ValidationForm
-                  patientId={patient.id}
-                  identityDocs={identityDocs}
-                  paymentConfirmed={Boolean(patient.payment?.confirmed)}
-                  paymentMethod={patient.payment?.method}
-                  clinicalPresent={clinicalPresent}
-                />
-              </CardContent>
-            </Card>
-          </div>
+            <div>
+              <div className="mb-2 text-sm font-bold text-navy-800">Prontuário médico</div>
+              <div className="flex flex-col gap-2">
+                <ClinicalDocLink label="Receita" content={patient.clinical?.prescription} />
+                <ClinicalDocLink label="Laudo" content={patient.clinical?.report} />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
-          <div className="rounded-2xl border border-white/30 bg-white/65 p-5 backdrop-blur-xl">
-            <PaymentHistory transactions={transactions ?? []} />
-          </div>
+        <div className="flex justify-end gap-3">
+          <Link
+            href="/admin"
+            className="flex items-center rounded-[8px] border border-teal-500 px-5 py-2.5 text-sm font-bold text-teal-600 transition hover:bg-teal-50 active:scale-[0.98]"
+          >
+            Voltar
+          </Link>
+          <ValidationActionButton
+            patientId={patient.id}
+            allReady={state === 'liberado'}
+            alreadyNotified={Boolean(patient.admin_validation?.document_reminder_sent_at)}
+          />
         </div>
       </main>
     </div>
