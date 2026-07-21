@@ -34,9 +34,21 @@ export function LoginMenu() {
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls="login-menu-panel"
-        className="rounded-[8px] border border-line-400 bg-white px-4 py-2.5 text-sm font-bold text-navy-700"
+        className="flex items-center gap-1.5 rounded-[8px] border border-line-400 bg-white px-4 py-2.5 text-sm font-bold text-navy-700"
       >
-        Entrar ▾
+        Entrar
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className={`h-4 w-4 transition-transform ${open ? 'rotate-180' : ''}`}
+          aria-hidden="true"
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
       </button>
       {open && (
         <>
@@ -45,7 +57,7 @@ export function LoginMenu() {
             id="login-menu-panel"
             role="menu"
             aria-label="Entrar como"
-            className="absolute right-0 top-[52px] z-50 w-[210px] rounded-2xl border border-white/30 bg-white/65 backdrop-blur-xl p-2 shadow-[0_18px_40px_rgba(20,50,90,.16)]"
+            className="absolute right-0 top-[52px] z-50 w-[210px] rounded-2xl border border-line-200 bg-white p-2 shadow-[0_18px_40px_rgba(20,50,90,.16)]"
           >
             <div className="px-2.5 pb-1 pt-2 text-[11px] font-bold tracking-wide text-navy-100">ENTRAR COMO</div>
             {ROLES.map((r) => (
