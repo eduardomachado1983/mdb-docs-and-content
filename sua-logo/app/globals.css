@@ -75,6 +75,14 @@
   --header-height: 64px;
 }
 
+html {
+  /* Reserva o espaço da barra de rolagem sempre, mesmo em páginas cujo
+     conteúdo não excede a viewport — sem isso, o layout centralizado
+     (mx-auto) "pula" para a direita ao navegar para uma página mais
+     curta que não precisa de scroll. */
+  scrollbar-gutter: stable;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
