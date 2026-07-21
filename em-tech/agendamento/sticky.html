@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EM Tech — Marcar horário</title>
+<meta name="description" content="Veja com quem já trabalhamos e marque um horário para falar sobre o sistema que a sua empresa precisa.">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../theme.css">
+<style>
+  html { scroll-behavior: smooth; }
+
+  .topbar { display: flex; align-items: center; padding: 22px 32px; border-bottom: 1px solid var(--line-glow); }
+
+  .hero-short { padding: 88px 0 72px; text-align: center; position: relative; overflow: hidden; }
+  .hero-short .container { max-width: 680px; position: relative; z-index: 1; }
+  .hero-short h1 { margin-top: 18px; font-size: clamp(32px, 4.4vw, 46px); }
+  .hero-short p.lede { font-size: 17.5px; color: var(--text-secondary); margin-top: 18px; }
+
+  .proof { padding: 0 0 96px; }
+  .proof-note { text-align: center; margin-top: 20px; font-size: 14.5px; color: var(--text-secondary); }
+
+  .sticky-bar {
+    position: sticky; top: 0; z-index: 90;
+    background: rgba(5, 6, 15, 0.85); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line-glow);
+    padding: 14px 0;
+  }
+  .sticky-bar .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .sticky-bar p { font-size: 14.5px; color: var(--text-secondary); }
+  .sticky-bar .btn-primary { padding: 10px 20px; font-size: 14.5px; white-space: nowrap; }
+
+  .agenda-section { padding: 96px 0 120px; }
+  .agenda-section .container { max-width: 460px; }
+  .agenda-section .section-intro { margin-bottom: 40px; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+<div class="topbar">
+  <a href="../index.html" class="logo" aria-label="EM Tech, página inicial">
+    <svg width="26" height="26" viewBox="0 0 30 30" aria-hidden="true">
+      <path class="logo-bracket" d="M10 6 L6 6 L6 24 L10 24" />
+      <path class="logo-bracket" d="M20 6 L24 6 L24 24 L20 24" />
+      <rect class="logo-cursor" x="14" y="8" width="2.2" height="14" />
+    </svg>
+    <span><span class="logo-word-em">EM</span> <span class="logo-word-tech">TECH</span></span>
+  </a>
+</div>
+
+<main id="conteudo">
+
+  <section class="hero-short">
+    <div class="spotlight" aria-hidden="true"></div>
+    <div class="container">
+      <span class="eyebrow">Agendamento direto</span>
+      <h1>Antes de marcar, veja com quem já trabalhamos.</h1>
+      <p class="lede">Sistemas em produção, não protótipos. Depois de ver os cases, escolha um horário — a agenda está sempre um clique acima.</p>
+    </div>
+  </section>
+
+  <section class="proof">
+    <div class="container grid-2">
+      <div class="card-elevated">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20"/><path d="M10 19 L14 19"/></svg>
+        </div>
+        <h3>Sua Logo — Telemedicina</h3>
+        <p>Plataforma completa com três papéis de usuário (paciente, médico e admin), pagamento integrado e prontuário digital — em produção.</p>
+      </div>
+      <div class="card-elevated">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 2 L12 22 M2 12 L22 12"/><rect x="8" y="8" width="8" height="8"/></svg>
+        </div>
+        <h3>Outros projetos</h3>
+        <p>Outros sistemas em andamento sob acordo de confidencialidade. Podemos falar dos detalhes técnicos na sua conversa com a gente.</p>
+      </div>
+    </div>
+    <p class="proof-note">Sem estudo de caso genérico — o que entregamos fica em produção com o cliente.</p>
+  </section>
+
+  <div class="sticky-bar">
+    <div class="container">
+      <p>Pronto para conversar sobre o seu sistema?</p>
+      <a href="#agenda" class="btn-primary">Marcar horário</a>
+    </div>
+  </div>
+
+  <section class="agenda-section" id="agenda">
+    <div class="container">
+      <div class="section-intro">
+        <span class="eyebrow">Agenda</span>
+        <h2 class="section-title">Escolha um horário</h2>
+        <p class="section-subtitle">30 minutos, sem formulário de qualificação antes.</p>
+      </div>
+      <div class="scheduler" id="scheduler"></div>
+    </div>
+  </section>
+
+</main>
+
+<script src="../scheduler.js"></script>
+<script>initScheduler('scheduler');</script>
+</body>
+</html>

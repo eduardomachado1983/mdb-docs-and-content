@@ -9,323 +9,49 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
 <style>
-  :root {
-    --color-primary: #1C2733;
-    --color-secondary: #4A4A52;
-    --color-neutral: #F6F5F3;
-    --color-accent: #B5652F;
-    --color-white: #FFFFFF;
-    --max-width: 1180px;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
 
-  body {
-    font-family: 'IBM Plex Sans', sans-serif;
-    background: var(--color-neutral);
-    color: var(--color-primary);
-    font-size: 16px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  img, svg { display: block; max-width: 100%; }
-
-  a { color: inherit; }
-
-  .container {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  .skip-link {
-    position: absolute;
-    left: -999px;
-    top: 0;
-    background: var(--color-accent);
-    color: var(--color-white);
-    padding: 12px 20px;
-    z-index: 1000;
-    font-weight: 600;
-  }
-  .skip-link:focus {
-    left: 24px;
-    top: 24px;
-  }
-
-  :focus-visible {
-    outline: 3px solid var(--color-accent);
-    outline-offset: 3px;
-  }
-
-  /* ---------- Logo ---------- */
-  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .logo-bracket { stroke-width: 4.5; stroke-linecap: square; stroke-linejoin: miter; fill: none; }
-  .logo-cursor { fill: var(--color-accent); }
-  @media (prefers-reduced-motion: no-preference) {
-    .logo-cursor { animation: blink 1.1s steps(1, start) infinite; }
-  }
-  @keyframes blink { 50% { opacity: 0; } }
-  .logo-word-em { font-weight: 600; font-size: 22px; letter-spacing: -0.01em; }
-  .logo-word-tech { font-weight: 600; font-size: 12px; letter-spacing: 0.14em; color: var(--color-accent); text-transform: uppercase; }
-  .logo--light .logo-bracket { stroke: var(--color-white); }
-  .logo--light .logo-word-em { color: var(--color-white); }
-  .logo--dark .logo-bracket { stroke: var(--color-primary); }
-  .logo--dark .logo-word-em { color: var(--color-primary); }
-
-  /* ---------- Header ---------- */
-  header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: var(--color-primary);
-    border-bottom: 1px solid rgba(246,245,243,0.08);
-  }
-  .header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 76px;
-  }
-  nav.main-nav { display: flex; align-items: center; gap: 32px; }
-  nav.main-nav a {
-    color: var(--color-neutral);
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 500;
-  }
-  nav.main-nav a:hover { color: var(--color-accent); }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 13px 26px;
-    font-family: inherit;
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    border-radius: 2px;
-    border: 1.5px solid transparent;
-    cursor: pointer;
-    transition: background-color .15s ease, color .15s ease, border-color .15s ease;
-  }
-  .btn-accent {
-    background: var(--color-accent);
-    color: var(--color-white);
-  }
-  .btn-accent:hover { background: #9c5527; }
-  .btn-outline-light {
-    border-color: rgba(246,245,243,0.4);
-    color: var(--color-neutral);
-    background: transparent;
-  }
-  .btn-outline-light:hover { border-color: var(--color-neutral); }
-  .btn-outline-dark {
-    border-color: rgba(28,39,51,0.3);
-    color: var(--color-primary);
-    background: transparent;
-  }
-  .btn-outline-dark:hover { border-color: var(--color-primary); }
-
-  .nav-toggle {
-    display: none;
-    background: none;
-    border: none;
-    color: var(--color-neutral);
-    cursor: pointer;
-    padding: 8px;
-  }
-
-  /* ---------- Label / eyebrow ---------- */
-  .label {
-    font-size: 13px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-accent);
-  }
-  .label--on-primary { color: var(--color-accent); }
-
-  h1, h2, h3 { font-weight: 600; }
-  h1 {
-    font-size: clamp(36px, 5vw, 56px);
-    letter-spacing: -0.01em;
-    line-height: 1.1;
-    margin-top: 16px;
-  }
-  h2 {
-    font-size: clamp(26px, 3.4vw, 32px);
-    margin-top: 12px;
-  }
-  h3 { font-size: 21px; margin-bottom: 10px; }
-
-  section { padding: 96px 0; }
-
   /* ---------- Hero ---------- */
-  .hero {
-    background: var(--color-primary);
-    color: var(--color-neutral);
-    padding: 120px 0 110px;
-  }
-  .hero-content { max-width: 720px; }
-  .hero p.lede {
-    font-size: 18px;
-    color: #C7CBD1;
-    margin-top: 24px;
-    max-width: 560px;
-  }
-  .hero-actions {
-    display: flex;
-    gap: 16px;
-    margin-top: 40px;
-    flex-wrap: wrap;
-  }
+  .hero { padding: 160px 0 130px; text-align: center; overflow: hidden; }
+  .hero-content { max-width: 720px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero h1 { margin-top: 22px; }
+  .hero p.lede { font-size: 18px; color: var(--text-secondary); margin-top: 22px; max-width: 560px; margin-left: auto; margin-right: auto; }
+  .hero-actions { display: flex; gap: 16px; margin-top: 40px; flex-wrap: wrap; justify-content: center; }
+  .btn-outline { display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px; border-radius: 8px; border: 1px solid var(--line-glow); color: var(--text-primary); font-size: 15px; font-weight: 600; }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* ---------- Diferenciais ---------- */
-  .section-intro { max-width: 680px; margin-bottom: 56px; }
-  .section-intro p { color: var(--color-secondary); margin-top: 16px; font-size: 17px; }
-
-  .grid-3 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-  }
-  .grid-2 {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
-  }
-  .grid-4 {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 28px;
-  }
-
-  .card {
-    background: var(--color-white);
-    border: 1px solid rgba(74,74,82,0.14);
-    padding: 32px 28px;
-    border-radius: 3px;
-  }
-  .card .icon { color: var(--color-accent); margin-bottom: 20px; }
-  .card p { color: var(--color-secondary); font-size: 15.5px; }
-
-  .icon svg { width: 30px; height: 30px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: square; stroke-linejoin: miter; }
-
-  /* ---------- Serviços ---------- */
-  .services { background: var(--color-white); }
+  .section-intro { max-width: 680px; margin: 0 auto 56px; text-align: center; }
 
   /* ---------- Como trabalhamos ---------- */
-  .process { background: var(--color-neutral); }
-  .process-step {
-    display: flex;
-    gap: 20px;
-    padding: 28px 0;
-    border-top: 1px solid rgba(74,74,82,0.18);
-  }
-  .process-step:last-child { border-bottom: 1px solid rgba(74,74,82,0.18); }
-  .process-number {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--color-accent);
-    min-width: 48px;
-  }
+  .process-step { display: flex; gap: 20px; padding: 28px 0; border-top: 1px solid var(--line-glow); }
+  .process-step:last-child { border-bottom: 1px solid var(--line-glow); }
+  .process-number { font-size: 15px; font-weight: 600; color: var(--accent); min-width: 48px; }
   .process-step h3 { margin-bottom: 6px; font-size: 18px; }
-  .process-step p { color: var(--color-secondary); font-size: 15.5px; max-width: 640px; }
+  .process-step p { color: var(--text-secondary); font-size: 15.5px; max-width: 640px; }
+  .process-list { max-width: 760px; margin: 0 auto; }
 
-  /* ---------- Voice / manifesto ---------- */
-  .manifesto {
-    border-left: 3px solid var(--color-accent);
-    padding-left: 28px;
-    max-width: 760px;
-  }
-  .manifesto p {
-    font-size: 21px;
-    font-weight: 500;
-    color: var(--color-primary);
-    line-height: 1.5;
-  }
-  .manifesto p + p { margin-top: 20px; font-size: 16px; font-weight: 400; color: var(--color-secondary); }
+  /* ---------- Manifesto ---------- */
+  .manifesto { border-left: 2px solid var(--accent); padding-left: 28px; max-width: 760px; margin: 0 auto; }
+  .manifesto p { font-size: 21px; font-weight: 500; color: var(--text-primary); line-height: 1.5; }
+  .manifesto p + p { margin-top: 20px; font-size: 16px; font-weight: 400; color: var(--text-secondary); }
 
   /* ---------- CTA band ---------- */
-  .cta-band {
-    background: var(--color-primary);
-    color: var(--color-neutral);
-    text-align: center;
-  }
+  .cta-band { text-align: center; }
   .cta-band .container { max-width: 620px; }
-  .cta-band p { color: #C7CBD1; margin-top: 18px; font-size: 17px; }
-  .cta-band .hero-actions { justify-content: center; margin-top: 36px; }
-
-  /* ---------- Footer ---------- */
-  footer {
-    background: var(--color-primary);
-    color: var(--color-neutral);
-    padding: 56px 0 32px;
-  }
-  .footer-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 32px;
-    padding-bottom: 40px;
-    border-bottom: 1px solid rgba(246,245,243,0.12);
-  }
-  .footer-nav { display: flex; gap: 28px; flex-wrap: wrap; }
-  .footer-nav a { color: #C7CBD1; text-decoration: none; font-size: 14.5px; }
-  .footer-nav a:hover { color: var(--color-accent); }
-  .footer-bottom {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 24px;
-    font-size: 13px;
-    color: #8B93A0;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  @media (max-width: 860px) {
-    .grid-3, .grid-2, .grid-4 { grid-template-columns: 1fr; }
-    section { padding: 64px 0; }
-    .hero { padding: 88px 0 72px; }
-  }
-
-  @media (max-width: 720px) {
-    nav.main-nav {
-      position: absolute;
-      top: 76px;
-      left: 0;
-      right: 0;
-      background: var(--color-primary);
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0;
-      padding: 8px 24px 20px;
-      display: none;
-      border-top: 1px solid rgba(246,245,243,0.08);
-    }
-    nav.main-nav.open { display: flex; }
-    nav.main-nav a { padding: 14px 0; width: 100%; border-bottom: 1px solid rgba(246,245,243,0.06); }
-    nav.main-nav .btn { margin-top: 12px; }
-    .nav-toggle { display: inline-flex; }
-  }
+  .cta-band p { color: var(--text-secondary); margin-top: 18px; font-size: 17px; }
+  .cta-band .hero-actions { margin-top: 36px; }
 </style>
 </head>
 <body>
 
 <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-<header>
+<header class="site-header">
   <div class="container header-inner">
-    <a href="#topo" class="logo logo--light" aria-label="EM Tech, página inicial">
-      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
+    <a href="#topo" class="logo" aria-label="EM Tech, página inicial">
+      <svg width="28" height="28" viewBox="0 0 30 30" aria-hidden="true">
         <path class="logo-bracket" d="M10 6 L6 6 L6 24 L10 24" />
         <path class="logo-bracket" d="M20 6 L24 6 L24 24 L20 24" />
         <rect class="logo-cursor" x="14" y="8" width="2.2" height="14" />
@@ -343,7 +69,7 @@
       <a href="#diferenciais">Diferenciais</a>
       <a href="#servicos">Serviços</a>
       <a href="#como-trabalhamos">Como trabalhamos</a>
-      <a href="#contato" class="btn btn-accent">Fale com a gente</a>
+      <a href="#contato" class="btn-primary">Fale com a gente</a>
     </nav>
   </div>
 </header>
@@ -351,13 +77,19 @@
 <main id="conteudo">
 
   <section class="hero" id="topo">
+    <div class="grid-lines" aria-hidden="true">
+      <div class="hline" style="top: 30%"></div>
+      <div class="vline" style="left: 20%"></div>
+      <div class="vline" style="left: 80%"></div>
+    </div>
+    <div class="spotlight" aria-hidden="true"></div>
     <div class="container hero-content">
-      <span class="label label--on-primary">Consultoria de tecnologia</span>
+      <span class="eyebrow">Consultoria de tecnologia</span>
       <h1>Sistemas sob medida para o seu negócio.</h1>
       <p class="lede">Desenvolvemos sistemas web e aplicativos Android/iOS white label para empresas que precisam de tecnologia confiável — não de promessas.</p>
       <div class="hero-actions">
-        <a href="#contato" class="btn btn-accent">Fale com a gente</a>
-        <a href="#diferenciais" class="btn btn-outline-light">Ver diferenciais</a>
+        <a href="#contato" class="btn-primary">Fale com a gente</a>
+        <a href="#diferenciais" class="btn-outline">Ver diferenciais</a>
       </div>
     </div>
   </section>
@@ -365,27 +97,27 @@
   <section id="diferenciais">
     <div class="container">
       <div class="section-intro">
-        <span class="label">Posicionamento</span>
-        <h2>Disciplina visual. Execução técnica.</h2>
-        <p>A maioria das consultorias de TI usa a mesma paleta genérica de azul e verde. A EM Tech trabalha com uma base quase monocromática e um único ponto de assinatura — a mesma disciplina que aplicamos no código também aparece na forma como comunicamos.</p>
+        <span class="eyebrow">Posicionamento</span>
+        <h2 class="section-title">Disciplina visual. Execução técnica.</h2>
+        <p class="section-subtitle">A maioria das consultorias de TI usa a mesma paleta genérica de azul e verde. A EM Tech trabalha com uma base quase monocromática e um único ponto de assinatura — a mesma disciplina que aplicamos no código também aparece na forma como comunicamos.</p>
       </div>
 
       <div class="grid-3">
-        <div class="card">
+        <div class="card-elevated">
           <div class="icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M12 2 L12 22 M2 12 L22 12"/><rect x="8" y="8" width="8" height="8"/></svg>
           </div>
           <h3>Precisão</h3>
           <p>Arquitetura pensada antes da primeira linha de código. Sem retrabalho, sem atalho que vira dívida técnica.</p>
         </div>
-        <div class="card">
+        <div class="card-elevated">
           <div class="icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16"/><path d="M9 12 L11 14 L16 9"/></svg>
           </div>
           <h3>Confiança</h3>
           <p>Comunicação direta em cada etapa do projeto. Você sabe exatamente o que foi entregue e o que vem a seguir.</p>
         </div>
-        <div class="card">
+        <div class="card-elevated">
           <div class="icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M4 20 L10 8 L14 14 L20 4"/></svg>
           </div>
@@ -396,36 +128,36 @@
     </div>
   </section>
 
-  <section id="servicos" class="services">
+  <section id="servicos">
     <div class="container">
       <div class="section-intro">
-        <span class="label">O que fazemos</span>
-        <h2>Serviços</h2>
+        <span class="eyebrow">O que fazemos</span>
+        <h2 class="section-title">Serviços</h2>
       </div>
 
       <div class="grid-4">
-        <div class="card">
+        <div class="card-elevated">
           <div class="icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14"/><path d="M8 22 L16 22 M12 18 L12 22"/></svg>
           </div>
           <h3>Sistemas Web</h3>
           <p>Plataformas sob medida, do painel administrativo à área do cliente final.</p>
         </div>
-        <div class="card">
+        <div class="card-elevated">
           <div class="icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="0"/><path d="M10 19 L14 19"/></svg>
           </div>
           <h3>Apps Android &amp; iOS</h3>
           <p>Aplicativos nativos e multiplataforma, integrados ao seu sistema web.</p>
         </div>
-        <div class="card">
+        <div class="card-elevated">
           <div class="icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M10 3 L6 3 L6 21 L10 21 M14 3 L18 3 L18 21 L14 21"/></svg>
           </div>
           <h3>Produtos White Label</h3>
           <p>Sua marca, nossa engenharia — plataformas prontas para revenda sob a sua identidade.</p>
         </div>
-        <div class="card">
+        <div class="card-elevated">
           <div class="icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18"/><path d="M3 10 L21 10 M10 10 L10 21"/></svg>
           </div>
@@ -436,14 +168,14 @@
     </div>
   </section>
 
-  <section class="process" id="como-trabalhamos">
+  <section id="como-trabalhamos">
     <div class="container">
       <div class="section-intro">
-        <span class="label">Processo</span>
-        <h2>Como trabalhamos</h2>
+        <span class="eyebrow">Processo</span>
+        <h2 class="section-title">Como trabalhamos</h2>
       </div>
 
-      <div>
+      <div class="process-list">
         <div class="process-step">
           <span class="process-number">01</span>
           <div>
@@ -487,21 +219,21 @@
 
   <section class="cta-band" id="contato">
     <div class="container">
-      <span class="label label--on-primary">Contato</span>
-      <h2>Vamos conversar sobre o seu sistema.</h2>
+      <span class="eyebrow">Contato</span>
+      <h2 class="section-title">Vamos conversar sobre o seu sistema.</h2>
       <p>Conte o que sua empresa precisa. Respondemos com um diagnóstico técnico, não com um formulário genérico.</p>
       <div class="hero-actions">
-        <a href="mailto:contato@emtech.com.br" class="btn btn-accent">contato@emtech.com.br</a>
+        <a href="mailto:contato@emtech.com.br" class="btn-primary">contato@emtech.com.br</a>
       </div>
     </div>
   </section>
 
 </main>
 
-<footer>
+<footer class="site-footer">
   <div class="container">
     <div class="footer-top">
-      <a href="#topo" class="logo logo--light" aria-label="EM Tech, página inicial">
+      <a href="#topo" class="logo" aria-label="EM Tech, página inicial">
         <svg width="26" height="26" viewBox="0 0 30 30" aria-hidden="true">
           <path class="logo-bracket" d="M10 6 L6 6 L6 24 L10 24" />
           <path class="logo-bracket" d="M20 6 L24 6 L24 24 L20 24" />
