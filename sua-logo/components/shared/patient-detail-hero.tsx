@@ -1,8 +1,7 @@
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
-import { VideoCallButton } from '@/components/shared/video-call-button'
+import { PATIENT_STATUS_LABEL, PATIENT_STATUS_VARIANT } from '@/lib/patient-status'
 import { initials, patientCode } from '@/lib/utils'
-import { STATUS_LABELS } from '@/types'
 import type { Patient } from '@/types'
 
 export function PatientDetailHero({
@@ -13,28 +12,33 @@ export function PatientDetailHero({
   docsComplete: boolean
 }) {
   const patientName = patient.personal_data?.full_name || 'Paciente'
-  const paid = Boolean(patient.payment?.confirmed)
+  const hasProntuario = Boolean(patient.clinical?.saved_by_doctor)
 
   return (
     <Card>
-      <CardContent className="flex flex-wrap items-start justify-between gap-5 p-6">
+      <CardContent className="flex flex-col gap-4 p-6 sm:grid sm:grid-cols-[1fr_auto_auto] sm:items-center sm:gap-8">
         <div className="flex items-center gap-3.5">
           <div className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-teal-100 text-base font-bold text-navy-900">
             {initials(patientName)}
           </div>
           <div>
-            <div className="text-xs font-extrabold tracking-wide text-navy-200">DETALHES DO PACIENTE</div>
-            <h1 className="text-xl font-extrabold text-navy-900">{patientName}</h1>
+            <div className="text-xl font-extrabold text-navy-900">{patientName}</div>
             <div className="text-[13px] text-navy-200">{patientCode(patient.id)}</div>
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <Badge variant="amber">{STATUS_LABELS[patient.status]}</Badge>
-          {paid && <Badge variant="teal">✓ Pago</Badge>}
-          {docsComplete && <Badge variant="teal">✓ Docs enviados</Badge>}
+
+        <div>
+          <div className="mb-1 text-xs font-semibold text-navy-200">Processos</div>
+          <div className="flex flex-wrap items-center gap-2">
+            {docsComplete && <Badge variant="teal">✓ Docs enviados</Badge>}
+            {hasProntuario && <Badge variant="teal">✓ Prontuário do médico</Badge>}
+            {!docsComplete && !hasProntuario && <span className="text-sm text-navy-200">—</span>}
+          </div>
         </div>
-        <div className="w-full border-t border-line-100 pt-5">
-          <VideoCallButton patientId={patient.id} />
+
+        <div className="sm:w-[200px]">
+          <div className="mb-1 text-xs font-semibold text-navy-200">Status</div>
+          <Badge variant={PATIENT_STATUS_VARIANT[patient.status]}>{PATIENT_STATUS_LABEL[patient.status]}</Badge>
         </div>
       </CardContent>
     </Card>

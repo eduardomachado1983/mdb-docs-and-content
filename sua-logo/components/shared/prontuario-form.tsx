@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -86,9 +87,17 @@ export function ProntuarioForm({ patientId, patient }: { patientId: string; pati
         <IdeasPanel title="Laudo" ideas={reportIdeas} onUse={() => insertIdeas(reportIdeas, report, setReport)} />
         <Textarea id="report" value={report} onChange={(e) => setReport(e.target.value)} placeholder="Diagnóstico e observações..." />
       </div>
-      <Button type="submit" disabled={loading}>
-        {loading ? 'Salvando...' : 'Salvar e enviar para validação'}
-      </Button>
+      <div className="flex justify-end gap-3">
+        <Link
+          href="/medico"
+          className="flex items-center rounded-[8px] border border-teal-500 px-5 py-2.5 text-sm font-bold text-teal-600 transition hover:bg-teal-50 active:scale-[0.98]"
+        >
+          Voltar
+        </Link>
+        <Button type="submit" variant="teal" disabled={loading}>
+          {loading ? 'Salvando...' : 'Salvar e enviar para validação'}
+        </Button>
+      </div>
     </form>
   )
 }
