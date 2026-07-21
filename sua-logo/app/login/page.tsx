@@ -23,7 +23,7 @@ const ROLES = {
     lightBg: 'bg-brand-100',
     text: 'text-brand-700',
     onBg: 'text-primary-on',
-    demo: { label: 'Paciente demo', email: 'contato@em.art.br', password: 'A1234567' },
+    demo: { label: 'Paciente demo', email: 'contato@em.art.br', displayEmail: 'contato@em.art.br', password: 'A1234567' },
   },
   doctor: {
     label: 'Médico',
@@ -33,7 +33,7 @@ const ROLES = {
     lightBg: 'bg-teal-100',
     text: 'text-navy-900',
     onBg: 'text-primary-on',
-    demo: { label: 'Médico demo', email: 'medico@sualogo.com.br', password: 'medico123' },
+    demo: { label: 'Médico demo', email: 'medico@sualogo.com.br', displayEmail: 'medico@biosativa.com.br', password: 'medico123' },
   },
   admin: {
     label: 'Administrador',
@@ -43,7 +43,7 @@ const ROLES = {
     lightBg: 'bg-admin-100',
     text: 'text-admin-500',
     onBg: 'text-white',
-    demo: { label: 'Admin demo', email: 'admin@sualogo.com.br', password: 'admin123' },
+    demo: { label: 'Admin demo', email: 'admin@sualogo.com.br', displayEmail: 'admin@biosativa.com.br', password: 'admin123' },
   },
 } as const
 
@@ -266,7 +266,7 @@ function LoginForm() {
                 className="flex w-full items-center justify-between gap-2.5 rounded-[10px] border border-line-200 bg-surface-subtle px-3 py-2.5 text-left hover:border-brand-200 hover:bg-brand-50"
               >
                 <span className="text-[13px] font-bold text-navy-700">{config.demo.label}</span>
-                <span className="text-xs text-navy-200">{config.demo.email}</span>
+                <span className="text-xs text-navy-200">{config.demo.displayEmail}</span>
               </button>
 
               <p className="mt-6 text-center text-sm text-navy-300">
