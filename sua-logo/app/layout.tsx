@@ -4,7 +4,7 @@ import { HeaderOffset } from '@/components/shared/header-offset'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Sua Logo Telemedicina',
+  title: 'BioSativa',
   description: 'Cannabis medicinal com acompanhamento médico, triagem guiada e receita e laudo digitais — 100% dentro da lei.',
 }
 

@@ -67,7 +67,7 @@ export default function LandingPage() {
               Medicina, tecnologia e cuidado humano
             </h2>
             <p className="mb-3.5 text-base leading-relaxed text-navy-500">
-              A Sua Logo é uma clínica digital especializada em cannabis medicinal. Conectamos você a
+              A BioSativa é uma clínica digital especializada em cannabis medicinal. Conectamos você a
               médicos prescritores registrados no CRM, que avaliam seu caso individualmente e constroem um
               plano de tratamento sob medida — sempre dentro da lei e das normas da Anvisa.
             </p>
@@ -191,7 +191,7 @@ export default function LandingPage() {
           <div>
             <div className="mb-3 text-sm font-bold text-white">Contato</div>
             <div className="text-sm leading-[2] text-[#9db4cc]">
-              contato@sualogo.com.br<br />0800 123 4567<br />Seg a Sex, 8h às 20h
+              contato@biosativa.com.br<br />0800 123 4567<br />Seg a Sex, 8h às 20h
             </div>
           </div>
           <div>
@@ -202,7 +202,7 @@ export default function LandingPage() {
           </div>
         </div>
         <div className="border-t border-white/10 px-6 py-[18px] text-center text-[13px] text-[#7a92ac]">
-          © 2026 Sua Logo Telemedicina — Ambiente de demonstração.
+          © 2026 BioSativa — Ambiente de demonstração.
         </div>
       </footer>
     </div>

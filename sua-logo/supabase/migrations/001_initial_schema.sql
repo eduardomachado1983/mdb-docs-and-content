@@ -1,6 +1,6 @@
 -- ══════════════════════════════════════════════
 -- Migration 001 — Schema inicial
--- Sua Logo Telemedicina
+-- BioSativa
 -- ══════════════════════════════════════════════
 
 -- Profiles (complementa auth.users)

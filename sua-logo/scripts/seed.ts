@@ -103,7 +103,7 @@ async function seed() {
 
     if (patient) {
       await supabase.from('chat_history').insert([
-        { patient_id: patient.id, role: 'assistant', content: 'Olá! Sou o assistente de triagem da Sua Logo. Qual é o seu principal sintoma hoje?' },
+        { patient_id: patient.id, role: 'assistant', content: 'Olá! Sou o assistente de triagem da BioSativa. Qual é o seu principal sintoma hoje?' },
         { patient_id: patient.id, role: 'user', content: 'Estou com dor de cabeça forte há 3 dias, piora à tarde.' },
         { patient_id: patient.id, role: 'assistant', content: 'Há quanto tempo você está com esse sintoma?' },
         { patient_id: patient.id, role: 'user', content: 'Desde domingo, são 3 dias.' },

@@ -1,4 +1,4 @@
-# CLAUDE.md — Sua Logo Telemedicina
+# CLAUDE.md — BioSativa
 
 Leia este arquivo inteiro antes de qualquer tarefa.
 Este é o contrato de arquitetura do projeto.
@@ -257,7 +257,7 @@ export async function createPixPayment(params: {
   return payment.create({
     body: {
       transaction_amount: params.amount / 100,
-      description: 'Consulta - Sua Logo Telemedicina',
+      description: 'Consulta - BioSativa',
       payment_method_id: 'pix',
       payer: {
         email: params.email,
@@ -330,7 +330,7 @@ Sem API de IA — lógica baseada em contador de mensagens.
 
 ```typescript
 const QUESTIONS = [
-  'Olá! Sou o assistente da Sua Logo. Qual é o seu principal sintoma hoje?',
+  'Olá! Sou o assistente da BioSativa. Qual é o seu principal sintoma hoje?',
   'Há quanto tempo você está com esse sintoma?',
   'Em uma escala de 0 a 10, qual é a intensidade?',
   'Onde você sente o desconforto?',
@@ -363,7 +363,7 @@ WHATSAPP_VERIFY_TOKEN=
 WHATSAPP_APP_SECRET=
 
 # Site
-NEXT_PUBLIC_SITE_URL=https://sua-logo.vercel.app
+NEXT_PUBLIC_SITE_URL=https://biosativa.vercel.app
 
 # Consulta (em centavos)
 CONSULTATION_AMOUNT=200

@@ -18,7 +18,7 @@ export async function createPixPayment(params: {
   email: string
   cpf: string
 }) {
-  const referenceId = `SUALOGO-${params.patientId}-${Date.now()}`
+  const referenceId = `BIOSATIVA-${params.patientId}-${Date.now()}`
 
   // Modo simulado (sem token)
   if (!process.env.MERCADOPAGO_ACCESS_TOKEN) {
@@ -38,7 +38,7 @@ export async function createPixPayment(params: {
   const result = await payment.create({
     body: {
       transaction_amount: AMOUNT / 100,
-      description: 'Consulta médica online — Sua Logo Telemedicina',
+      description: 'Consulta médica online — BioSativa',
       payment_method_id: 'pix',
       payer: {
         email: params.email,
@@ -96,7 +96,7 @@ export async function createCardPayment(params: {
   issuerId?: string
   installments: number
 }) {
-  const referenceId = `SUALOGO-${params.patientId}-${Date.now()}`
+  const referenceId = `BIOSATIVA-${params.patientId}-${Date.now()}`
 
   // Modo simulado
   if (!process.env.MERCADOPAGO_ACCESS_TOKEN) {
@@ -109,7 +109,7 @@ export async function createCardPayment(params: {
   const result = await payment.create({
     body: {
       transaction_amount: AMOUNT / 100,
-      description: 'Consulta médica online — Sua Logo Telemedicina',
+      description: 'Consulta médica online — BioSativa',
       installments: params.installments,
       payment_method_id: params.paymentMethodId,
       issuer_id: params.issuerId ? Number(params.issuerId) : undefined,
