@@ -10,7 +10,7 @@ interface Message {
 }
 
 const GREETING =
-  'Olá! Sou o assistente de ajuda da Sua Logo. Escolha um assunto abaixo ou ' +
+  'Olá! Sou o assistente de ajuda da BioSativa. Escolha um assunto abaixo ou ' +
   'digite sua dúvida que eu tento te ajudar. 💬'
 
 const FALLBACK =

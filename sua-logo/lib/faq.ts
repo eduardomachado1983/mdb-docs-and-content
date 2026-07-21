@@ -36,4 +36,4 @@ export const FAQS: Faq[] = [
   },
 ]
 
-export const SUPPORT_EMAIL = 'suporte@sualogo.com.br'
+export const SUPPORT_EMAIL = 'suporte@biosativa.com.br'

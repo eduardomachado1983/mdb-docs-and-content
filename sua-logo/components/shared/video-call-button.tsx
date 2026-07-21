@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 // O nome da sala é derivado do id do paciente para ser estável e difícil de adivinhar.
 export function VideoCallButton({ patientId, className }: { patientId: string; className?: string }) {
   function handleClick() {
-    const room = `SuaLogoTelemedicina-${patientId}`
+    const room = `BioSativa-${patientId}`
     window.open(`https://meet.jit.si/${room}`, '_blank', 'noopener,noreferrer')
   }
 
