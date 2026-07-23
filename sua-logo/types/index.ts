@@ -64,13 +64,16 @@ export interface ClinicalData {
   saved_at?: string
 }
 
+export type ReminderReason = 'documentos' | 'pagamento' | 'prontuario'
+
 export interface AdminValidation {
   identity_approved?: boolean
   financial_approved?: boolean
   clinical_approved?: boolean
   released_at?: string
   released_by?: string
-  document_reminder_sent_at?: string
+  reminder_sent_at?: string
+  reminder_reason?: ReminderReason
 }
 
 export interface Patient {

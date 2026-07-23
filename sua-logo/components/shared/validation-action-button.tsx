@@ -3,14 +3,17 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import type { ReminderReason } from '@/types'
 
 export function ValidationActionButton({
   patientId,
   allReady,
+  reason,
   alreadyNotified,
 }: {
   patientId: string
   allReady: boolean
+  reason?: ReminderReason
   alreadyNotified?: boolean
 }) {
   const router = useRouter()
@@ -38,15 +41,25 @@ export function ValidationActionButton({
   }
 
   async function handleNotify() {
+    if (!reason) return
     setLoading(true)
     try {
-      const res = await fetch(`/api/admin/patients/${patientId}/notify-documents`, { method: 'POST' })
+      const res = await fetch(`/api/admin/patients/${patientId}/notify`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reason }),
+      })
       const data = await res.json()
       if (!res.ok) {
         toast.error(data.error ?? 'Falha ao notificar paciente')
         return
       }
-      toast.success('Notificação registrada — o paciente verá o aviso na área dele.')
+      const viaReal = !data.whatsappSimulated || !data.emailSimulated
+      toast.success(
+        viaReal
+          ? 'Notificação enviada por WhatsApp e/ou e-mail.'
+          : 'Notificação registrada (modo simulado — configure as credenciais de WhatsApp/e-mail para envio real).'
+      )
       setNotified(true)
     } finally {
       setLoading(false)

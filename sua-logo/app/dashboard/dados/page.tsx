@@ -29,7 +29,7 @@ export default async function DadosPage() {
   const docsUnlocked = DOCS_UNLOCKED.includes(patient.status)
   const uploadedTypes = new Set<string>((documents ?? []).map((d) => d.type))
   const missingDocs = REQUIRED_DOCS.filter((d) => !uploadedTypes.has(d.type))
-  const showReminder = Boolean(patient.admin_validation?.document_reminder_sent_at) && missingDocs.length > 0
+  const showReminder = patient.admin_validation?.reminder_reason === 'documentos' && missingDocs.length > 0
 
   return (
     <div className="min-h-screen">
