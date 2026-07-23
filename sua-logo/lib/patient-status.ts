@@ -9,8 +9,8 @@ export const PATIENT_STATUS_LABEL: Record<PatientStatus, string> = {
   concluido: 'Concluído',
 }
 
-export const PATIENT_STATUS_VARIANT: Record<PatientStatus, 'default' | 'amber' | 'teal'> = {
-  cadastro_incompleto: 'default',
+export const PATIENT_STATUS_VARIANT: Record<PatientStatus, 'red' | 'amber' | 'teal'> = {
+  cadastro_incompleto: 'red',
   aguardando_pagamento: 'amber',
   aguardando_medico: 'amber',
   retido_admin: 'amber',
