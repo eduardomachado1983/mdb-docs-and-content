@@ -298,6 +298,21 @@ não é enviada de fato) — mesmo padrão do Mercado Pago sem token.
 
 ---
 
+## Notificações ao paciente (admin)
+
+`POST /api/admin/patients/[id]/notify` — o admin notifica o paciente sobre
+uma pendência (`reason`: `documentos` | `pagamento` | `prontuario`) por
+WhatsApp (`lib/whatsapp.ts`, também registra a mensagem no inbox) e e-mail
+(`lib/email.ts`, via Resend). Grava `admin_validation.reminder_reason` +
+`reminder_sent_at` para o paciente ver o aviso na área dele
+(`/dashboard` e `/dashboard/dados`).
+
+Sem `RESEND_API_KEY`/`RESEND_FROM_EMAIL` configurados, o e-mail roda em
+modo simulado (não é enviado de fato) — mesmo padrão do WhatsApp e do
+Mercado Pago sem token.
+
+---
+
 ## Upload de documentos
 
 Usar **Supabase Storage** com bucket privado.
@@ -361,6 +376,10 @@ WHATSAPP_ACCESS_TOKEN=
 WHATSAPP_PHONE_NUMBER_ID=
 WHATSAPP_VERIFY_TOKEN=
 WHATSAPP_APP_SECRET=
+
+# E-mail transacional (Resend) — opcional, sem elas o envio roda simulado
+RESEND_API_KEY=
+RESEND_FROM_EMAIL=
 
 # Site
 NEXT_PUBLIC_SITE_URL=https://biosativa.vercel.app
