@@ -1,32 +1,25 @@
 import Link from 'next/link'
 
-// Folíolos da folha de cannabis do logo (leque de 7, apontando para cima).
-const LEAFLETS = [
-  { rot: 0, scale: 1 },
-  { rot: 32, scale: 0.82 },
-  { rot: -32, scale: 0.82 },
-  { rot: 64, scale: 0.58 },
-  { rot: -64, scale: 0.58 },
-  { rot: 94, scale: 0.4 },
-  { rot: -94, scale: 0.4 },
-]
-
-const LEAFLET = 'M0 0 C 8 -24 6 -58 0 -84 C -6 -58 -8 -24 0 0 Z'
-
+// Broto de duas folhas — versão simplificada do símbolo da BioSativa.
 function LeafIcon() {
   return (
     <svg viewBox="0 0 100 100" className="h-9 w-9" aria-hidden>
       <defs>
-        <linearGradient id="biosativa-leaf" x1="0" y1="1" x2="0" y2="0">
+        <linearGradient id="biosativa-leaf" x1="0" y1="1" x2="1" y2="0">
           <stop offset="0" stopColor="#2f9e6f" />
-          <stop offset="1" stopColor="#57bc90" />
+          <stop offset="1" stopColor="#7fd6ab" />
         </linearGradient>
       </defs>
-      <g transform="translate(50 90)">
-        {LEAFLETS.map((l, i) => (
-          <path key={i} d={LEAFLET} fill="url(#biosativa-leaf)" transform={`rotate(${l.rot}) scale(${l.scale})`} />
-        ))}
-        <rect x="-1.4" y="-6" width="2.8" height="12" rx="1.4" fill="#2f9e6f" />
+      <g transform="translate(50 88)">
+        <rect x="-1.6" y="-40" width="3.2" height="40" rx="1.6" fill="#2f9e6f" />
+        <path
+          d="M0 -22 C 20 -26 34 -14 38 4 C 16 6 0 -4 0 -22 Z"
+          fill="url(#biosativa-leaf)"
+        />
+        <path
+          d="M0 -34 C -20 -38 -34 -26 -38 -8 C -16 -6 0 -16 0 -34 Z"
+          fill="url(#biosativa-leaf)"
+        />
       </g>
     </svg>
   )
