@@ -9,7 +9,7 @@ import { ValidationActionButton } from '@/components/shared/validation-action-bu
 import { DetailField } from '@/components/shared/detail-field'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { DOCUMENTS_BUCKET } from '@/lib/storage'
-import { computeValidationState } from '@/lib/validation-status'
+import { computeValidationState, VALIDATION_STATE_REMINDER_REASON } from '@/lib/validation-status'
 import { cn } from '@/lib/utils'
 import type { Patient } from '@/types'
 
@@ -172,7 +172,11 @@ export default async function ValidacaoPage({ params }: { params: Promise<{ id: 
           <ValidationActionButton
             patientId={patient.id}
             allReady={state === 'liberado'}
-            alreadyNotified={Boolean(patient.admin_validation?.document_reminder_sent_at)}
+            reason={VALIDATION_STATE_REMINDER_REASON[state]}
+            alreadyNotified={
+              patient.admin_validation?.reminder_reason === VALIDATION_STATE_REMINDER_REASON[state] &&
+              Boolean(patient.admin_validation?.reminder_sent_at)
+            }
           />
         </div>
       </main>

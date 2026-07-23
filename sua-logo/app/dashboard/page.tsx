@@ -46,6 +46,10 @@ export default async function DashboardPage() {
     .eq('role', 'user')
   const consultaDone = (answersCount ?? 0) >= TOTAL_ANSWERS
 
+  const reminderReason = patient.admin_validation?.reminder_reason
+  const showPaymentReminder = reminderReason === 'pagamento' && patient.status === 'aguardando_pagamento'
+  const showProntuarioReminder = reminderReason === 'prontuario' && patient.status === 'retido_admin'
+
   return (
     <div className="min-h-screen">
       <PatientHeader patientName={profile?.name ?? 'Paciente'} />
@@ -57,6 +61,18 @@ export default async function DashboardPage() {
         </p>
         {patient.status === 'concluido' && (
           <p className="mb-5 text-[15px] text-navy-300">{STATUS_MSG.concluido}</p>
+        )}
+
+        {showPaymentReminder && (
+          <div className="mb-[18px] rounded-2xl border border-amber-200 bg-amber-50 p-5">
+            <p className="text-sm font-bold text-amber-800">⚠️ A administração identificou que seu pagamento ainda não foi confirmado. Finalize o pagamento abaixo.</p>
+          </div>
+        )}
+
+        {showProntuarioReminder && (
+          <div className="mb-[18px] rounded-2xl border border-amber-200 bg-amber-50 p-5">
+            <p className="text-sm font-bold text-amber-800">⚠️ Seu caso está em análise final com a nossa equipe. Em breve você recebe sua receita e laudo.</p>
+          </div>
         )}
 
         {patient.status !== 'concluido' && (

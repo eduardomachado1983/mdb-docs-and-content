@@ -1,3 +1,5 @@
+import type { ReminderReason } from '@/types'
+
 export type ValidationState = 'aguardando_documento' | 'aguardando_pagamento' | 'aguardando_receita' | 'liberado'
 
 // Ordem segue a jornada do paciente: documentos → pagamento → prontuário do médico.
@@ -28,4 +30,11 @@ export const VALIDATION_STATE_VARIANT: Record<ValidationState, 'amber' | 'teal'>
   aguardando_pagamento: 'amber',
   aguardando_receita: 'amber',
   liberado: 'teal',
+}
+
+export const VALIDATION_STATE_REMINDER_REASON: Record<ValidationState, ReminderReason | undefined> = {
+  aguardando_documento: 'documentos',
+  aguardando_pagamento: 'pagamento',
+  aguardando_receita: 'prontuario',
+  liberado: undefined,
 }
