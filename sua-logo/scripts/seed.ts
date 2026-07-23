@@ -125,6 +125,146 @@ async function seed() {
     console.log('✓ Paciente demo populado (status: aguardando_medico)')
   }
 
+  // Pacientes demo extras (sem login) — populam as listas do admin e do
+  // médico com outros status, incluindo exemplos de prontuário já
+  // preenchido pelo médico.
+  console.log('\n👥 Populando pacientes demo extras...')
+
+  const EXTRA_PATIENTS: {
+    status: string
+    personal_data: Record<string, string>
+    triage?: Record<string, unknown>
+    payment?: Record<string, unknown>
+    clinical?: Record<string, unknown>
+    admin_validation?: Record<string, unknown>
+    withDocuments?: boolean
+  }[] = [
+    {
+      status: 'retido_admin',
+      personal_data: {
+        full_name: 'Ana Beatriz Souza',
+        email: 'ana.souza@example.com',
+        cpf: '123.456.789-00',
+        rg: '11.222.333-4',
+        birth_date: '15/03/1988',
+        phone: '(11) 91234-5678',
+        cep: '01310-100',
+        address: 'Av. Paulista',
+        number: '1000',
+        neighborhood: 'Bela Vista',
+        city: 'São Paulo',
+        state: 'SP',
+      },
+      triage: {
+        main_symptom: 'Ansiedade generalizada e insônia recorrente há 2 meses.',
+        pain_location: '—',
+        pain_intensity: 4,
+        medical_history: 'Sem alergias conhecidas. Uso ocasional de melatonina.',
+      },
+      payment: { confirmed: true, method: 'pix', amount: 200, confirmed_at: new Date().toISOString() },
+      clinical: {
+        prescription: 'Óleo CBD 5% — 2 gotas sublinguais à noite, por 30 dias.',
+        report: 'Paciente relata ansiedade generalizada e insônia recorrente há 2 meses, sem histórico de outras comorbidades. Indicado tratamento com cannabis medicinal (CBD) para controle dos sintomas, com reavaliação em 30 dias.',
+        saved_by_doctor: true,
+        saved_at: new Date().toISOString(),
+      },
+      withDocuments: true,
+    },
+    {
+      status: 'concluido',
+      personal_data: {
+        full_name: 'Carlos Eduardo Lima',
+        email: 'carlos.lima@example.com',
+        cpf: '987.654.321-00',
+        rg: '22.333.444-5',
+        birth_date: '08/11/1979',
+        phone: '(31) 98888-2222',
+        cep: '30130-010',
+        address: 'Rua da Bahia',
+        number: '500',
+        neighborhood: 'Centro',
+        city: 'Belo Horizonte',
+        state: 'MG',
+      },
+      triage: {
+        main_symptom: 'Dor crônica lombar há mais de 1 ano, sem melhora com analgésicos comuns.',
+        pain_location: 'Região lombar',
+        pain_intensity: 7,
+        medical_history: 'Hipertensão controlada. Sem alergias.',
+      },
+      payment: { confirmed: true, method: 'card', amount: 200, confirmed_at: new Date().toISOString() },
+      clinical: {
+        prescription: 'Extrato full spectrum CBD:THC 20:1 — 3 gotas sublinguais 2x ao dia, por 60 dias.',
+        report: 'Paciente com dor crônica lombar há mais de 1 ano refratária a analgésicos comuns. Indicado tratamento com cannabis medicinal, com reavaliação em 60 dias.',
+        saved_by_doctor: true,
+        saved_at: new Date().toISOString(),
+      },
+      admin_validation: {
+        identity_approved: true,
+        financial_approved: true,
+        clinical_approved: true,
+        released_at: new Date().toISOString(),
+        released_by: 'Administrador',
+      },
+      withDocuments: true,
+    },
+    {
+      status: 'cadastro_incompleto',
+      personal_data: {
+        full_name: 'Fernanda Ribeiro',
+        email: 'fernanda.ribeiro@example.com',
+        cpf: '456.789.123-00',
+        rg: '33.444.555-6',
+        birth_date: '22/07/1995',
+        phone: '(21) 99876-5432',
+      },
+    },
+  ]
+
+  for (const p of EXTRA_PATIENTS) {
+    const cpf = p.personal_data.cpf
+    const { data: existing, error: findError } = await supabase
+      .from('patients').select('id').eq('personal_data->>cpf', cpf).maybeSingle()
+    if (findError) {
+      console.error(`❌ ${p.personal_data.full_name}:`, findError.message)
+      continue
+    }
+
+    const payload = {
+      status: p.status,
+      personal_data: p.personal_data,
+      triage: p.triage ?? {},
+      payment: p.payment ?? {},
+      clinical: p.clinical ?? {},
+      admin_validation: p.admin_validation ?? {},
+    }
+
+    let patientId: string | undefined = existing?.id
+    let upsertError = null
+    if (patientId) {
+      const { error } = await supabase.from('patients').update(payload).eq('id', patientId)
+      upsertError = error
+    } else {
+      const { data: inserted, error } = await supabase.from('patients').insert(payload).select('id').single()
+      patientId = inserted?.id
+      upsertError = error
+    }
+    if (upsertError || !patientId) {
+      console.error(`❌ ${p.personal_data.full_name}:`, upsertError?.message ?? 'falha desconhecida')
+      continue
+    }
+
+    if (p.withDocuments) {
+      await supabase.from('documents').delete().eq('patient_id', patientId)
+      await supabase.from('documents').insert([
+        { patient_id: patientId, type: 'identity', filename: 'documento-identidade.pdf', storage_path: `${patientId}/identity/documento-identidade.pdf`, mime_type: 'application/pdf' },
+        { patient_id: patientId, type: 'address', filename: 'comprovante-endereco.pdf', storage_path: `${patientId}/address/comprovante-endereco.pdf`, mime_type: 'application/pdf' },
+      ])
+    }
+
+    console.log(`✓ Paciente demo: ${p.personal_data.full_name} (status: ${p.status})`)
+  }
+
   // Conversas de WhatsApp em andamento (inbox do admin)
   console.log('\n💬 Populando conversas de WhatsApp...')
 
