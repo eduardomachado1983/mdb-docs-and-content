@@ -37,6 +37,12 @@
       "skillPath": "skills/pick-ui-library/SKILL.md",
       "computedHash": "f8d4d2cf4677bf54b14f35f62a741add93541bfcb67863315a40164365161b49"
     },
+    "responsive-craft": {
+      "source": "kylezantos/responsive-craft",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "cd5996664f6003446dcc34ce26ac8bec85a307feb0a89ff96f4bb7b08158e1fd"
+    },
     "review-animations": {
       "source": "emilkowalski/skill",
       "sourceType": "github",
