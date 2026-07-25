@@ -41,7 +41,7 @@ export default function LandingPage() {
       <section className="relative overflow-hidden bg-gradient-to-b from-[#eef3fb] to-[#f3f7fc]">
         <LeafBackground />
         <div className="relative mx-auto grid max-w-[720px] justify-items-center gap-5 px-6 pb-20 pt-20 text-center">
-          <h1 className="animate-fade-up text-[32px] font-extrabold leading-[1.15] tracking-tight sm:text-[44px]">
+          <h1 className="animate-fade-up text-[clamp(1.75rem,5vw,2.75rem)] font-extrabold leading-[1.15] tracking-tight">
             <span className="text-brand-700">Cannabis medicinal</span>
             <br />
             com acompanhamento médico de verdade
@@ -63,7 +63,7 @@ export default function LandingPage() {
         <div className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-11 px-6 py-14 md:grid-cols-2">
           <div>
             <div className="mb-3 text-[13px] font-extrabold tracking-wide text-brand-700">QUEM SOMOS</div>
-            <h2 className="mb-4 text-[26px] font-extrabold tracking-tight sm:text-[31px]">
+            <h2 className="mb-4 text-[clamp(1.5rem,4vw,2rem)] font-extrabold tracking-tight">
               Medicina, tecnologia e cuidado humano
             </h2>
             <p className="mb-3.5 text-base leading-relaxed text-navy-500">
@@ -92,7 +92,7 @@ export default function LandingPage() {
       <section id="consultas" className="mx-auto grid max-w-[1140px] px-6 py-14">
         <div className="mb-9 text-center">
           <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-brand-700">O QUE TRATAMOS</div>
-          <h2 className="text-[26px] font-extrabold tracking-tight sm:text-[31px]">Para o que a cannabis medicinal pode ajudar</h2>
+          <h2 className="text-[clamp(1.5rem,4vw,2rem)] font-extrabold tracking-tight">Para o que a cannabis medicinal pode ajudar</h2>
         </div>
         <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
           {CONSULTAS.map((c) => (
@@ -111,7 +111,7 @@ export default function LandingPage() {
         <div className="mx-auto grid max-w-[1140px] px-6 py-14">
           <div className="mb-10 text-center">
             <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-[#5fb0ff]">COMO FUNCIONA</div>
-            <h2 className="text-[26px] font-extrabold tracking-tight sm:text-[31px]">
+            <h2 className="text-[clamp(1.5rem,4vw,2rem)] font-extrabold tracking-tight">
               Do primeiro contato ao tratamento, em 4 passos
             </h2>
           </div>
@@ -132,7 +132,7 @@ export default function LandingPage() {
       <section className="mx-auto grid max-w-[1140px] px-6 py-14">
         <div className="flex flex-wrap items-center justify-between gap-7 rounded-[22px] bg-gradient-to-r from-brand-500 to-teal-500 p-8 shadow-[0_20px_44px_rgba(140,231,192,.45)] sm:p-11">
           <div>
-            <h2 className="mb-2 text-2xl font-extrabold text-white sm:text-[28px]">Pronto para começar seu tratamento?</h2>
+            <h2 className="mb-2 text-[clamp(1.25rem,4vw,1.75rem)] font-extrabold text-white">Pronto para começar seu tratamento?</h2>
             <p className="text-base text-[#e3f0ff]">Leva poucos minutos. Triagem guiada e atendimento humanizado.</p>
           </div>
           <Link
