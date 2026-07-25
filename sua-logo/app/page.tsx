@@ -60,29 +60,29 @@ export default function LandingPage() {
       </section>
 
       <section id="quem-somos" className="border-y border-[#e9eff6] bg-white">
-        <div className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-11 px-6 py-14 md:grid-cols-2">
+        <div className="mx-auto grid max-w-[1140px] grid-cols-1 items-center gap-[clamp(2rem,8vw,3rem)] px-6 py-14 md:grid-cols-2">
           <div>
             <div className="mb-3 text-[13px] font-extrabold tracking-wide text-brand-700">QUEM SOMOS</div>
             <h2 className="mb-4 text-[clamp(1.5rem,4vw,2rem)] font-extrabold tracking-tight">
               Medicina, tecnologia e cuidado humano
             </h2>
-            <p className="mb-3.5 text-base leading-relaxed text-navy-500">
+            <p className="mb-3.5 text-[clamp(0.875rem,2vw,1rem)] leading-relaxed text-navy-500">
               A BioSativa é uma clínica digital especializada em cannabis medicinal. Conectamos você a
               médicos prescritores registrados no CRM, que avaliam seu caso individualmente e constroem um
               plano de tratamento sob medida — sempre dentro da lei e das normas da Anvisa.
             </p>
-            <p className="text-base leading-relaxed text-navy-500">
+            <p className="text-[clamp(0.875rem,2vw,1rem)] leading-relaxed text-navy-500">
               Levamos a privacidade a sério: seus dados pessoais, documentos e informações de saúde são
               tratados conforme a LGPD e ficam visíveis apenas para os profissionais responsáveis pelo seu
               caso.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-[clamp(1rem,3vw,1.5rem)]">
             {FEATURES.map((f) => (
               <div key={f.title} className="rounded-2xl border border-line-100 bg-surface-muted p-5">
-                <div className="mb-2 text-2xl">{f.icon}</div>
-                <div className="mb-1 text-[15px] font-bold">{f.title}</div>
-                <div className="text-[13px] leading-relaxed text-navy-300">{f.desc}</div>
+                <div className="mb-2 text-[clamp(1.5rem,4vw,1.75rem)]">{f.icon}</div>
+                <div className="mb-1 text-[clamp(0.875rem,2vw,0.9375rem)] font-bold">{f.title}</div>
+                <div className="text-[clamp(0.75rem,1.5vw,0.8125rem)] leading-relaxed text-navy-300">{f.desc}</div>
               </div>
             ))}
           </div>
@@ -90,18 +90,18 @@ export default function LandingPage() {
       </section>
 
       <section id="consultas" className="mx-auto grid max-w-[1140px] px-6 py-14">
-        <div className="mb-9 text-center">
+        <div className="mb-[clamp(2rem,6vw,3rem)] text-center">
           <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-brand-700">O QUE TRATAMOS</div>
           <h2 className="text-[clamp(1.5rem,4vw,2rem)] font-extrabold tracking-tight">Para o que a cannabis medicinal pode ajudar</h2>
         </div>
-        <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-[clamp(1rem,3vw,1.5rem)] sm:grid-cols-2 lg:grid-cols-3">
           {CONSULTAS.map((c) => (
-            <div key={c.title} className="rounded-2xl border border-line-100 bg-white p-6 transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(20,50,90,.09)]">
-              <div className="mb-3.5 flex h-[46px] w-[46px] items-center justify-center rounded-xl bg-[#def5e9] text-[22px]">
+            <div key={c.title} className="rounded-2xl border border-line-100 bg-white p-[clamp(1rem,3vw,1.5rem)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(20,50,90,.09)]">
+              <div className="mb-3.5 flex h-[46px] w-[46px] items-center justify-center rounded-xl bg-[#def5e9] text-[clamp(1.25rem,3vw,1.5rem)]">
                 {c.icon}
               </div>
-              <div className="mb-1.5 text-[17px] font-bold">{c.title}</div>
-              <div className="text-sm leading-relaxed text-navy-300">{c.desc}</div>
+              <div className="mb-1.5 text-[clamp(0.9375rem,2vw,1.0625rem)] font-bold">{c.title}</div>
+              <div className="text-[clamp(0.8125rem,1.5vw,0.875rem)] leading-relaxed text-navy-300">{c.desc}</div>
             </div>
           ))}
         </div>
@@ -109,20 +109,20 @@ export default function LandingPage() {
 
       <section id="como-funciona" className="bg-navy-900 text-white">
         <div className="mx-auto grid max-w-[1140px] px-6 py-14">
-          <div className="mb-10 text-center">
+          <div className="mb-[clamp(2rem,6vw,3rem)] text-center">
             <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-[#5fb0ff]">COMO FUNCIONA</div>
             <h2 className="text-[clamp(1.5rem,4vw,2rem)] font-extrabold tracking-tight">
               Do primeiro contato ao tratamento, em 4 passos
             </h2>
           </div>
-          <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-[clamp(1rem,3vw,1.5rem)] sm:grid-cols-2 lg:grid-cols-4">
             {STEPS.map((s, i) => (
-              <div key={s.t} className="rounded-2xl border border-white/10 bg-white/[.06] p-6">
-                <div className="mb-3.5 flex h-10 w-10 items-center justify-center rounded-[11px] bg-gradient-to-br from-[#3d8bff] to-[#12c3ac] text-[17px] font-extrabold">
+              <div key={s.t} className="rounded-2xl border border-white/10 bg-white/[.06] p-[clamp(1rem,3vw,1.5rem)]">
+                <div className="mb-3.5 flex h-10 w-10 items-center justify-center rounded-[11px] bg-gradient-to-br from-[#3d8bff] to-[#12c3ac] text-[clamp(0.875rem,2vw,1.0625rem)] font-extrabold">
                   {i + 1}
                 </div>
-                <div className="mb-1.5 text-base font-bold">{s.t}</div>
-                <div className="text-sm leading-relaxed text-[#b8cbe0]">{s.d}</div>
+                <div className="mb-1.5 text-[clamp(0.875rem,2vw,1rem)] font-bold">{s.t}</div>
+                <div className="text-[clamp(0.75rem,1.5vw,0.875rem)] leading-relaxed text-[#b8cbe0]">{s.d}</div>
               </div>
             ))}
           </div>
@@ -145,21 +145,21 @@ export default function LandingPage() {
       </section>
 
       <section className="mx-auto grid max-w-[1140px] px-6 pb-14 pt-5">
-        <div className="mb-9 text-center">
+        <div className="mb-[clamp(2rem,6vw,3rem)] text-center">
           <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-brand-700">DEPOIMENTOS</div>
-          <h2 className="text-[26px] font-extrabold sm:text-[31px]">Quem já começou o tratamento</h2>
+          <h2 className="text-[clamp(1.5rem,4vw,2rem)] font-extrabold">Quem já começou o tratamento</h2>
         </div>
-        <div className="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-[clamp(1rem,3vw,1.5rem)] sm:grid-cols-2 lg:grid-cols-3">
           {TESTEMUNHOS.map((t) => (
-            <div key={t.name} className="rounded-2xl border border-line-100 bg-white p-[26px]">
-              <div className="mb-[18px] text-[17px] italic leading-relaxed text-navy-700">&ldquo;{t.quote}&rdquo;</div>
+            <div key={t.name} className="rounded-2xl border border-line-100 bg-white p-[clamp(1rem,3vw,1.5rem)]">
+              <div className="mb-[clamp(1rem,2vw,1.25rem)] text-[clamp(0.9375rem,2vw,1.0625rem)] italic leading-relaxed text-navy-700">&ldquo;{t.quote}&rdquo;</div>
               <div className="flex items-center gap-2.5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-100 font-bold text-brand-700">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-100 text-[12px] font-bold text-brand-700">
                   {t.initials}
                 </div>
                 <div>
-                  <div className="text-sm font-bold">{t.name}</div>
-                  <div className="text-xs text-navy-200">{t.city}</div>
+                  <div className="text-[clamp(0.8125rem,1.5vw,0.875rem)] font-bold">{t.name}</div>
+                  <div className="text-[clamp(0.75rem,1.2vw,0.8125rem)] text-navy-200">{t.city}</div>
                 </div>
               </div>
             </div>
@@ -169,9 +169,9 @@ export default function LandingPage() {
 
       <section id="faq" className="border-t border-[#e9eff6] bg-white">
         <div className="mx-auto max-w-[820px] px-6 py-14">
-          <div className="mb-8 text-center">
+          <div className="mb-[clamp(2rem,6vw,3rem)] text-center">
             <div className="mb-2.5 text-[13px] font-extrabold tracking-wide text-brand-700">PERGUNTAS FREQUENTES</div>
-            <h2 className="text-[26px] font-extrabold sm:text-[31px]">Ainda com dúvidas?</h2>
+            <h2 className="text-[clamp(1.5rem,4vw,2rem)] font-extrabold">Ainda com dúvidas?</h2>
           </div>
           <FaqAccordion />
         </div>
