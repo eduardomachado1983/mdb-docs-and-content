@@ -6,6 +6,7 @@ import { AdminValidationHero } from '@/components/shared/admin-validation-hero'
 import { CollapsibleSection } from '@/components/shared/collapsible-section'
 import { ClinicalDocLink } from '@/components/shared/clinical-doc-link'
 import { ValidationActionButton } from '@/components/shared/validation-action-button'
+import { ValidacionActionSection } from '@/components/shared/validation-action-section'
 import { DetailField } from '@/components/shared/detail-field'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { DOCUMENTS_BUCKET } from '@/lib/storage'
@@ -162,23 +163,16 @@ export default async function ValidacaoPage({ params }: { params: Promise<{ id: 
           </CardContent>
         </Card>
 
-        <div className="flex justify-end gap-3">
-          <Link
-            href="/admin"
-            className="flex items-center rounded-[8px] border border-teal-500 px-5 py-2.5 text-sm font-bold text-teal-600 transition hover:bg-teal-50 active:scale-[0.98]"
-          >
-            Voltar
-          </Link>
-          <ValidationActionButton
-            patientId={patient.id}
-            allReady={state === 'liberado'}
-            reason={VALIDATION_STATE_REMINDER_REASON[state]}
-            alreadyNotified={
-              patient.admin_validation?.reminder_reason === VALIDATION_STATE_REMINDER_REASON[state] &&
-              Boolean(patient.admin_validation?.reminder_sent_at)
-            }
-          />
-        </div>
+        <ValidacionActionSection
+          patientId={patient.id}
+          patientName={pd?.full_name}
+          allReady={state === 'liberado'}
+          reason={VALIDATION_STATE_REMINDER_REASON[state]}
+          alreadyNotified={
+            patient.admin_validation?.reminder_reason === VALIDATION_STATE_REMINDER_REASON[state] &&
+            Boolean(patient.admin_validation?.reminder_sent_at)
+          }
+        />
       </main>
     </div>
   )

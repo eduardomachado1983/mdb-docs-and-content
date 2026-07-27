@@ -42,8 +42,18 @@ export default async function AdminPacientesPage({
       <AdminHeader adminName={profile?.name ?? 'Administrador'} />
 
       <div className="mx-auto grid max-w-[1140px] px-6 py-7">
-        <h1 className="mb-1 text-2xl font-extrabold">Painel administrativo</h1>
-        <p className="mb-5 text-[15px] text-navy-300">Lista de pacientes</p>
+        <div className="mb-5 flex items-center justify-between">
+          <div>
+            <h1 className="mb-1 text-2xl font-extrabold">Painel administrativo</h1>
+            <p className="text-[15px] text-navy-300">Lista de pacientes</p>
+          </div>
+          <a
+            href="/registro"
+            className="rounded-[8px] bg-brand-500 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-brand-600 active:scale-[0.98]"
+          >
+            + Cadastrar paciente
+          </a>
+        </div>
 
         {!allPatients?.length && (
           <div className="rounded-2xl border border-white/30 bg-white/65 backdrop-blur-xl px-6 py-8 text-center text-sm text-navy-200">
