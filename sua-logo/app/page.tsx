@@ -77,7 +77,7 @@ export default function LandingPage() {
               caso.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {FEATURES.map((f) => (
               <div key={f.title} className="rounded-2xl border border-line-100 bg-surface-muted p-4 sm:p-5">
                 <div className="mb-2 text-xl sm:text-2xl">{f.icon}</div>

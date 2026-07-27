@@ -60,11 +60,11 @@ export function PersonalDataForm({ initial }: { initial?: Partial<PersonalData> 
     return (
       <div className="flex flex-col gap-4">
         <FieldView label="Nome completo" value={form.full_name} />
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <FieldView label="CPF" value={form.cpf} />
           <FieldView label="RG" value={form.rg} />
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <FieldView label="Data de nascimento" value={form.birth_date ? formatDateBR(form.birth_date) : ''} />
           <FieldView label="Telefone" value={form.phone} />
         </div>

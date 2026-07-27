@@ -105,7 +105,7 @@ export function PaymentPanel({ cpf = '' }: { cpf?: string }) {
     <div className="flex flex-col gap-4">
       <div>
         <label className="mb-1.5 block text-[13px] font-bold text-navy-700">Escolha a forma de pagamento</label>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           {METHODS.map((m) => (
             <button
               key={m.value}

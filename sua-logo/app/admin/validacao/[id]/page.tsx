@@ -68,7 +68,7 @@ export default async function ValidacaoPage({ params }: { params: Promise<{ id: 
 
         <Card>
           <CardHeader><CardTitle className="text-base">Informações pessoais</CardTitle></CardHeader>
-          <CardContent className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 lg:grid-cols-5">
+          <CardContent className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             <DetailField label="Nome" value={pd?.full_name} />
             <DetailField label="CPF" value={pd?.cpf} />
             <DetailField label="RG" value={pd?.rg} />
@@ -84,7 +84,7 @@ export default async function ValidacaoPage({ params }: { params: Promise<{ id: 
         </Card>
 
         <CollapsibleSection title="Informações da consulta">
-          <div className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             <DetailField label="Objetivo" value={triage?.main_symptom} />
             <DetailField label="Local" value={triage?.pain_location} />
             <DetailField label="Intensidade" value={triage?.pain_intensity ? `${triage.pain_intensity}/10` : undefined} />

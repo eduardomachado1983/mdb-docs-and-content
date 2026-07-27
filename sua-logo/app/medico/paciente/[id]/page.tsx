@@ -49,7 +49,7 @@ export default async function PacientePage({ params }: { params: Promise<{ id: s
 
         <Card>
           <CardHeader><CardTitle className="text-base">Informações pessoais</CardTitle></CardHeader>
-          <CardContent className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 lg:grid-cols-5">
+          <CardContent className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             <DetailField label="Nome" value={pd?.full_name} />
             <DetailField label="CPF" value={pd?.cpf} />
             <DetailField label="RG" value={pd?.rg} />
@@ -68,7 +68,7 @@ export default async function PacientePage({ params }: { params: Promise<{ id: s
           {(triage?.height || triage?.weight || triage?.sex) && (
             <Card>
               <CardHeader><CardTitle className="text-base">Informações físicas</CardTitle></CardHeader>
-              <CardContent className="grid grid-cols-3 gap-4">
+              <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <DetailField label="Altura" value={triage.height} />
                 <DetailField label="Peso" value={triage.weight} />
                 <DetailField label="Sexo" value={triage.sex} />
@@ -93,7 +93,7 @@ export default async function PacientePage({ params }: { params: Promise<{ id: s
         {triage?.health_history && Object.keys(triage.health_history).length > 0 && (
           <Card>
             <CardHeader><CardTitle className="text-base">Histórico de saúde</CardTitle></CardHeader>
-            <CardContent className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 lg:grid-cols-5">
+            <CardContent className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
               {Object.entries(triage.health_history).map(([pergunta, resposta]) => (
                 <DetailField key={pergunta} label={pergunta} value={resposta} />
               ))}
