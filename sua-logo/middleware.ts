@@ -15,6 +15,17 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   let response = NextResponse.next({ request })
 
+  // Verificar sessão demo
+  const demoUserCookie = request.cookies.get('demo_user')?.value
+  let demoUser: { role: string; email: string } | null = null
+  if (demoUserCookie) {
+    try {
+      demoUser = JSON.parse(demoUserCookie)
+    } catch {
+      // Cookie inválido, ignorar
+    }
+  }
+
   // Criar cliente Supabase com SSR
   const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -35,6 +46,7 @@ export async function middleware(request: NextRequest) {
 
   // Atualizar sessão (importante para Server Components)
   const { data: { user } } = await supabase.auth.getUser()
+  const isAuthenticated = !!user || !!demoUser
 
   // Verificar rotas protegidas
   const protectedEntry = Object.entries(PROTECTED_ROUTES).find(
@@ -45,7 +57,7 @@ export async function middleware(request: NextRequest) {
     const [, requiredRole] = protectedEntry
 
     // Não autenticado → login
-    if (!user) {
+    if (!isAuthenticated) {
       const url = request.nextUrl.clone()
       url.pathname = '/login'
       url.searchParams.set('redirect', pathname)
@@ -53,38 +65,49 @@ export async function middleware(request: NextRequest) {
     }
 
     // Verificar role
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single()
+    let userRole: string | null = null
+    if (demoUser) {
+      userRole = demoUser.role
+    } else if (user) {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single()
+      userRole = profile?.role ?? null
+    }
 
-    if (!profile || profile.role !== requiredRole) {
+    if (!userRole || userRole !== requiredRole) {
       const redirectMap: Record<string, string> = {
         patient: '/dashboard',
         doctor: '/medico',
         admin: '/admin',
       }
-      const redirectTo = profile ? redirectMap[profile.role] || '/' : '/login'
+      const redirectTo = userRole ? redirectMap[userRole] || '/' : '/login'
       return NextResponse.redirect(new URL(redirectTo, request.url))
     }
   }
 
   // Redirecionar usuário logado para sua área.
-  // Exceção: se veio um ?role= explícito (menu "Entrar" do header),
-  // deixa acessar o login para trocar de perfil/conta.
   const switchingRole = request.nextUrl.searchParams.has('role')
-  if (pathname === '/login' && user && !switchingRole) {
-    const { data: profile } = await supabase
-      .from('profiles').select('role').eq('id', user.id).single()
+  if (pathname === '/login' && isAuthenticated && !switchingRole) {
+    let userRole: string | null = null
+    if (demoUser) {
+      userRole = demoUser.role
+    } else if (user) {
+      const { data: profile } = await supabase
+        .from('profiles').select('role').eq('id', user.id).single()
+      userRole = profile?.role ?? null
+    }
+
     const redirectMap: Record<string, string> = {
       patient: '/dashboard',
       doctor: '/medico',
       admin: '/admin',
     }
-    if (profile) {
+    if (userRole) {
       return NextResponse.redirect(
-        new URL(redirectMap[profile.role] || '/', request.url)
+        new URL(redirectMap[userRole] || '/', request.url)
       )
     }
   }

@@ -135,7 +135,7 @@ export function CardPaymentForm({ cpf }: { cpf: string }) {
             value={form.name} onChange={(e) => update('name', e.target.value.toUpperCase())}
           />
         </div>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <div>
             <Label htmlFor="cardMonth">Mês</Label>
             <Input id="cardMonth" placeholder="MM" maxLength={2} required value={form.month} onChange={(e) => update('month', e.target.value)} />
