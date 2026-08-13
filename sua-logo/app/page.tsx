@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { ChevronRight, X, ArrowRight, ArrowLeft, ArrowUp, Search, Shield, Lock, Heart, Stethoscope, FileText, Package, ChevronDown, Star, MessageCircleHeart, ShieldCheck } from 'lucide-react'
+import { SiteLogo } from '@/components/shared/site-logo'
 
 const CONDITIONS = ['Insônia', 'Ansiedade', 'Dor crônica', 'Depressão', 'Enxaqueca', 'Fibromialgia', 'Epilepsia', 'TDAH', 'Autismo', 'Parkinson', 'Estresse', 'Obesidade']
 
@@ -122,9 +123,7 @@ export default function VitalisLanding() {
       {/* Header */}
       <header className="sticky top-0 z-150 border-b border-gray-100 bg-white">
         <div className="container mx-auto flex h-[68px] max-w-[1200px] items-center justify-between px-5">
-          <a href="#top" className="flex items-center gap-2.5">
-            <img src="/biosativa-logo.svg" alt="BioSativa" className="h-8 w-auto" />
-          </a>
+          <SiteLogo />
           <div className="flex items-center gap-3">
             <a href="/login" className="flex items-center gap-1.5 text-sm font-medium text-[#1c5344]">
               Entrar <ChevronRight className="h-4 w-4" />
@@ -140,7 +139,7 @@ export default function VitalisLanding() {
       <div className={`fixed inset-0 z-200 bg-[#1c5344] text-white transition-transform duration-1000 overflow-y-auto ${menuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="container mx-auto max-w-[1200px] px-5">
           <div className="flex items-center justify-between py-6">
-            <img src="/biosativa-logo.svg" alt="BioSativa" className="h-7 w-auto invert" />
+            <div className="text-white text-2xl font-extrabold"><span className="text-white">Bio</span><span className="text-[#c9a24e]">Sativa</span></div>
             <button onClick={() => setMenuOpen(false)} className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/40 bg-transparent">
               <X className="h-6 w-6" />
             </button>
@@ -450,9 +449,7 @@ export default function VitalisLanding() {
         <div className="container mx-auto max-w-[1200px] px-5 py-16">
           <div className="mb-10 grid grid-cols-1 gap-9 sm:grid-cols-2 md:grid-cols-4">
             <div>
-              <div className="mb-4">
-                <img src="/biosativa-logo.svg" alt="BioSativa" className="h-8 w-auto invert" />
-              </div>
+              <div className="mb-4 text-white text-2xl font-extrabold"><span className="text-white">Bio</span><span className="text-[#c9a24e]">Sativa</span></div>
               <p className="mb-4 max-w-xs text-xs leading-relaxed text-white/80">Plataforma de telemedicina que une tecnologia e atendimento humanizado para cuidar da sua saúde.</p>
               <div className="flex gap-2.5">
                 {['instagram', 'linkedin', 'youtube', 'facebook', 'x'].map(social => (
