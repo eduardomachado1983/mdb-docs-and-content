@@ -24,10 +24,10 @@ const TESTIMONIAL_DATA = {
 }
 
 const GALLERY = [
-  { id: 'gal-1', title: 'Vitalis Runner', meta: 'Evento • 2024', placeholder: 'Foto do evento' },
-  { id: 'gal-2', title: 'Praia limpa', meta: 'Ação • 2024', placeholder: 'Foto do evento' },
-  { id: 'gal-3', title: 'Maratona', meta: 'Patrocínio • 2024', placeholder: 'Foto do evento' },
-  { id: 'gal-4', title: 'Meetup Saúde', meta: 'Comunidade • 2025', placeholder: 'Foto do evento' },
+  { id: 'gal-1', title: 'Vitalis Runner', meta: 'Evento • 2024', image: '/images/Vitalis Runner.webp' },
+  { id: 'gal-2', title: 'Praia limpa', meta: 'Ação • 2024', image: '/images/Praia limpa.webp' },
+  { id: 'gal-3', title: 'Maratona', meta: 'Patrocínio • 2024', image: '/images/Maratona.webp' },
+  { id: 'gal-4', title: 'Meetup Saúde', meta: 'Comunidade • 2025', image: '/images/Meetup Saúde.webp' },
 ]
 
 const FAQS = [
@@ -184,9 +184,12 @@ export default function VitalisLanding() {
               </div>
             </div>
             <div className="relative min-h-80">
-              <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-gradient-to-br from-gray-200 to-gray-300">
-                <span className="text-center text-sm text-gray-600">Foto de uma pessoa (paciente)</span>
-              </div>
+              <Image
+                src="/images/hero.webp"
+                alt="Paciente usando a plataforma"
+                fill
+                className="object-cover rounded-2xl"
+              />
               <div className="absolute left-0 top-6 flex items-center gap-2.5 rounded-2xl bg-white p-3 shadow-lg">
                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#e6f7f0] text-[#1c5344]">📸</span>
                 <div className="text-sm font-semibold text-[#1a1a1a]">+640 mil<br /><span className="text-xs text-gray-500">seguidores</span></div>
@@ -315,10 +318,13 @@ export default function VitalisLanding() {
                 Iniciar jornada <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-            <div className="relative min-h-80 bg-gradient-to-br from-gray-200 to-gray-300">
-              <div className="absolute inset-0 flex items-center justify-center text-center">
-                <span className="text-sm text-gray-600">Thumbnail do vídeo (médico/atendimento)</span>
-              </div>
+            <div className="relative min-h-80 overflow-hidden rounded-lg">
+              <Image
+                src="/images/video-thumbnail.webp"
+                alt="Consulta médica"
+                fill
+                className="object-cover"
+              />
               <button className="absolute inset-0 m-auto flex h-20 w-20 items-center justify-center rounded-full bg-white/92 shadow-lg">
                 <svg className="h-7 w-7 ml-0.5 fill-[#1c5344]" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z" /></svg>
               </button>
@@ -390,9 +396,14 @@ export default function VitalisLanding() {
         </div>
         <div ref={photoRef} className="mb-5 flex gap-4 overflow-x-auto pb-1 scroll-smooth">
           {GALLERY.map(g => (
-            <div key={g.id} className="flex-none rounded-2xl bg-gradient-to-br from-gray-200 to-gray-300 p-0" style={{ minHeight: '300px', width: '320px' }}>
-              <div className="relative h-full w-full overflow-hidden rounded-2xl">
-                <div className="flex h-full items-center justify-center text-center text-sm text-gray-600">{g.placeholder}</div>
+            <div key={g.id} className="flex-none rounded-2xl overflow-hidden" style={{ minHeight: '300px', width: '320px' }}>
+              <div className="relative h-full w-full">
+                <Image
+                  src={g.image}
+                  alt={g.title}
+                  fill
+                  className="object-cover"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
                   <div className="font-medium">{g.title}</div>
